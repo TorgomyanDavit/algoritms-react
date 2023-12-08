@@ -1,0 +1,15 @@
+N-Queens Problem: In the N-Queens problem, you're given an NxN chessboard, and you need to place N queens on the board in such a way that no two queens threaten each other. Backtracking is often used to solve this problem by trying different board configurations until a solution is found.
+
+Sudoku Solver: Backtracking is commonly used to solve Sudoku puzzles. The algorithm tries different numbers in empty cells and backtracks when it encounters a conflict until a valid solution is found.
+
+Knight's Tour: Given a chessboard and a knight piece, the Knight's Tour problem asks if it's possible for the knight to visit every square on the board exactly once. Backtracking can be used to explore different knight movements until a solution is found or all possibilities are exhausted.
+
+Subset Sum Problem: This problem involves finding a subset of a given set of numbers such that their sum equals a target value. Backtracking can be used to explore different combinations of numbers until a valid subset sum is found or all possibilities are checked.
+
+Maze Solving: Backtracking can be applied to find a path through a maze. The algorithm explores different paths and backtracks when it reaches a dead end until it finds a path from the start to the exit.
+
+Permutations and Combinations: Backtracking can be used to generate all permutations or combinations of a set of elements.
+
+Word Search: In this problem, you're given a 2D board of letters and a word to search for. Backtracking can be used to explore the board and find if the word can be formed by connecting adjacent letters.
+
+Graph Coloring: Backtracking can be applied to solve the graph coloring problem, where the goal is to assign colors to vertices of a graph such that no two adjacent vertices have the same color.

@@ -1,0 +1,35 @@
+<!-- Merge Sort:
+
+Divide: Split the unsorted list into two halves.
+Conquer: Recursively sort each half.
+Combine: Merge the sorted halves to produce a single sorted list.
+Quick Sort:
+
+Divide: Choose a pivot element and partition the array into two subarrays such that elements less than the pivot are on the left, and elements greater than the pivot are on the right.
+Conquer: Recursively sort the two subarrays.
+Combine: No explicit combine step is needed; the array is sorted in-place.
+Binary Search:
+
+Divide: Compare the middle element of the sorted array with the target value.
+Conquer: If the middle element is equal to the target, return its index. If it's less, recursively search the right half; otherwise, search the left half.
+Combine: No explicit combine step is needed; the result is obtained when the target element is found or determined to be absent.
+Strassen's Matrix Multiplication:
+
+Divide: Split two matrices into four smaller matrices.
+Conquer: Recursively compute seven products involving these smaller matrices.
+Combine: Combine the seven products to obtain the final result efficiently.
+Closest Pair of Points:
+
+Divide: Divide the set of points into two equal-sized subsets based on their x-coordinates.
+Conquer: Recursively find the closest pairs in both subsets.
+Combine: Find the closest pair that spans the boundary between the two subsets and compare it with the closest pairs from the subsets.
+Karatsuba Multiplication:
+
+Divide: Split two multi-digit numbers into smaller parts.
+Conquer: Recursively compute three multiplications of these smaller parts.
+Combine: Combine the three results to obtain the final product efficiently.
+Max Subarray Sum (Kadane's Algorithm):
+
+Divide: Split the array into two subarrays.
+Conquer: Find the maximum subarray sum recursively in both subarrays.
+Combine: Calculate the maximum subarray sum that crosses the midpoint to find the overall maximum subarray sum. -->

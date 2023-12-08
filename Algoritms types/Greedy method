@@ -1,0 +1,32 @@
+<!-- Activity Selection:
+
+In the activity selection problem, you are given a set of activities, each with a start and finish time. The goal is to select a maximum-size subset of non-overlapping activities.
+The greedy choice is to select the activity that finishes first and does not overlap with the previously selected activities.
+Fractional Knapsack:
+
+The fractional knapsack problem is a variant of the 0/1 knapsack problem, where you are allowed to take fractional parts of items.
+The greedy choice is to select items with the highest ratio of value to weight and add them to the knapsack until it is full.
+Huffman Coding:
+
+Huffman coding is used for data compression, where you want to represent characters in a message with variable-length binary codes to minimize the total number of bits.
+The greedy choice is to merge the two least frequent characters into a single node repeatedly until you have a single tree that represents the optimal code.
+Dijkstra's Algorithm:
+
+Dijkstra's algorithm is used to find the shortest path in a weighted graph from a single source node to all other nodes.
+At each step, it selects the vertex with the smallest tentative distance from the source and relaxes all its adjacent edges.
+Prim's Algorithm:
+
+Prim's algorithm is used to find the minimum spanning tree of a weighted, connected graph.
+It starts with an arbitrary vertex and repeatedly selects the edge with the smallest weight that connects a vertex in the tree to a vertex outside the tree.
+Kruskal's Algorithm:
+
+Kruskal's algorithm also finds a minimum spanning tree of a graph but operates in a different way compared to Prim's algorithm.
+It starts with an empty set of edges and repeatedly adds the smallest remaining edge that does not create a cycle until a spanning tree is formed.
+Greedy Coloring:
+
+In graph theory, greedy coloring is a technique to assign colors to the vertices of an undirected graph such that no two adjacent vertices have the same color.
+The greedy choice is to assign the smallest available color to each vertex in turn.
+Change Making Problem:
+
+The change making problem involves finding the minimum number of coins (from a given set of coin denominations) needed to make a specific amount of change.
+The greedy choice is to use the largest denomination coin as many times as possible until the target amount is reached. -->

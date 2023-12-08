@@ -1,0 +1,25 @@
+// Bubble Sort: This simple algorithm repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list is repeated until no swaps are needed.
+
+// Selection Sort: In this algorithm, the list is divided into two parts: the sorted and the unsorted. It repeatedly selects the minimum element from the unsorted portion and moves it to the sorted portion.
+
+// Insertion Sort: This algorithm builds the final sorted array one item at a time. It takes each element from the input and inserts it into its correct position in the already-sorted part of the list.
+
+// Quick Sort: Quick Sort also uses a divide-and-conquer strategy. It selects a 'pivot' element from the array and partitions the other elements into two sub-arrays, according to whether they are less than or greater than the pivot. The sub-arrays are then sorted recursively.
+
+// Merge Sort: Merge Sort is a divide-and-conquer algorithm. It divides the input array into two halves, sorts them, and then merges the sorted halves to produce a single sorted array.
+
+// Heap Sort: This is an in-place comparison-based sorting algorithm. It builds a max-heap or min-heap (depending on ascending or descending order) from the input data and repeatedly extracts the maximum (or minimum) element from the heap.
+
+// Counting Sort: Counting Sort is a non-comparison-based sorting algorithm. It works well for integers within a known, finite range. It counts the frequency of each element and then uses that information to place the elements in their sorted order.
+
+// Radix Sort: Radix Sort is another non-comparison-based sorting algorithm. It works by sorting elements based on individual digits or radix. It's often used for sorting strings or integers with fixed-width representations.
+
+// Bucket Sort: Bucket Sort divides the input into "buckets" and then sorts the elements within each bucket using another sorting algorithm or recursively using bucket sort itself. It's particularly useful when the input data is uniformly distributed.
+
+// Tim Sort: Tim Sort is a hybrid sorting algorithm derived from Merge Sort and Insertion Sort. It aims to perform well on many kinds of real-world data. It first divides the array into small chunks, sorts them using insertion sort, and then merges them.
+
+// Cocktail Sort: Also known as bidirectional bubble sort or shaker sort, this variation of bubble sort sorts in both directions, moving the largest elements to the end and the smallest to the beginning.
+
+// Gnome Sort: Gnome Sort is a simple sorting algorithm that works by repeatedly moving an element to its proper position by a series of swaps, similar to how a gnome sorts a line of flower pots.
+
+// These are some of the most commonly known sorting algorithms. The choice of sorting algorithm depends on the specific requirements and characteristics of the data being sorted, as each algorithm has its strengths and weaknesses.

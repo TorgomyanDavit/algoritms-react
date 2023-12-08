@@ -1,0 +1,30 @@
+<!-- Memoization (Top-Down DP):
+
+Memoization is a recursive approach to dynamic programming.
+It involves breaking down a problem into smaller subproblems and caching (storing) the results of those subproblems in a data structure (usually an array or a dictionary).
+When solving a subproblem, the algorithm first checks if the solution is already cached; if so, it returns the cached result to avoid redundant calculations.
+Memoization is often used to optimize recursive algorithms, such as in Fibonacci sequence calculation or recursive tree traversals.
+Tabulation (Bottom-Up DP):
+
+Tabulation is an iterative approach to dynamic programming.
+It involves solving and storing the results of subproblems in a table (usually a 2D array or a similar data structure).
+The algorithm starts by solving the smallest subproblems and gradually builds up to the original problem.
+Tabulation is often used when you can define a natural order in which to solve subproblems, such as in the case of finding the nth Fibonacci number, shortest path problems, or dynamic programming on grids.
+0/1 Knapsack Problem:
+
+The 0/1 Knapsack problem is a classic optimization problem where you have a set of items, each with a weight and a value, and a knapsack with a maximum weight capacity.
+The goal is to select a subset of items to maximize the total value while staying within the weight capacity.
+Dynamic programming is used to solve this problem efficiently by considering two choices for each item (including it in the knapsack or excluding it) and computing the optimal solution based on these choices.
+Longest Common Subsequence (LCS):
+
+The LCS problem involves finding the longest subsequence that two sequences (strings or arrays) have in common.
+Dynamic programming is used to construct a table that stores the length of the longest common subsequence at each possible pair of positions in the input sequences.
+This technique is commonly used in text comparison, DNA sequence alignment, and version control systems.
+Matrix Chain Multiplication:
+
+In matrix chain multiplication, you are given a sequence of matrices, and you want to find the most efficient way to multiply them together to minimize the number of scalar multiplications.
+Dynamic programming is used to compute the optimal order of matrix multiplication, minimizing the computational cost.
+Coin Change Problem:
+
+The coin change problem involves finding the minimum number of coins needed to make a certain amount of change using a given set of coin denominations.
+Dynamic programming can be used to calculate the minimum number of coins for various target amounts. -->

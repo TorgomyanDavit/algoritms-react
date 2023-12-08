@@ -1,0 +1,45 @@
+<!-- Graph Traversal Algorithms:
+
+Breadth-First Search (BFS): Explores all neighbors of a node before moving on to their children.
+Depth-First Search (DFS): Explores as far as possible along one branch before backtracking.
+Topological Sort: Orders the nodes of a directed acyclic graph (DAG) such that for every directed edge (u, v), node u comes before node v.
+Shortest Path Algorithms:
+
+Dijkstra's Algorithm: Finds the shortest path between two nodes in a weighted graph with non-negative edge weights.
+Bellman-Ford Algorithm: Finds the shortest path in a graph with weighted edges, allowing for negative edge weights and detecting negative weight cycles.
+Floyd-Warshall Algorithm: Computes the shortest paths between all pairs of nodes in a weighted graph.
+Minimum Spanning Tree Algorithms:
+
+Prim's Algorithm: Builds a minimum spanning tree by adding edges to a growing tree.
+Kruskal's Algorithm: Builds a minimum spanning tree by selecting edges based on their weights, avoiding cycles.
+Connected Components Algorithms:
+
+Connected Components: Identifies the connected components (subgraphs) in an undirected graph.
+Strongly Connected Components: Identifies strongly connected components in a directed graph using algorithms like Tarjan's or Kosaraju's.
+Maximum Flow Algorithms:
+
+Ford-Fulkerson Algorithm: Finds the maximum flow in a flow network.
+Edmonds-Karp Algorithm: A specific implementation of the Ford-Fulkerson method that uses BFS to find augmenting paths.
+Minimum Cut Algorithms:
+
+Stoer-Wagner Algorithm: Finds the minimum cut in an undirected graph.
+Graph Coloring Algorithms:
+
+Graph Coloring: Assigns colors to vertices of a graph such that no two adjacent vertices share the same color.
+Chromatic Number: Determines the minimum number of colors needed to color a graph.
+Eulerian and Hamiltonian Path/Cycle Algorithms:
+
+Eulerian Path/Cycle: Determines whether a graph has an Eulerian path or cycle.
+Hamiltonian Path/Cycle: Determines whether a graph has a Hamiltonian path or cycle.
+Planarity Testing Algorithms:
+
+Planar Graphs: Determines whether a graph can be embedded in the plane without edge crossings.
+Graph Matching Algorithms:
+
+Maximum Bipartite Matching: Finds the largest set of non-overlapping edges in a bipartite graph.
+Maximum Cardinality Matching: Finds the maximum number of edges that can be matched in a general graph.
+Centrality Algorithms:
+
+Betweenness Centrality: Measures the importance of a node based on how often it appears on the shortest paths between other nodes.
+Closeness Centrality: Measures how close a node is to all other nodes in the graph.
+PageRank: Measures the importance of web pages in a network of hyperlinks. -->
