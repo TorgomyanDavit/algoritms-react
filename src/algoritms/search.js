@@ -75,8 +75,6 @@ export function BinarySearch({ arr, target }) {
   );
 }
 
-
-
 export function RecursiveBinarySearch({ arr }) {
   const [output,setOutput] = useState([])
   const target = 2
@@ -111,9 +109,6 @@ export function RecursiveBinarySearch({ arr }) {
     </div>
   );
 }
-
-
-
 
 export function TernarySearch({ arr: sortedArray, target }) {
   const [index, setIndex] = useState(null);

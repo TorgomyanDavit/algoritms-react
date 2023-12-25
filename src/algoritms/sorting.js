@@ -48,43 +48,43 @@ export function BubbleSort({arr}) {
     Selection Sort has a time complexity of O(n^2) in the worst case and is not the most efficient choice for large datasets.
 */
 export function SelectionSort({arr}) {
-let input = [...arr]
+    let input = [...arr]
 
-function selectionSort(arr) {
-    const length = arr.length;
-    for (let i = 0; i < length - 1; i++) {
-    let minIndex = i;
+    function selectionSort(arr) {
+        const length = arr.length;
+        for (let i = 0; i < length - 1; i++) {
+            let minIndex = i;
 
-    // Find the index of the minimum element in the remaining unsorted array
-    for (let j = i + 1; j < length; j++) {
-        const nextElement = arr[j]
-        const currentElement = arr[minIndex]
+            // Find the index of the minimum element in the remaining unsorted array
+            for (let j = i + 1; j < length; j++) {
+                const nextElement = arr[j]
+                const currentElement = arr[minIndex]
 
-        if (nextElement < currentElement) {
-        minIndex = j;
+                if (nextElement < currentElement) {
+                    minIndex = j;
+                }
+            }
+
+            // Swap the found minimum element with the first element in the unsorted part
+            if (minIndex !== i) {
+                const temp = arr[i];
+                arr[i] = arr[minIndex];
+                arr[minIndex] = temp;
+            }
+        
         }
+
+        return arr;
     }
 
-    // Swap the found minimum element with the first element in the unsorted part
-    if (minIndex !== i) {
-        const temp = arr[i];
-        arr[i] = arr[minIndex];
-        arr[minIndex] = temp;
-    }
-    
-    }
-
-    return arr;
-}
-
-const result = selectionSort(arr)
-return (
-    <div>
-    <h3>GenerateSelectionSort</h3> 
-    <div>input = {input}</div>
-    <div>output = {result.join(",")}</div>
-    </div>
-)
+    const result = selectionSort(arr)
+    return (
+        <div>
+        <h3>GenerateSelectionSort</h3> 
+        <div>input = {input}</div>
+        <div>output = {result.join(",")}</div>
+        </div>
+    )
 }
   
 /**Insertion Sort is a simple sorting algorithm that builds 
@@ -94,28 +94,30 @@ return (
     making it less efficient for large datasets.
 */
 export function InsertionSort({arr}) { // [5, 3, 1, 4, 2]
-const originArray = arr;
-const length = arr.length;
-for (let i = 1; i < length; i++) {
-    const nextElemy = arr[i];
-    let prevelemIndex = i - 1;
-    // Move elements of arr[0..i-1] that are greater than key
-    // to one position ahead of their current position
-    while (prevelemIndex >= 0 && arr[prevelemIndex] > nextElemy) {
-    arr[prevelemIndex + 1] = arr[prevelemIndex];
-    prevelemIndex--;
+    const originArray = arr;
+    const length = arr.length;
+
+
+    for (let i = 1; i < length; i++) {
+        const nextElemy = arr[i];
+        let prevelemIndex = i - 1;
+        // Move elements of arr[0..i-1] that are greater than key
+        // to one position ahead of their current position
+        while (prevelemIndex >= 0 && arr[prevelemIndex] > nextElemy) {
+            arr[prevelemIndex + 1] = arr[prevelemIndex];
+            prevelemIndex--;
+        }
+
+        arr[prevelemIndex + 1] = nextElemy;
     }
 
-    arr[prevelemIndex + 1] = nextElemy;
-}
-
-return (
-    <div>
-    <h3>Generate Insertion</h3> 
-    <div>input = {originArray}</div>
-    <div>output = {arr.join(",")}</div>
-    </div>
-)
+    return (
+        <div>
+        <h3>Generate Insertion</h3> 
+        <div>input = {originArray}</div>
+        <div>output = {arr.join(",")}</div>
+        </div>
+    )
 }
   
 /**QuickSort 
@@ -153,7 +155,6 @@ export function GenerateQuickSort({arr}) {
         const sortedData = sortedLess.concat(equal,sortedGreater);
         return sortedData
     }
-
 
     return (
         <div>
@@ -201,14 +202,7 @@ export function GenerateMergeSort({arr,callBack}) {
     }
 
     useEffect(() => { callBack(mergeSort(arr)) },[])
-
-
-
-
-
-
     
-        
     return (
         <div>
             <h3>Merge Sort Algoritm</h3> 
