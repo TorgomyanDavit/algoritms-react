@@ -1,3 +1,5 @@
+import x from "../data/getSomeIdData.json"
+
 export function CuriousJsonStringify({count}) {
     // const fibonacciSequence = [0, 1];
     const inputArray = [1,null,undefined,() => "",NaN]
@@ -132,21 +134,53 @@ export function MaxSumAdjacent({arr}) {
     )  
 } 
 
+export function GetSomeID() {
+  const newArray = x.reduce((aggr, val, index) => {
+    if (val.isDeleted) {
+      aggr.push({ itemPosition: index, item: val });
+    }
+    return aggr;
+  }, []);
+  
+  let ischange = 0;
+  newArray.forEach((filteredItem) => {
+    x.forEach((val, ind) => {
+      if (!val.isDeleted && val.id === filteredItem.item.replacedId) {
+        const objectToUpdate = x.find((v, i) => i === ind);
+        const myArr = x.filter((item, i) => i !== ind);
+        myArr.splice(filteredItem.itemPosition - ischange, 0, objectToUpdate);
+        x = myArr;
+        if(ischange === 0) {
+          ischange = 1
+        }
+        return;
+      }
+    });
+  });
+
+
+  return (
+    <div>
+        <h3>GetSomeID Array</h3> 
+        <div>output {JSON.stringify(x)}</div>
+    </div>
+  )  
+}
 
 export function RemoveDuplicates() {
-    const arr = [1,1,1,2,2,3,3]
-    let repeatArray = {1:1}
-    for(let i = 0; i < arr.length - 1; i++) {
-      if(repeatArray[arr[i]] === undefined) {
-        repeatArray[arr[i]] = arr[i]
-      }
+  const arr = [1,1,1,2,2,3,3]
+  let repeatArray = {1:1}
+  for(let i = 0; i < arr.length - 1; i++) {
+    if(repeatArray[arr[i]] === undefined) {
+      repeatArray[arr[i]] = arr[i]
     }
+  }
 
-    return (
-        <div>
-            <h3>RemoveDuplicates from Array</h3> 
-            <div>input {arr}</div>
-            <div>output {Object.keys(repeatArray).join(", ")}</div>
-        </div>
-    )  
+  return (
+      <div>
+          <h3>RemoveDuplicates from Array</h3> 
+          <div>input {arr}</div>
+          <div>output {Object.keys(repeatArray).join(", ")}</div>
+      </div>
+  )  
 }

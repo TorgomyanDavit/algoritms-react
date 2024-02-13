@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./App.css"
+import MyComponent from 'getlogic';
+
 
 import ThreeExample from './three';
 import { BubbleSort, GenerateMergeSort, GenerateQuickSort, InsertionSort, SelectionSort } from './algoritms/sorting';
 import { HashingSearch, BinarySearch, LineirSearch, TernarySearch, HashingTextSearch, DFSArrayExample, RecursiveBinarySearch } from './algoritms/search';
-import { CuriousJsonStringify, Find_max, GenerateFibonacci, GetAllDigitsSum, MaxSumAdjacent, RemoveDuplicates } from './algoritms/mixedAlgoritm';
+import { CuriousJsonStringify, Find_max, GenerateFibonacci, GetAllDigitsSum, GetSomeID, MaxSumAdjacent, RemoveDuplicates } from './algoritms/mixedAlgoritm';
+
 
 function App() {  
   const [mergeSortedList,setMergeSortedList] = useState([])
+
+  
 
 
   return (
     <div className="App">
       {/* mixed algoritm */}
+      <MyComponent name="Jone"/>
       <CuriousJsonStringify/>
       <GenerateFibonacci count={10}/>
       <Find_max nums={[5, 3, 1, 4, 2]}/>
       <GetAllDigitsSum arr={[53,14,2]}/>
       <MaxSumAdjacent arr={[5, 3, 1, 4, 2]}/>
       <RemoveDuplicates/>
+      <GetSomeID/>
 
       {/* sort algoritm */}
       <BubbleSort arr={[1, 2, 3, 5, 4]}/>

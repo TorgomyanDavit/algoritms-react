@@ -21,43 +21,16 @@ export function LineirSearch({arr,target}) {
   )
 }
 
-export function HashingSearch({ arr: myArray, target }) {
-  const [index, setIndex] = useState(null);
-
-  useEffect(() => {
-    function createHashTable(arr) {
-      const hashTable = {};
-      arr.forEach((value, index) => {
-        hashTable[value] = index;
-      });
-      return hashTable;
-    }
-
-    const hashTable = createHashTable(myArray);
-    const targetIndex = hashTable[target];
-    setIndex(targetIndex);
-  }, [myArray, target]);
-
-  return (
-    <div>
-      <h3>Hashing Search Algorithm</h3>
-      <div>
-        Input: {myArray.join(', ')}, Target is {target}
-      </div>
-      <div>Finding output index: {index}</div>
-    </div>
-  );
-}
-
 export function BinarySearch({ arr, target }) {
   let response = -1;
 
   let start = 0;
   let end = arr.length - 1;
+  
   while (start <= end) {
     const mid = Math.floor((start + end) / 2);
     if (arr[mid] === target) {
-      response = mid; // Return the index of the target if found
+      response = mid; 
       break;
     } else if (target < arr[mid]) {
       end = mid - 1;
@@ -71,41 +44,6 @@ export function BinarySearch({ arr, target }) {
       <h3>Binary Search Algorithm</h3>
       <div>Input: {arr.join(', ')}, Target is {target}</div>
       <div>Finding output index: {response}</div>
-    </div>
-  );
-}
-
-export function RecursiveBinarySearch({ arr }) {
-  const [output,setOutput] = useState([])
-  const target = 2
-
-  function binary_search_recursive(inputArr, start, end) {
-    const mid = Math.floor((start + end) / 2)
-    if(start > end ) {return -1}
-    if(inputArr[mid] === target) {return mid}
-
-
-
-    if (inputArr[mid] > target) {
-      return binary_search_recursive(inputArr, start, mid - 1); 
-    } else if (inputArr[mid] < target) {
-      return binary_search_recursive(inputArr, mid + 1, end); 
-    } 
-  }
-
-  useEffect(() => {
-    const end = arr.length - 1
-    const start = 0
-    setOutput(binary_search_recursive(arr,start,end,target))
-  },[])
-
-
-
-  return (
-    <div>
-      <h3>RecursiveBinarySearch Algorithm</h3>
-      <div>Input: {arr.join(', ')}, Target is {target}</div>
-      <div>Finding output index: {output}</div>
     </div>
   );
 }
@@ -157,6 +95,71 @@ export function TernarySearch({ arr: sortedArray, target }) {
     </div>
   );
 }
+
+export function HashingSearch({ arr: myArray, target }) {
+  const [index, setIndex] = useState(null);
+
+  useEffect(() => {
+    function createHashTable(arr) {
+      const hashTable = {};
+      arr.forEach((value, index) => {
+        hashTable[value] = index;
+      });
+      return hashTable;
+    }
+
+    const hashTable = createHashTable(myArray);
+    const targetIndex = hashTable[target];
+    setIndex(targetIndex);
+  }, [myArray, target]);
+
+  return (
+    <div>
+      <h3>Hashing Search Algorithm</h3>
+      <div>
+        Input: {myArray.join(', ')}, Target is {target}
+      </div>
+      <div>Finding output index: {index}</div>
+    </div>
+  );
+}
+
+export function RecursiveBinarySearch({ arr }) {
+  const [output,setOutput] = useState([])
+  const target = 2
+
+  function binary_search_recursive(inputArr, start, end) {
+    const mid = Math.floor((start + end) / 2)
+    if(start > end ) {return -1}
+    if(inputArr[mid] === target) {return mid}
+
+
+
+    if (inputArr[mid] > target) {
+      return binary_search_recursive(inputArr, start, mid - 1); 
+    } else if (inputArr[mid] < target) {
+      return binary_search_recursive(inputArr, mid + 1, end); 
+    } 
+  }
+
+  useEffect(() => {
+    const end = arr.length - 1
+    const start = 0
+    setOutput(binary_search_recursive(arr,start,end,target))
+  },[])
+
+
+
+  return (
+    <div>
+      <h3>RecursiveBinarySearch Algorithm</h3>
+      <div>Input: {arr.join(', ')}, Target is {target}</div>
+      <div>Finding output index: {output}</div>
+    </div>
+  );
+}
+
+
 
 // Example usage of DFS in a functional component with an array
 export function DFSArrayExample({nestedArray}) {
