@@ -101,8 +101,7 @@ export function InsertionSort({arr}) { // [5, 3, 1, 4, 2]
     for (let i = 1; i < length; i++) {
         const nextElemy = arr[i];
         let prevelemIndex = i - 1;
-        // Move elements of arr[0..i-1] that are greater than key
-        // to one position ahead of their current position
+
         while (prevelemIndex >= 0 && arr[prevelemIndex] > nextElemy) {
             arr[prevelemIndex + 1] = arr[prevelemIndex];
             prevelemIndex--;
@@ -178,7 +177,7 @@ export function GenerateMergeSort({arr,callBack}) {
     const originArray = arr; // [5, 3, 1, 4, 2]
 
     function mergeSort(arr) {
-        if(arr.length <= 1 ) {
+        if( arr.length <= 1 ) {
             return arr
         }
 

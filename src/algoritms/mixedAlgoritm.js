@@ -1,7 +1,6 @@
 import x from "../data/getSomeIdData.json"
 
-export function CuriousJsonStringify({count}) {
-    // const fibonacciSequence = [0, 1];
+export function CuriousJsonStringify() {
     const inputArray = [1,null,undefined,() => "",NaN]
     const inputObject = {age:25,name:NaN,func:() => "",country:null,city:undefined}
   
@@ -54,20 +53,20 @@ export function CuriousJsonStringify({count}) {
 }
 
 export function GenerateFibonacci({count}) {
-const fibonacciSequence = [0, 1];
+  const fibonacciSequence = [0, 1];
 
-for (let i = 2; i < count; i++) {
+  for (let i = 2; i < count; i++) {
     const nextFibonacci = fibonacciSequence[i - 1] + fibonacciSequence[i - 2];
     fibonacciSequence.push(nextFibonacci);
-}
+  }
 
-return (
+  return (
     <div>
     <h3>fibonacciSequence</h3> 
     <div>input = {count}</div>
     <div>output = {fibonacciSequence.join(",")}</div>
     </div>
-)
+  )
 }
 
 export function Find_max({nums}) {
