@@ -183,3 +183,41 @@ export function RemoveDuplicates() {
       </div>
   )  
 }
+
+export function DeepCopyObject() {
+  function deepCopy(obj) {
+    if (obj === null || typeof obj !== 'object') {
+      return obj; 
+    }
+  
+    const copy = Array.isArray(obj) ? [] : {}; // Determine if obj is an array or object
+  
+    for (let key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        debugger
+        copy[key] = deepCopy(obj[key]);
+      }
+    }
+  
+    return copy;
+  }
+
+  const obj1 = { 
+    age: 1,
+    nestedObj:{
+       name:"joe",
+       net:{
+        name:"vlan"
+       }
+    },
+    arr:[15]
+  };
+
+
+  return (
+      <div>
+          <h3>Deep Copy Object</h3> 
+          <div>output {deepCopy(obj1).join(", ")}</div>
+      </div>
+  )  
+}
