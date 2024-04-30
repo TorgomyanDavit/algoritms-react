@@ -8,6 +8,8 @@ import { BubbleSort, GenerateMergeSort, GenerateQuickSort, InsertionSort, Select
 import { HashingSearch, BinarySearch, LineirSearch, TernarySearch, HashingTextSearch, DFSArrayExample, RecursiveBinarySearch } from './algoritms/search';
 import { CuriousJsonStringify, DeepCopyObject, Find_max, GenerateFibonacci, GetAllDigitsSum, GetSomeID, MaxSumAdjacent, RemoveDuplicates } from './algoritms/mixedAlgoritm';
 import ZoomedImage from './component';
+import MasonryGrid from './component/reactWindow/reactWindow';
+import List from './component/reactWindow/reactWindow';
 
 
 function App() {  
@@ -15,8 +17,10 @@ function App() {
   
   return (  
     <div className="App">
+      <List/>
+
       {/* mixed algoritm */}
-      <DeepCopyObject/>
+      {/* <DeepCopyObject/> */}
 
       {/* <MyComponent name="Jone"/>
       <CuriousJsonStringify/>
@@ -47,7 +51,7 @@ function App() {
       {/* <ThreeExample/> */}
 
       {/* Another Challenges */}
-      <ZoomedImage/>
+      {/* <ZoomedImage/> */}
 
     </div>
   )

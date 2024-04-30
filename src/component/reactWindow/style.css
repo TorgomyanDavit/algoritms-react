@@ -1,0 +1,7 @@
+.list-item {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    justify-content: center; /* Center items horizontally */
+    border: 1px solid #ccc; /* Just for visual clarity */
+    padding: 10px; /* Add padding */
+}
