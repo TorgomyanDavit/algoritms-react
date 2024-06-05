@@ -302,3 +302,43 @@ export function ThrottleWindowScroll() {
     </div>
   );
 }
+
+export function MemoizeObject() {
+  
+  function memoize(func) {
+    const cache = new Map();
+    return function(...args) {
+      const key = JSON.stringify(args);
+      if (cache.has(key)) {
+        return cache.get(key);
+      }
+      const result = func.apply(this, args);
+      cache.set(key, result);
+      return result;
+    };
+  }
+
+  const factorial = memoize((n) => {
+    console.log('Computing factorial…');
+    if (n === 0 || n === 1) {
+      return 1;
+    }
+    return n * factorial(n - 1);
+  });
+
+  function callCash() {
+    const start = performance.now();
+    const result = factorial(5); 
+    const end = performance.now();
+    const timeTaken = end - start;
+    console.log('Result:', result);
+    console.log('Time taken:', timeTaken.toFixed(2), 'ms');
+  }
+
+  return (
+    <div>
+      <h3>Memoize Simple Example</h3>
+      <button onClick={callCash}>Click to Cash</button>
+    </div>
+  );
+}
