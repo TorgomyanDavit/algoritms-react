@@ -9,3 +9,8 @@
 .js-image-zoom__zoomed-image{
   left: 0;
 }
+
+.scrollItem {
+  max-height: 300px;
+  overflow: auto;
+}

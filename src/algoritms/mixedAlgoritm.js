@@ -1,4 +1,6 @@
 import x from "../data/getSomeIdData.json"
+import React, { useEffect, useState, useCallback } from 'react';
+import "../App.css"
 
 export function CuriousJsonStringify() {
     const inputArray = [1,null,undefined,() => "",NaN]
@@ -194,7 +196,6 @@ export function DeepCopyObject() {
   
     for (let key in obj) {
       if (obj.hasOwnProperty(key)) {
-        debugger
         copy[key] = deepCopy(obj[key]);
       }
     }
@@ -220,4 +221,84 @@ export function DeepCopyObject() {
           <div>output {deepCopy(obj1).join(", ")}</div>
       </div>
   )  
+}
+
+export function DebounceWindowResize() {
+  function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
+
+  const handleResize = useCallback(() => {
+    console.log('Window resized');
+  }, []);
+
+  const debouncedHandleResize = debounce(handleResize, 200);
+  
+  useEffect(() => {
+    window.addEventListener('resize', debouncedHandleResize);
+
+    return () => {
+      window.removeEventListener('resize', debouncedHandleResize);
+    };
+  }, [debouncedHandleResize]);
+
+  return (
+    <div>
+      <h3>Debounce Window Resize</h3>
+      <div>Resize the window and check the console log.</div>
+    </div>
+  );
+}
+
+export function ThrottleWindowScroll() {
+
+  function throttle(func, limit) {
+    let lastFunc;
+    let lastRan;
+    return function(...args) {
+      if (!lastRan) {
+        func.apply(this, args);
+        lastRan = Date.now();
+      } else {
+        clearTimeout(lastFunc);
+
+        lastFunc = setTimeout(() => {
+          if (Date.now() - lastRan >= limit) {
+            func.apply(this, args);
+            lastRan = Date.now();
+          }
+        }, limit - (Date.now() - lastRan));
+      }
+    };
+  }
+
+  useEffect(() => {
+    const handleScroll = throttle(() => {
+      console.log('Window scrolled');
+    }, 200);
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  return (
+    <div>
+      <h3>Throttle Window Scroll</h3>
+      <div>Scroll the window and check the console log.</div>
+      <div className="scrollItem">
+        {
+          Array.from({ length: 1000 }, (_, index) => (
+            <div>item {index}</div>
+          ))
+        }
+      </div>
+    </div>
+  );
 }
