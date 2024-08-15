@@ -342,3 +342,33 @@ export function MemoizeObject() {
     </div>
   );
 }
+
+
+//  this is not component
+export function createPubSub() {
+  const subscribers = {};
+
+  function subscribe(event, callback) {
+    if (!subscribers[event]) {
+      subscribers[event] = [];
+    }
+    subscribers[event].push(callback);
+    return () => unsubscribe(event, callback);
+  }
+
+  function unsubscribe(event, callback) {
+    if (!subscribers[event]) return;
+    subscribers[event] = subscribers[event].filter(cb => cb !== callback);
+  }
+
+  function publish(event, data) {
+    if (!subscribers[event]) return;
+    subscribers[event].forEach(callback => callback(data));
+  }
+
+  return {
+    subscribe,
+    unsubscribe,
+    publish
+  };
+}

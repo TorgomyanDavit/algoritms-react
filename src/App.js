@@ -24,8 +24,9 @@ function App() {
       {/* <List/> */}
 
       {/* mixed algoritm */}
-      {/* <DeepCopyObject/> */}
 
+      {/* createPubSub()  */}
+      {/* <DeepCopyObject/> */}
       {/* <MyComponent name="Jone"/>
       <CuriousJsonStringify/>
       <GenerateFibonacci count={10}/>
