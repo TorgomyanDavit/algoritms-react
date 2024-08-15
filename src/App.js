@@ -30,6 +30,7 @@ function App() {
       {/* <MyComponent name="Jone"/>
       <CuriousJsonStringify/>
       <GenerateFibonacci count={10}/>
+      <fibonacciTailRecursive count={10}/>
       <Find_max nums={[5, 3, 1, 4, 2]}/>
       <GetAllDigitsSum arr={[53,14,2]}/>
       <MaxSumAdjacent arr={[5, 3, 1, 4, 2]}/>

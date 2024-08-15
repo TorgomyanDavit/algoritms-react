@@ -54,6 +54,30 @@ export function CuriousJsonStringify() {
     )
 }
 
+// Tail recursive helper function
+function fibonacciTailRecursive(n, a = 0, b = 1, sequence = []) {
+  if (n <= 0) {
+    return sequence;
+  }
+  // Add the current value to the sequence
+  sequence.push(a);
+  // Tail recursive call with updated values
+  return fibonacciTailRecursive(n - 1, b, a + b, sequence);
+}
+
+export function GenerateFibonacci({ count }) {
+  // Generate Fibonacci sequence using tail recursion
+  const fibonacciSequence = fibonacciTailRecursive(count);
+  
+  return (
+    <div>
+      <h3>Fibonacci Sequence</h3>
+      <div>Input = {count}</div>
+      <div>Output = {fibonacciSequence.join(", ")}</div>
+    </div>
+  );
+}
+
 export function GenerateFibonacci({count}) {
   const fibonacciSequence = [0, 1];
 
