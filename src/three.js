@@ -2,33 +2,31 @@ import * as THREE from 'three'
 import { Canvas } from '@react-three/fiber'
 import { Sparkles, Shadow, ContactShadows, Billboard, Environment, BakeShadows, OrbitControls } from '@react-three/drei'
 import { LayerMaterial, Depth } from 'lamina'
+import { Model } from './threeJS'
+import ThreeScene from './threeJS/another'
 
 function ThreeExample() {
 
   return (
     <Canvas shadows camera={{ position: [0, 0, 12], fov: 30 }}>
-      <hemisphereLight intensity={0.5} color="white" groundColor="black" />
+      <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/evening_road_01_2k.hdr" ground={{ height: 5, radius: 40, scale: 20 }} />
+      <OrbitControls autoRotateSpeed={0.85} zoomSpeed={0.75} minPolarAngle={Math.PI / 2.5} maxPolarAngle={Math.PI / 2.55} />
+      <Model />
+      {/* <ThreeScene/> */}
+
+      {/* <hemisphereLight intensity={0.5} color="white" groundColor="black" />
       <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/evening_road_01_2k.hdr" ground={{ height: 5, radius: 40, scale: 20 }} />
       <Sphere color="white" amount={50} emissive="green" glow="lightgreen" position={[1, 1, -1]} />
       <Sphere color="white" amount={30} emissive="purple" glow="#ff90f0" size={0.5} position={[-1.5, 0.5, -2]} />
       <Sphere color="lightpink" amount={20} emissive="orange" glow="#ff9f50" size={0.25} position={[-1, 0.25, 1]} />
       <ContactShadows renderOrder={2} color="black" resolution={1024} frames={1} scale={10} blur={1.5} opacity={0.65} far={0.5} />
       <BakeShadows />
-      <OrbitControls autoRotateSpeed={0.85} zoomSpeed={0.75} minPolarAngle={Math.PI / 2.5} maxPolarAngle={Math.PI / 2.55} />
+      <OrbitControls autoRotateSpeed={0.85} zoomSpeed={0.75} minPolarAngle={Math.PI / 2.5} maxPolarAngle={Math.PI / 2.55} /> */}
     </Canvas>
   )
 }
 
 export default ThreeExample;
-
-
-
-
-
-
-
-
-
 
 
 

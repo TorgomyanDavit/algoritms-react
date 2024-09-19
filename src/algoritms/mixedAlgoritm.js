@@ -65,7 +65,7 @@ function fibonacciTailRecursive(n, a = 0, b = 1, sequence = []) {
   return fibonacciTailRecursive(n - 1, b, a + b, sequence);
 }
 
-export function GenerateFibonacci({ count }) {
+export function GenerateFibonacci2({ count }) {
   // Generate Fibonacci sequence using tail recursion
   const fibonacciSequence = fibonacciTailRecursive(count);
   

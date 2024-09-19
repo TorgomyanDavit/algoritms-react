@@ -10,6 +10,7 @@ import { CuriousJsonStringify, DebounceWindowResize, DeepCopyObject, Find_max, G
 import ZoomedImage from './component';
 import MasonryGrid from './component/reactWindow/reactWindow';
 import List from './component/reactWindow/reactWindow';
+import { Model } from './threeJS';
 
 
 function App() {  
@@ -17,7 +18,7 @@ function App() {
   
   return (  
     <div className="App">
-      <MemoizeObject/>
+      {/* <MemoizeObject/> */}
 
       {/* <ThrottleWindowScroll/> */}
       {/* <DebounceWindowResize/> */}
@@ -54,7 +55,7 @@ function App() {
       <HashingTextSearch /> */}
 
       {/* Three js */}
-      {/* <ThreeExample/> */}
+      <ThreeExample/>
 
       {/* Another Challenges */}
       {/* <ZoomedImage/> */}
