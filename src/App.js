@@ -10,7 +10,6 @@ import { CuriousJsonStringify, DebounceWindowResize, DeepCopyObject, Find_max, G
 import ZoomedImage from './component';
 import MasonryGrid from './component/reactWindow/reactWindow';
 import List from './component/reactWindow/reactWindow';
-import { Model } from './threeJS';
 
 
 function App() {  

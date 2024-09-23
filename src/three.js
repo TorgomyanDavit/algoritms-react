@@ -2,13 +2,15 @@ import * as THREE from 'three'
 import { Canvas } from '@react-three/fiber'
 import { Sparkles, Shadow, ContactShadows, Billboard, Environment, BakeShadows, OrbitControls } from '@react-three/drei'
 import { LayerMaterial, Depth } from 'lamina'
-import { Model } from './threeJS'
 import ThreeScene from './threeJS/another'
+import Model  from './threeJS'
+
+
 
 function ThreeExample() {
 
   return (
-    <Canvas shadows camera={{ position: [0, 0, 12], fov: 30 }}>
+    <Canvas shadows camera={{ position: [0, 0, 10], fov: 30 }} style={{ height: '800px', width: '100%' }}>
       <Environment files="https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/evening_road_01_2k.hdr" ground={{ height: 5, radius: 40, scale: 20 }} />
       <OrbitControls autoRotateSpeed={0.85} zoomSpeed={0.75} minPolarAngle={Math.PI / 2.5} maxPolarAngle={Math.PI / 2.55} />
       <Model />
