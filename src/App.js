@@ -10,6 +10,7 @@ import { CuriousJsonStringify, DebounceWindowResize, DeepCopyObject, Find_max, G
 import ZoomedImage from './component';
 import MasonryGrid from './component/reactWindow/reactWindow';
 import List from './component/reactWindow/reactWindow';
+import ImageUpload from './AI/imageRecognization';
 
 
 function App() {  
@@ -54,10 +55,12 @@ function App() {
       <HashingTextSearch /> */}
 
       {/* Three js */}
-      <ThreeExample/>
+      {/* <ThreeExample/> */}
 
       {/* Another Challenges */}
       {/* <ZoomedImage/> */}
+
+      <ImageUpload/>
 
     </div>
   )
