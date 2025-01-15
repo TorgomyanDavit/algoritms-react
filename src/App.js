@@ -77,5 +77,3 @@ Arrays: Ordered lists of values enclosed in square brackets. Arrays can contain 
 including other arrays. For example: [1, 2, "apple", true, null]
 Objects: Unordered collections of key-value pairs, where keys are strings and values can be of any JSON data type. 
 Objects are enclosed in curly braces. For example: */
-
-
