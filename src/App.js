@@ -39,11 +39,11 @@ function App() {
       <GetSomeID/> */}
 
       {/* sort algoritm */}
-      {/* <BubbleSort arr={[2, 1, 3, 5, 4]}/>
+      {/* <BubbleSort arr={[2, 1, 3, 5, 4]}/> */}
       <SelectionSort arr={[1, 3, 2, 5, 4]}/>
-      <InsertionSort arr={[1,2,4,3]}/>
-      <GenerateQuickSort arr={[5, 3, 1, 4, 2]}/>
-      <GenerateMergeSort arr={[5, 3, 1, 4, 2]} callBack={setMergeSortedList}/> */}
+      {/* <InsertionSort arr={[1,2,4,3]}/> */}
+      {/* <GenerateQuickSort arr={[5, 3, 1, 4, 2]}/> */}
+      {/* <GenerateMergeSort arr={[5, 3, 1, 4, 2]} callBack={setMergeSortedList}/> */}
 
       {/* searching algoritm */}
       {/* <LineirSearch arr={[5, 3, 1, 4, 2]} target={2}/>
@@ -60,7 +60,7 @@ function App() {
       {/* Another Challenges */}
       {/* <ZoomedImage/> */}
 
-      <ImageUpload/>
+      {/* <ImageUpload/> */}
 
     </div>
   )
@@ -77,3 +77,5 @@ Arrays: Ordered lists of values enclosed in square brackets. Arrays can contain 
 including other arrays. For example: [1, 2, "apple", true, null]
 Objects: Unordered collections of key-value pairs, where keys are strings and values can be of any JSON data type. 
 Objects are enclosed in curly braces. For example: */
+
+

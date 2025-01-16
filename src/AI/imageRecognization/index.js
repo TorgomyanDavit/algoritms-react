@@ -23,7 +23,6 @@ const ImageUpload = () => {
       const model = await load();
       const predictions = await model.classify(img);
 
-      debugger
       setPredictions(predictions);
     };
   };

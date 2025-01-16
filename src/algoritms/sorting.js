@@ -59,6 +59,7 @@ export function SelectionSort({arr}) {
             for (let j = i + 1; j < length; j++) {
                 const nextElement = arr[j]
                 const currentElement = arr[minIndex]
+                debugger
 
                 if (nextElement < currentElement) {
                     minIndex = j;
