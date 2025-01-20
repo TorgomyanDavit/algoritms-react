@@ -6,7 +6,7 @@ import MyComponent from 'getlogic';
 import ThreeExample from './three';
 import { BubbleSort, GenerateMergeSort, GenerateQuickSort, InsertionSort, SelectionSort } from './algoritms/sorting';
 import { HashingSearch, BinarySearch, LineirSearch, TernarySearch, HashingTextSearch, DFSArrayExample, RecursiveBinarySearch } from './algoritms/search';
-import { CuriousJsonStringify, DebounceWindowResize, DeepCopyObject, Find_max, GenerateFibonacci, GetAllDigitsSum, GetSomeID, MaxSumAdjacent, MemoizeObject, RemoveDuplicates, ThrottleWindowScroll } from './algoritms/mixedAlgoritm';
+import { CopyObjectMethods, CuriousJsonStringify, DebounceWindowResize, DeepCopyObject, Find_max, GenerateFibonacci, GetAllDigitsSum, GetSomeID, IsPalindrome, MaxSumAdjacent, MemoizeObject, RemoveDuplicates, ThrottleWindowScroll } from './algoritms/mixedAlgoritm';
 import ZoomedImage from './component';
 import MasonryGrid from './component/reactWindow/reactWindow';
 import List from './component/reactWindow/reactWindow';
@@ -28,20 +28,23 @@ function App() {
 
       {/* createPubSub()  */}
       {/* <DeepCopyObject/> */}
-      {/* <MyComponent name="Jone"/>
-      <CuriousJsonStringify/>
-      <GenerateFibonacci count={10}/>
-      <fibonacciTailRecursive count={10}/>
-      <Find_max nums={[5, 3, 1, 4, 2]}/>
-      <GetAllDigitsSum arr={[53,14,2]}/>
-      <MaxSumAdjacent arr={[5, 3, 1, 4, 2]}/>
-      <RemoveDuplicates/>
-      <GetSomeID/> */}
+      {/* <MyComponent name="Jone"/> */}
+      {/* <CuriousJsonStringify/> */}
+      {/* <GenerateFibonacci count={10}/> */}
+      {/* <fibonacciTailRecursive count={10}/> */}
+      {/* <Find_max nums={[5, 3, 1, 4, 2]}/> */}
+      {/* <GetAllDigitsSum arr={[53,14,2]}/> */}
+      {/* <MaxSumAdjacent arr={[5, 3, 1, 4, 2]}/> */}
+      {/* <RemoveDuplicates/> */}
+      {/* <GetSomeID/> */}
+      {/* <CopyObjectMethods/> */}
+      {/* <IsPalindrome inputText={"abba"}/> */}
+
 
       {/* sort algoritm */}
       {/* <BubbleSort arr={[2, 1, 3, 5, 4]}/> */}
-      <SelectionSort arr={[1, 3, 2, 5, 4]}/>
-      {/* <InsertionSort arr={[1,2,4,3]}/> */}
+      {/* <SelectionSort arr={[1, 3, 2, 5, 4]}/> */}
+      <InsertionSort arr={[5, 3, 1, 4, 2]}/>
       {/* <GenerateQuickSort arr={[5, 3, 1, 4, 2]}/> */}
       {/* <GenerateMergeSort arr={[5, 3, 1, 4, 2]} callBack={setMergeSortedList}/> */}
 

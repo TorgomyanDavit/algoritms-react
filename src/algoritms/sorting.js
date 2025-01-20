@@ -95,14 +95,14 @@ export function SelectionSort({arr}) {
     making it less efficient for large datasets.
 */
 export function InsertionSort({arr}) { // [5, 3, 1, 4, 2]
-    const originArray = arr;
+    const originArray = [...arr];
     const length = arr.length;
 
 
     for (let i = 1; i < length; i++) {
         const nextElemy = arr[i];
         let prevelemIndex = i - 1;
-
+        debugger
         while (prevelemIndex >= 0 && arr[prevelemIndex] > nextElemy) {
             arr[prevelemIndex + 1] = arr[prevelemIndex];
             prevelemIndex--;
