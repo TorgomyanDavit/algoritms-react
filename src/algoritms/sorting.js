@@ -138,6 +138,7 @@ export function GenerateQuickSort({arr}) {
         const equal = [];
         const greater = [];
         
+        debugger
         for (const element of arr) {
             if (element < pivot) {
                 less.push(element);
