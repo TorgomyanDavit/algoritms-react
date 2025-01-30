@@ -128,7 +128,7 @@ export function InsertionSort({arr}) { // [5, 3, 1, 4, 2]
 */
 export function GenerateQuickSort({arr}) {
 
-    function quickSort(arr) { //[5, 3, 1, 4, 2]
+    function quickSort(arr) { //[12]
         if (arr.length <= 1) {
             return arr;
         }
@@ -138,7 +138,6 @@ export function GenerateQuickSort({arr}) {
         const equal = [];
         const greater = [];
         
-        debugger
         for (const element of arr) {
             if (element < pivot) {
                 less.push(element);
