@@ -45,8 +45,8 @@ function App() {
       {/* <BubbleSort arr={[2, 1, 3, 5, 4]}/> */}
       {/* <SelectionSort arr={[1, 3, 2, 5, 4]}/> */}
       {/* <InsertionSort arr={[5, 3, 1, 4, 2]}/> */}
-      <GenerateQuickSort arr={[5, 3, 1, 4, 2]}/>
-      {/* <GenerateMergeSort arr={[5, 3, 1, 4, 2]} callBack={setMergeSortedList}/> */}
+      {/* <GenerateQuickSort arr={[5, 3, 1, 4, 2]}/> */}
+      <GenerateMergeSort arr={[5, 3, 1, 4, 2]} callBack={setMergeSortedList}/>
 
       {/* searching algoritm */}
       {/* <LineirSearch arr={[5, 3, 1, 4, 2]} target={2}/>

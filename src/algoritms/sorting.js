@@ -101,7 +101,6 @@ export function InsertionSort({arr}) { // [5, 3, 1, 4, 2]
     for (let i = 1; i < length; i++) {
         const nextElemy = arr[i];
         let prevelemIndex = i - 1;
-        debugger
         while (prevelemIndex >= 0 && arr[prevelemIndex] > nextElemy) {
             arr[prevelemIndex + 1] = arr[prevelemIndex];
             prevelemIndex--;
@@ -176,6 +175,21 @@ export function GenerateQuickSort({arr}) {
 export function GenerateMergeSort({arr,callBack}) {
     const originArray = arr; // [5, 3, 1, 4, 2]
 
+    function merge(leftArr, rightArr) {
+        const sortedArray = []
+
+        while(leftArr.length && rightArr.length) {
+            if(leftArr[0] < rightArr[0]) {
+                sortedArray.push(leftArr.shift())
+            } else {
+                sortedArray.push(rightArr.shift())
+            }
+        }
+        debugger
+
+        return sortedArray.concat(leftArr,rightArr)
+    }
+
     function mergeSort(arr) {
         if( arr.length <= 1 ) {
             return arr
@@ -184,20 +198,9 @@ export function GenerateMergeSort({arr,callBack}) {
         const middle = Math.floor(arr.length / 2)
         const left = arr.slice(0,middle)
         const right = arr.slice(middle)
+
+        debugger
         return merge(mergeSort(left),mergeSort(right))
-    }
-
-    function merge(leftArr, rightArr) {
-        const sortedArray = []
-        while(leftArr.length && rightArr.length) {
-            if(leftArr[0] < rightArr[0]) {
-                sortedArray.push(leftArr.shift())
-            } else {
-                sortedArray.push(rightArr.shift())
-            }
-        }
-
-        return sortedArray.concat(leftArr,rightArr)
     }
 
     useEffect(() => { callBack(mergeSort(arr)) },[])
