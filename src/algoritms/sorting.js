@@ -173,7 +173,7 @@ export function GenerateQuickSort({arr}) {
 */
   
 export function GenerateMergeSort({arr,callBack}) {
-    const originArray = arr; // [5, 3, 1, 4, 2]
+    const originArray = arr; // [-6, 20, 8, -2, 4]
 
     function merge(leftArr, rightArr) {
         const sortedArray = []

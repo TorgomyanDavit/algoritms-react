@@ -34,7 +34,7 @@ function App() {
       {/* <fibonacciTailRecursive count={10}/> */}
       {/* <Find_max nums={[5, 3, 1, 4, 2]}/> */}
       {/* <GetAllDigitsSum arr={[53,14,2]}/> */}
-      {/* <MaxSumAdjacent arr={[5, 3, 1, 4, 2]}/> */}
+      {/* <MaxSumAdjacent arr={[-6, 20, 8, -2, 4]}/> */}
       {/* <RemoveDuplicates/> */}
       {/* <GetSomeID/> */}
       {/* <CopyObjectMethods/> */}
@@ -42,11 +42,11 @@ function App() {
 
 
       {/* sort algoritm */}
-      {/* <BubbleSort arr={[2, 1, 3, 5, 4]}/> */}
-      {/* <SelectionSort arr={[1, 3, 2, 5, 4]}/> */}
-      {/* <InsertionSort arr={[5, 3, 1, 4, 2]}/> */}
-      {/* <GenerateQuickSort arr={[5, 3, 1, 4, 2]}/> */}
-      <GenerateMergeSort arr={[5, 3, 1, 4, 2]} callBack={setMergeSortedList}/>
+      {/* <BubbleSort arr={[-6, 20, 8, -2, 4]}/> */}
+      {/* <SelectionSort arr={[-6, 20, 8, -2, 4]}/> */}
+      {/* <InsertionSort arr={[-6, 20, 8, -2, 4]}/> */}
+      {/* <GenerateQuickSort arr={[-6, 20, 8, -2, 4]}/> */}
+      <GenerateMergeSort arr={[-6, 20, 8, -2, 4]} callBack={setMergeSortedList}/>
 
       {/* searching algoritm */}
       {/* <LineirSearch arr={[5, 3, 1, 4, 2]} target={2}/>
