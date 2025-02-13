@@ -60,7 +60,7 @@ function fibonacciTailRecursive(n, a = 0, b = 1, sequence = []) {
   if (n <= 0) {
     return sequence;
   }
-  // Add the current value to the sequence
+
   sequence.push(a);
   // Tail recursive call with updated values
   return fibonacciTailRecursive(n - 1, b, a + b, sequence);
@@ -68,6 +68,7 @@ function fibonacciTailRecursive(n, a = 0, b = 1, sequence = []) {
 
 export function GenerateFibonacci2({ count }) {
   // Generate Fibonacci sequence using tail recursion
+
   const fibonacciSequence = fibonacciTailRecursive(count);
   
   return (
@@ -92,6 +93,56 @@ export function GenerateFibonacci({count}) {
     <h3>fibonacciSequence</h3> 
     <div>input = {count}</div>
     <div>output = {fibonacciSequence.join(",")}</div>
+    </div>
+  )
+}
+
+export function Fibonacci({count}) {
+
+  function fibonacci(n) {
+    if(n < 2)return n;
+
+    return fibonacci(n - 1) + fibonacci(n - 2)
+  }
+
+  const x = fibonacci(count)
+  alert(x)
+  return (
+    <div>
+    <h3>fibonacciSequence</h3> 
+    <div>input = {count}</div>
+    {/* <div>output = {fibonacci(count)}</div> */}
+    </div>
+  )
+}
+
+export function MemoizedFibonacci({count}) {
+
+
+  const memoFibonacci =  memoize((n) => {
+    if(n < 2)return n;
+
+    return memoFibonacci(n - 1) + memoFibonacci(n - 2)
+  })
+
+
+  function memoize(func) {
+    const cache = new Map()
+
+    return function(n) {
+      if(cache[n] === undefined) {
+        cache[n] = func(n)
+      }
+      return cache[n]
+    }
+  }
+
+
+  return (
+    <div>
+    <h3>fibonacciSequence</h3> 
+    <div>input = {count}</div>
+    <div>output = {memoFibonacci(count)}</div>
     </div>
   )
 }
@@ -394,12 +445,14 @@ export function ThrottleWindowScroll() {
 export function MemoizeObject() {
   
   function memoize(func) {
+
     const cache = new Map();
     return function(...args) {
       const key = JSON.stringify(args);
       if (cache.has(key)) {
         return cache.get(key);
       }
+
       const result = func.apply(this, args);
       cache.set(key, result);
       return result;
@@ -411,6 +464,7 @@ export function MemoizeObject() {
     if (n === 0 || n === 1) {
       return 1;
     }
+
     return n * factorial(n - 1);
   });
 

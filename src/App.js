@@ -6,7 +6,7 @@ import MyComponent from 'getlogic';
 import ThreeExample from './three';
 import { BubbleSort, GenerateMergeSort, GenerateQuickSort, InsertionSort, SelectionSort } from './algoritms/sorting';
 import { HashingSearch, BinarySearch, LineirSearch, TernarySearch, HashingTextSearch, DFSArrayExample, RecursiveBinarySearch } from './algoritms/search';
-import { CopyObjectMethods, CuriousJsonStringify, DebounceWindowResize, DeepCopyObject, Find_max, GenerateFibonacci, GetAllDigitsSum, GetSomeID, IsPalindrome, MaxSumAdjacent, MemoizeObject, RemoveDuplicates, ThrottleWindowScroll } from './algoritms/mixedAlgoritm';
+import { CopyObjectMethods, CuriousJsonStringify, DebounceWindowResize, DeepCopyObject, Fibonacci, Find_max, GenerateFibonacci, GenerateFibonacci2, GetAllDigitsSum, GetSomeID, IsPalindrome, MaxSumAdjacent, MemoizeObject, MemoizedFibonacci, RemoveDuplicates, ThrottleWindowScroll } from './algoritms/mixedAlgoritm';
 import ZoomedImage from './component';
 import MasonryGrid from './component/reactWindow/reactWindow';
 import List from './component/reactWindow/reactWindow';
@@ -30,8 +30,12 @@ function App() {
       {/* <DeepCopyObject/> */}
       {/* <MyComponent name="Jone"/> */}
       {/* <CuriousJsonStringify/> */}
+
       {/* <GenerateFibonacci count={10}/> */}
-      {/* <fibonacciTailRecursive count={10}/> */}
+      {/* <MemoizedFibonacci count={100}/> */}
+      {/* <Fibonacci count={40}/> */}
+      {/* <GenerateFibonacci2 count={10}/> */}
+
       {/* <Find_max nums={[5, 3, 1, 4, 2]}/> */}
       {/* <GetAllDigitsSum arr={[53,14,2]}/> */}
       {/* <MaxSumAdjacent arr={[-6, 20, 8, -2, 4]}/> */}
@@ -46,7 +50,7 @@ function App() {
       {/* <SelectionSort arr={[-6, 20, 8, -2, 4]}/> */}
       {/* <InsertionSort arr={[-6, 20, 8, -2, 4]}/> */}
       {/* <GenerateQuickSort arr={[-6, 20, 8, -2, 4]}/> */}
-      <GenerateMergeSort arr={[-6, 20, 8, -2, 4]} callBack={setMergeSortedList}/>
+      {/* <GenerateMergeSort arr={[-6, 20, 8, -2, 4]} callBack={setMergeSortedList}/> */}
 
       {/* searching algoritm */}
       {/* <LineirSearch arr={[5, 3, 1, 4, 2]} target={2}/>
