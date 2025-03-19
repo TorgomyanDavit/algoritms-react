@@ -539,3 +539,52 @@ export function IsPalindrome({inputText}) {
     <div>output {isPalindrom ? "true" : "false"}</div>
   </div>
 }
+
+export function SumPairExist({input1, input2, target}) {
+
+  // o(n) Time Complexity
+  function calculate() {
+    const obj = new Map()
+
+    for(let i2 = 0;i2 < input2.length;i2++) {
+      if(!obj.get([input2[i2]])) {
+        obj.set(input2[i2],true)
+      }           
+    }
+
+    for(let i = 0;i < input1.length;i++) {
+      const result = target - input1[i]
+      if(!!obj.get(result)) {
+        return {
+          first:input1[i],
+          second:result
+        }
+      }
+    }
+
+    return false
+  }
+
+  // o(n^) Time Complexity
+  // function calculate() {
+  //   for(let i = 0;i < input1.length;i++) {
+  //     for(let i2 = 0;i2 < input2.length;i2++) {
+  //       const result = input1[i] + input2[i2]
+  //       if(result === target) {
+  //         return {
+  //           first:input1[i],
+  //           second:input2[i2]
+  //         }
+  //       }
+  //     }
+  //   }
+  //   return false
+  // }
+
+
+  return <div>
+    <h3>Sum pair exist</h3>
+    {/* <div>input {str}</div> */}
+    <div>output {JSON.stringify(calculate())}</div>
+  </div>
+}

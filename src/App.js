@@ -6,7 +6,7 @@ import MyComponent from 'getlogic';
 import ThreeExample from './three';
 import { BubbleSort, GenerateMergeSort, GenerateQuickSort, InsertionSort, SelectionSort } from './algoritms/sorting';
 import { HashingSearch, BinarySearch, LineirSearch, TernarySearch, HashingTextSearch, DFSArrayExample, RecursiveBinarySearch } from './algoritms/search';
-import { CopyObjectMethods, CuriousJsonStringify, DebounceWindowResize, DeepCopyObject, Fibonacci, Find_max, GenerateFibonacci, GenerateFibonacci2, GetAllDigitsSum, GetSomeID, IsPalindrome, MaxSumAdjacent, MemoizeObject, MemoizedFibonacci, RemoveDuplicates, ThrottleWindowScroll } from './algoritms/mixedAlgoritm';
+import { CopyObjectMethods, CuriousJsonStringify, DebounceWindowResize, DeepCopyObject, Fibonacci, Find_max, GenerateFibonacci, GenerateFibonacci2, GetAllDigitsSum, GetSomeID, IsPalindrome, MaxSumAdjacent, MemoizeObject, MemoizedFibonacci, RemoveDuplicates, SumPairExist, ThrottleWindowScroll } from './algoritms/mixedAlgoritm';
 import ZoomedImage from './component';
 import MasonryGrid from './component/reactWindow/reactWindow';
 import List from './component/reactWindow/reactWindow';
@@ -44,7 +44,6 @@ function App() {
       {/* <CopyObjectMethods/> */}
       {/* <IsPalindrome inputText={"abba"}/> */}
 
-
       {/* sort algoritm */}
       {/* <BubbleSort arr={[-6, 20, 8, -2, 4]}/> */}
       {/* <SelectionSort arr={[-6, 20, 8, -2, 4]}/> */}
@@ -53,13 +52,13 @@ function App() {
       {/* <GenerateMergeSort arr={[-6, 20, 8, -2, 4]} callBack={setMergeSortedList}/> */}
 
       {/* searching algoritm */}
-      {/* <LineirSearch arr={[5, 3, 1, 4, 2]} target={2}/>
+      <LineirSearch arr={[5, 3, 1, 4, 2]} target={2}/>
       <BinarySearch arr={[1, 2, 4, 5]} target={4}/>
       <RecursiveBinarySearch arr={[1, 2, 3, 4, 5]}/>
       <HashingSearch arr={[1, 2, 3, 4, 5]} target={3}/>
       <TernarySearch arr={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} target={8}/>
       <DFSArrayExample nestedArray={[1, [2, [3, 4], 5], 6, [7, 8]]}/>
-      <HashingTextSearch /> */}
+      <HashingTextSearch />
 
       {/* Three js */}
       {/* <ThreeExample/> */}
@@ -69,6 +68,10 @@ function App() {
 
       {/* <ImageUpload/> */}
 
+      {/*international interview quetion */}
+      <SumPairExist input1={[4,2,5,60,10,9,15]} input2={[67,12,0,2,1,0]} target={22}/>
+
+        
     </div>
   )
 }
