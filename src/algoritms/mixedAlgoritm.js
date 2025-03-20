@@ -2,26 +2,38 @@ import x from "../data/getSomeIdData.json"
 import React, { useEffect, useState, useCallback } from 'react';
 import "../App.css"
 import _ from "lodash";
+import "./style.css"
+
+
+export function convertFunctionTemplateLiteral(func) {
+  const functionSource = func.toString(); // Get the raw function code
+  // const bodyStart = functionSource.indexOf("{") + 1; // Find the start of the function body
+  // const bodyEnd = functionSource.lastIndexOf("}"); // Find the end of the function body
+  // const bodyCode = functionSource.slice(bodyStart, bodyEnd).trim(); // Extract the body
+
+  return functionSource;
+}
+
+export function convertArrayToTemplateLiteral(arr) {
+  const customString = arr.map((element) => {
+    if (element === null) {
+      return "null";
+    } else if (element === undefined) {
+      return "undefined";
+    } else if (typeof element === "function") {
+      return "() => \"\"";
+    } else {
+      return element.toString();
+    }
+  }).join(", ");
+
+  return `[${customString}]`;
+}
 
 export function CuriousJsonStringify() {
     const inputArray = [1,null,undefined,() => "",NaN]
     const inputObject = {age:25,name:NaN,func:() => "",country:null,city:undefined}
   
-    function convertArrayToTemplateLiteral(arr) {
-      const customString = arr.map((element) => {
-        if (element === null) {
-          return "null";
-        } else if (element === undefined) {
-          return "undefined";
-        } else if (typeof element === "function") {
-          return "() => \"\"";
-        } else {
-          return element.toString();
-        }
-      }).join(", ");
-  
-      return `[${customString}]`;
-    }
     const innerTemplateLiteralArr = convertArrayToTemplateLiteral(inputArray);
   
     function convertObjectToTemplateLiteral(obj) {
@@ -119,7 +131,7 @@ export function Fibonacci({count}) {
 export function MemoizedFibonacci({count}) {
 
 
-  const memoFibonacci =  memoize((n) => {
+  const memoFibonacci = memoize((n) => {
     if(n < 2)return n;
 
     return memoFibonacci(n - 1) + memoFibonacci(n - 2)
@@ -540,30 +552,18 @@ export function IsPalindrome({inputText}) {
   </div>
 }
 
-export function SumPairExist({input1, input2, target}) {
-
-  // o(n) Time Complexity
+export function SumDifferentArrayValuePairExist({ input1, input2, target }) {
   function calculate() {
-    const obj = new Map()
-
-    for(let i2 = 0;i2 < input2.length;i2++) {
-      if(!obj.get([input2[i2]])) {
-        obj.set(input2[i2],true)
-      }           
-    }
-
-    for(let i = 0;i < input1.length;i++) {
-      const result = target - input1[i]
-      if(!!obj.get(result)) {
-        return {
-          first:input1[i],
-          second:result
-        }
+    const valueSet = new Set(input2);
+    for (let num of input1) {
+      const requiredPair = target - num;
+      if (valueSet.has(requiredPair)) {
+        return `${num} + ${requiredPair} = ${target}`;
       }
     }
-
-    return false
+    return "No matching pair found.";
   }
+
 
   // o(n^) Time Complexity
   // function calculate() {
@@ -581,10 +581,47 @@ export function SumPairExist({input1, input2, target}) {
   //   return false
   // }
 
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>🔢 Sum Pair Finder</h3>
+        <p><strong>Array 1:</strong> <span className="input">{JSON.stringify(input1)}</span></p>
+        <p><strong>Array 2:</strong> <span className="input">{JSON.stringify(input2)}</span></p>
+        <p><strong>Target:</strong> <span className="target">{target}</span></p>
+        <p><strong>Result:</strong> <span className="output success">Found: {calculate()}</span></p>
+      </div>
 
-  return <div>
-    <h3>Sum pair exist</h3>
-    {/* <div>input {str}</div> */}
-    <div>output {JSON.stringify(calculate())}</div>
-  </div>
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+      </pre>
+    </div>
+  );
+}
+
+
+export function FirstNoneRepeatingCharacters({targetText}) {
+
+  function calculate() {
+    for(let i = 0;i < targetText.length;i++) {
+      if(targetText.indexOf(targetText[i]) === targetText.lastIndexOf(targetText[i])) {
+        return targetText[i]
+      }         
+    }
+    return false
+  }
+  
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>🔢 Get First None Repeated character</h3>
+        <p><strong>Target:</strong> <span className="target">{JSON.stringify(targetText)}</span></p>
+        <p><strong>Result:</strong> <span className="output success">Found: {calculate()}</span></p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+      </pre>
+    </div>
+  )
 }

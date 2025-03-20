@@ -6,7 +6,7 @@ import MyComponent from 'getlogic';
 import ThreeExample from './three';
 import { BubbleSort, GenerateMergeSort, GenerateQuickSort, InsertionSort, SelectionSort } from './algoritms/sorting';
 import { HashingSearch, BinarySearch, LineirSearch, TernarySearch, HashingTextSearch, DFSArrayExample, RecursiveBinarySearch } from './algoritms/search';
-import { CopyObjectMethods, CuriousJsonStringify, DebounceWindowResize, DeepCopyObject, Fibonacci, Find_max, GenerateFibonacci, GenerateFibonacci2, GetAllDigitsSum, GetSomeID, IsPalindrome, MaxSumAdjacent, MemoizeObject, MemoizedFibonacci, RemoveDuplicates, SumPairExist, ThrottleWindowScroll } from './algoritms/mixedAlgoritm';
+import { CopyObjectMethods, CuriousJsonStringify, DebounceWindowResize, DeepCopyObject, Fibonacci, Find_max, FirstNoneRepeatingCharacters, GenerateFibonacci, GenerateFibonacci2, GetAllDigitsSum, GetSomeID, IsPalindrome, MaxSumAdjacent, MemoizeObject, MemoizedFibonacci, RemoveDuplicates, SumDifferentArrayValuePairExist, ThrottleWindowScroll } from './algoritms/mixedAlgoritm';
 import ZoomedImage from './component';
 import MasonryGrid from './component/reactWindow/reactWindow';
 import List from './component/reactWindow/reactWindow';
@@ -31,10 +31,10 @@ function App() {
       {/* <MyComponent name="Jone"/> */}
       {/* <CuriousJsonStringify/> */}
 
-      {/* <GenerateFibonacci count={10}/> */}
+      {/* <GenerateFibonacci count={100}/> */}
       {/* <MemoizedFibonacci count={100}/> */}
-      {/* <Fibonacci count={40}/> */}
-      {/* <GenerateFibonacci2 count={10}/> */}
+      {/* <Fibonacci count={50}/> */}
+      {/* <GenerateFibonacci2 count={50}/> */}
 
       {/* <Find_max nums={[5, 3, 1, 4, 2]}/> */}
       {/* <GetAllDigitsSum arr={[53,14,2]}/> */}
@@ -52,13 +52,13 @@ function App() {
       {/* <GenerateMergeSort arr={[-6, 20, 8, -2, 4]} callBack={setMergeSortedList}/> */}
 
       {/* searching algoritm */}
-      <LineirSearch arr={[5, 3, 1, 4, 2]} target={2}/>
+      {/* <LineirSearch arr={[5, 3, 1, 4, 2]} target={2}/>
       <BinarySearch arr={[1, 2, 4, 5]} target={4}/>
       <RecursiveBinarySearch arr={[1, 2, 3, 4, 5]}/>
       <HashingSearch arr={[1, 2, 3, 4, 5]} target={3}/>
       <TernarySearch arr={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} target={8}/>
       <DFSArrayExample nestedArray={[1, [2, [3, 4], 5], 6, [7, 8]]}/>
-      <HashingTextSearch />
+      <HashingTextSearch /> */}
 
       {/* Three js */}
       {/* <ThreeExample/> */}
@@ -69,7 +69,9 @@ function App() {
       {/* <ImageUpload/> */}
 
       {/*international interview quetion */}
-      <SumPairExist input1={[4,2,5,60,10,9,15]} input2={[67,12,0,2,1,0]} target={22}/>
+      <SumDifferentArrayValuePairExist input1={[4,2,5,60,10,9,15]} input2={[67,12,50,2,1,0]} target={22}/>
+      <FirstNoneRepeatingCharacters targetText={"abcabbiefc"}/>
+
 
         
     </div>
