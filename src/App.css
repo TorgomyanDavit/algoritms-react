@@ -14,3 +14,154 @@
   max-height: 300px;
   overflow: auto;
 }
+
+/* Header */
+nav {
+  background-color: #222; 
+  padding: 15px;
+
+  ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    display: inline-block;
+  }
+
+  a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: all 0.3s ease-in-out;
+    border-radius: 5px;
+
+    &:hover {
+      background-color: #444; 
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+
+/* Global Container */
+
+.title {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  gap: 5px;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: fit-content;
+  margin: 20px;
+  text-align: left;
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+  }
+}
+
+.result-side {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Inputs */
+.input {
+  background: #e3f2fd;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #1565c0;
+  display: inline-block;
+}
+
+.input::before {
+  content: "📥 "; /* Input icon */
+}
+
+.input-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Target */
+.target {
+  background: #fff3cd;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #856404;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.target::before {
+  content: "🎯 "; /* Target icon */
+}
+
+/* Output - Success */
+.output.success {
+  background: #c8e6c9;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #2e7d32;
+  display: inline-block;
+}
+
+.output.success::before {
+  content: "✅ "; /* Success icon */
+}
+
+/* Output - Error */
+.output.error {
+  background: #ffebee;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: bold;
+  color: #c62828;
+  display: inline-block;
+}
+
+.output.error::before {
+  content: "❌ "; 
+}
+
+/* Icons */
+.icon {
+  margin-right: 5px;
+}
+
+
+.code-box {
+  background: #1e1e1e;
+  color: #c5c8c6;
+  padding: 10px;
+  border-radius: 6px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  overflow-x: auto;
+  font-size: 20px;
+  @media screen and (max-width: 1024px) {
+    font-size: 12px;
+  }
+}

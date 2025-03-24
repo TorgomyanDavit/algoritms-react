@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./App.css"
 import MyComponent from 'getlogic';
-
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
 import ThreeExample from './three';
 import { BubbleSort, GenerateMergeSort, GenerateQuickSort, InsertionSort, SelectionSort } from './algoritms/sorting';
@@ -11,6 +11,7 @@ import ZoomedImage from './component';
 import MasonryGrid from './component/reactWindow/reactWindow';
 import List from './component/reactWindow/reactWindow';
 import ImageUpload from './AI/imageRecognization';
+import MixedAlgoritm from './pages/mixedAlgoritm';
 
 
 function App() {  
@@ -18,6 +19,22 @@ function App() {
   
   return (  
     <div className="App">
+      <Router>
+        <nav>
+          <ul>
+            <li><Link to="/">Mixed Algoritm</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<MixedAlgoritm />} />
+          {/* <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} /> */}
+        </Routes>
+      </Router>
       {/* <MemoizeObject/> */}
 
       {/* <ThrottleWindowScroll/> */}
@@ -68,12 +85,7 @@ function App() {
 
       {/* <ImageUpload/> */}
 
-      {/*international interview quetion */}
-      <SumDifferentArrayValuePairExist input1={[4,2,5,60,10,9,15]} input2={[67,12,50,2,1,0]} target={22}/>
-      <FirstNoneRepeatingCharacters targetText={"abcabbiefc"}/>
 
-
-        
     </div>
   )
 }

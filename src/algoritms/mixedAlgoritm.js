@@ -1,8 +1,6 @@
 import x from "../data/getSomeIdData.json"
 import React, { useEffect, useState, useCallback } from 'react';
-import "../App.css"
 import _ from "lodash";
-import "./style.css"
 
 
 export function convertFunctionTemplateLiteral(func) {
@@ -67,7 +65,6 @@ export function CuriousJsonStringify() {
     )
 }
 
-// Tail recursive helper function
 function fibonacciTailRecursive(n, a = 0, b = 1, sequence = []) {
   if (n <= 0) {
     return sequence;
@@ -552,7 +549,16 @@ export function IsPalindrome({inputText}) {
   </div>
 }
 
-export function SumDifferentArrayValuePairExist({ input1, input2, target }) {
+export function SumDifferentArrayValuePairExist() {
+  const [input1, setInput1] = useState([1, 2, 3, 4]);
+  const [input2, setInput2] = useState([5, 6, 7, 8]);
+  const [target, setTarget] = useState(10);
+
+  function handleChange(setter) {
+    return (e) => {
+      setter(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
+    };
+  }
   function calculate() {
     const valueSet = new Set(input2);
     for (let num of input1) {
@@ -563,7 +569,6 @@ export function SumDifferentArrayValuePairExist({ input1, input2, target }) {
     }
     return "No matching pair found.";
   }
-
 
   // o(n^) Time Complexity
   // function calculate() {
@@ -585,9 +590,40 @@ export function SumDifferentArrayValuePairExist({ input1, input2, target }) {
     <div className="container">
       <div className="result-side">
         <h3>🔢 Sum Pair Finder</h3>
-        <p><strong>Array 1:</strong> <span className="input">{JSON.stringify(input1)}</span></p>
-        <p><strong>Array 2:</strong> <span className="input">{JSON.stringify(input2)}</span></p>
-        <p><strong>Target:</strong> <span className="target">{target}</span></p>
+        <div className="input-side">
+          <label className="input">
+            Array 1:
+            <input
+              className="input"
+              type="text"
+              value={input1.join(",")}
+              onChange={handleChange(setInput1)}
+              placeholder="Enter numbers, e.g. 1,2,3"
+            />
+          </label>
+          
+          <label className="input">
+            Array 2:
+            <input
+              className="input"
+              type="text"
+              value={input2.join(",")}
+              onChange={handleChange(setInput2)}
+              placeholder="Enter numbers, e.g. 4,5,6"
+            />
+          </label>
+
+          <label className="target">
+            Target:
+            <input
+              className="target"
+              type="number"
+              value={target}
+              onChange={(e) => setTarget(Number(e.target.value))}
+              placeholder="Enter target sum"
+            />
+          </label>
+        </div>
         <p><strong>Result:</strong> <span className="output success">Found: {calculate()}</span></p>
       </div>
 
@@ -598,16 +634,31 @@ export function SumDifferentArrayValuePairExist({ input1, input2, target }) {
   );
 }
 
+export function FirstNoneRepeatingCharacters() {
+  const [text, setText] = useState("abcabbiefc");
 
-export function FirstNoneRepeatingCharacters({targetText}) {
 
   function calculate() {
-    for(let i = 0;i < targetText.length;i++) {
-      if(targetText.indexOf(targetText[i]) === targetText.lastIndexOf(targetText[i])) {
-        return targetText[i]
-      }         
+    const array = text.split("")
+    const valueSet = array.reduce((aggr,val) => {
+      if(!aggr[val]) {
+        aggr[val] = 1
+      } else {
+        aggr[val]++
+      }
+
+      return aggr
+    },{})
+
+    const keys = Object.keys(valueSet)
+    for (let i = 0; i < keys.length;i++) {
+      const val = keys[i]
+      if (valueSet[val] === 1) {
+        return val
+      }
     }
-    return false
+
+    return "No matching odd value."
   }
   
 
@@ -615,7 +666,16 @@ export function FirstNoneRepeatingCharacters({targetText}) {
     <div className="container">
       <div className="result-side">
         <h3>🔢 Get First None Repeated character</h3>
-        <p><strong>Target:</strong> <span className="target">{JSON.stringify(targetText)}</span></p>
+        <label className="input">
+          Input Text:
+          <input
+            className="input"
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Enter numbers, e.g. 4,5,6"
+          />
+        </label>
         <p><strong>Result:</strong> <span className="output success">Found: {calculate()}</span></p>
       </div>
 
