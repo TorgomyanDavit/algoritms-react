@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./App.css"
 import MyComponent from 'getlogic';
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link, NavLink } from "react-router-dom";
 
 import ThreeExample from './three';
 import { BubbleSort, GenerateMergeSort, GenerateQuickSort, InsertionSort, SelectionSort } from './algoritms/sorting';
@@ -12,6 +12,7 @@ import MasonryGrid from './component/reactWindow/reactWindow';
 import List from './component/reactWindow/reactWindow';
 import ImageUpload from './AI/imageRecognization';
 import MixedAlgoritm from './pages/mixedAlgoritm';
+import SortingAlgoritm from './pages/sortingAlgoritms';
 
 
 function App() {  
@@ -22,16 +23,28 @@ function App() {
       <Router>
         <nav>
           <ul>
-            <li><Link to="/">Mixed Algoritm</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
+          <li>
+            <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>
+              Mixed Algorithm
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/sorting" className={({ isActive }) => isActive ? "active" : ""}>
+              Sorting Algorithm
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/contact" className={({ isActive }) => isActive ? "active" : ""}>
+              Contact
+            </NavLink>
+          </li>
           </ul>
         </nav>
 
         <Routes>
           <Route path="/" element={<MixedAlgoritm />} />
-          {/* <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/sorting" element={<SortingAlgoritm />} />
+          {/* <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </Router>
@@ -62,9 +75,7 @@ function App() {
       {/* <IsPalindrome inputText={"abba"}/> */}
 
       {/* sort algoritm */}
-      {/* <BubbleSort arr={[-6, 20, 8, -2, 4]}/> */}
       {/* <SelectionSort arr={[-6, 20, 8, -2, 4]}/> */}
-      {/* <InsertionSort arr={[-6, 20, 8, -2, 4]}/> */}
       {/* <GenerateQuickSort arr={[-6, 20, 8, -2, 4]}/> */}
       {/* <GenerateMergeSort arr={[-6, 20, 8, -2, 4]} callBack={setMergeSortedList}/> */}
 
@@ -84,8 +95,6 @@ function App() {
       {/* <ZoomedImage/> */}
 
       {/* <ImageUpload/> */}
-
-
     </div>
   )
 }

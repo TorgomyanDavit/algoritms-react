@@ -549,6 +549,11 @@ export function IsPalindrome({inputText}) {
   </div>
 }
 
+
+
+
+
+// new 
 export function SumDifferentArrayValuePairExist() {
   const [input1, setInput1] = useState([1, 2, 3, 4]);
   const [input2, setInput2] = useState([5, 6, 7, 8]);
@@ -591,7 +596,7 @@ export function SumDifferentArrayValuePairExist() {
       <div className="result-side">
         <h3>🔢 Sum Pair Finder</h3>
         <div className="input-side">
-          <label className="input">
+          <label className="label">
             Array 1:
             <input
               className="input"
@@ -602,7 +607,7 @@ export function SumDifferentArrayValuePairExist() {
             />
           </label>
           
-          <label className="input">
+          <label className="label">
             Array 2:
             <input
               className="input"
@@ -613,7 +618,7 @@ export function SumDifferentArrayValuePairExist() {
             />
           </label>
 
-          <label className="target">
+          <label className="label target">
             Target:
             <input
               className="target"
@@ -625,6 +630,9 @@ export function SumDifferentArrayValuePairExist() {
           </label>
         </div>
         <p><strong>Result:</strong> <span className="output success">Found: {calculate()}</span></p>
+        <p className="description">
+          The Sum Pair Finder problem involves finding two numbers from two different arrays (or the same array) that sum up to a given target value.
+        </p>
       </div>
 
       <pre className="code-box">
@@ -666,7 +674,7 @@ export function FirstNoneRepeatingCharacters() {
     <div className="container">
       <div className="result-side">
         <h3>🔢 Get First None Repeated character</h3>
-        <label className="input">
+        <label className="label">
           Input Text:
           <input
             className="input"
@@ -677,6 +685,11 @@ export function FirstNoneRepeatingCharacters() {
           />
         </label>
         <p><strong>Result:</strong> <span className="output success">Found: {calculate()}</span></p>
+        <p className="description">
+            This problem requires finding the first character in a string that does not repeat anywhere else.
+            <b>✅ Input: "swiss"</b>
+            <b>✅ Output: "w" (because 's' appears multiple times, but 'w' is unique and appears first)</b>
+          </p>
       </div>
 
       <pre className="code-box">

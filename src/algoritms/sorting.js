@@ -5,7 +5,9 @@
 // Insertion Sort: +
 // Merge Sort +
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { convertFunctionTemplateLiteral } from "./mixedAlgoritm";
+// import "../App.css"
 
 /**Bubble Sort 
  * is a simple sorting algorithm that repeatedly steps through the list, 
@@ -13,32 +15,62 @@ import { useEffect } from "react";
  * It continues to do this until no more swaps are needed, indicating that the list is sorted. 
  * Bubble Sort has a time complexity of O(n^2) in the worst case and is not very efficient for large lists.
 */
-export function BubbleSort({arr}) {
-    let input = arr.slice() // copy element 
-    let swapped;
+export function BubbleSort() {
+    const [arr, setArr] = useState([-6, 20, 8, -2, 4]);
+    
+    function handleChange(e) {
+      setArr(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
+    }
   
-    do {
-      swapped = false;
-      for (let i = 0; i < arr.length - 1; i++) {  
-        let currentElement = arr[i];
-        let nextElement = arr[i + 1];
-        if (currentElement > nextElement) {
-          // Swap the elements
-          arr[i] = nextElement;
-          arr[i + 1] = currentElement;
-          swapped = true;
+    function calculate() {
+      let input = [...arr]; 
+      let swapped;
+      do {
+        swapped = false;
+        for (let i = 0; i < input.length - 1; i++) {  
+            let currentElement = arr[i];
+            let nextElement = arr[i + 1];
+            if (currentElement > nextElement) {
+              arr[i] = nextElement;
+              arr[i + 1] = currentElement;
+              swapped = true;
+            }
         }
-      }
-    } while (swapped);
-  
+      } while (swapped);
+      return input;
+    }
   
     return (
-      <div>
-        <h3>BubbleSort</h3> 
-        <div>input = {input}</div>
-        <div>output = {arr.join(",")}</div>
+      <div className="container">
+        <div className="result-side">
+            <h3>🔢 Bubble Sort</h3>
+            <div className="input-side">
+                <label className="label">
+                    Enter Numbers:
+                    <input
+                    className="input"
+                    type="text"
+                    value={arr.join(",")}
+                    onChange={handleChange}
+                    placeholder="Enter numbers, e.g. -6,20,8,-2,4"
+                    />
+                </label>
+            </div>
+            <p><strong>Result:</strong> <span className="output success">Found: {calculate().join(",")}</span></p>
+            <p className="description">
+                Bubble Sort 
+                is a simple sorting algorithm that repeatedly steps through the list, 
+                compares adjacent elements, and swaps them if they are in the wrong order. 
+                It continues to do this until no more swaps are needed, indicating that the list is sorted. 
+                Bubble Sort has a time complexity of O(n^2) in the worst case and is not very efficient for large lists.
+            </p>
+        </div>
+
+        <pre className="code-box">
+            <code>{convertFunctionTemplateLiteral(calculate)}</code>
+        </pre>
       </div>
-    )
+    );
 }
   
 /**Selection Sort 
@@ -47,15 +79,20 @@ export function BubbleSort({arr}) {
     It divides the array into a sorted and an unsorted region, gradually expanding the sorted portion.
     Selection Sort has a time complexity of O(n^2) in the worst case and is not the most efficient choice for large datasets.
 */
-export function SelectionSort({arr}) {
-    let input = [...arr]
-
-    function selectionSort(arr) {
-        const length = arr.length;
+export function SelectionSort() {
+    const [arr, setArr] = useState([64, 25, 12, 22, 11]);
+  
+    function handleChange(e) {
+      setArr(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
+    }
+  
+    function selectionSort(inputArr) {
+      let arr = [...inputArr]; 
+      const length = arr.length;
+  
         for (let i = 0; i < length - 1; i++) {
             let minIndex = i;
 
-            // Find the index of the minimum element in the remaining unsorted array
             for (let j = i + 1; j < length; j++) {
                 const nextElement = arr[j]
                 const currentElement = arr[minIndex]
@@ -65,26 +102,52 @@ export function SelectionSort({arr}) {
                 }
             }
 
-            // Swap the found minimum element with the first element in the unsorted part
             if (minIndex !== i) {
                 const temp = arr[i];
                 arr[i] = arr[minIndex];
                 arr[minIndex] = temp;
             }
-        
+    
         }
-
-        return arr;
+  
+      return arr;
     }
-
-    const result = selectionSort(arr)
+  
     return (
-        <div>
-        <h3>GenerateSelectionSort</h3> 
-        <div>input = {input}</div>
-        <div>output = {result.join(",")}</div>
+      <div className="container">
+        <div className="result-side">
+          <h3>🔢 Selection Sort</h3>
+          <div className="input-side">
+            <label className="label">
+              Enter Numbers:
+              <input
+                className="input"
+                type="text"
+                value={arr.join(",")}
+                onChange={handleChange}
+                placeholder="Enter numbers, e.g. 64,25,12,22,11"
+              />
+            </label>
+          </div>
+          <p>
+            <strong>Result:</strong>{" "}
+            <span className="output success">Sorted: {selectionSort(arr).join(",")}</span>
+            <p className="description">
+                Selection Sort 
+                is a straightforward sorting algorithm that repeatedly
+                finds the minimum element from the unsorted part of the array and places it at the beginning.
+                It divides the array into a sorted and an unsorted region, gradually expanding the sorted portion.
+                Selection Sort has a time complexity of O(n^2) in the worst case and is not the most efficient choice for large datasets.
+            </p>
+
+          </p>
         </div>
-    )
+  
+        <pre className="code-box">
+          <code>{selectionSort.toString()}</code>
+        </pre>
+      </div>
+    );
 }
   
 /**Insertion Sort is a simple sorting algorithm that builds 
@@ -93,29 +156,64 @@ export function SelectionSort({arr}) {
     It works well for small lists but has a time complexity of O(n^2) in the worst case, 
     making it less efficient for large datasets.
 */
-export function InsertionSort({arr}) { // [5, 3, 1, 4, 2]
-    const originArray = [...arr];
+export function InsertionSort() {
+    const [arr, setArr] = useState([5, 3, 1, 4, 2]);
     const length = arr.length;
-
-
-    for (let i = 1; i < length; i++) {
-        const nextElemy = arr[i];
-        let prevelemIndex = i - 1;
-        while (prevelemIndex >= 0 && arr[prevelemIndex] > nextElemy) {
-            arr[prevelemIndex + 1] = arr[prevelemIndex];
-            prevelemIndex--;
-        }
-
-        arr[prevelemIndex + 1] = nextElemy;
+  
+    function handleChange(e) {
+      setArr(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
     }
-
+  
+    function insertionSort(arr) {
+      for (let i = 1; i < length; i++) {
+        const nextElement = arr[i];
+        let prevElementIndex = i - 1;
+        while (prevElementIndex >= 0 && arr[prevElementIndex] > nextElement) {
+          arr[prevElementIndex + 1] = arr[prevElementIndex];
+          prevElementIndex--;
+        }
+  
+        arr[prevElementIndex + 1] = nextElement;
+      }
+      return arr;
+    }
+  
+    const sortedArray = insertionSort([...arr]);
+  
     return (
-        <div>
-        <h3>Generate Insertion</h3> 
-        <div>input = {originArray}</div>
-        <div>output = {arr.join(",")}</div>
+      <div className="container">
+        <div className="result-side">
+            <h3>🔢 Insertion Sort</h3>
+            <div className="input-side">
+                <label className="input">
+                Enter Numbers:
+                <input
+                    className="input"
+                    type="text"
+                    value={arr.join(",")}
+                    onChange={handleChange}
+                    placeholder="Enter numbers, e.g. 5, 3, 1, 4, 2"
+                />
+                </label>
+            </div>
+            <p>
+                <strong>Result:</strong>{" "}
+                <span className="output success">Sorted: {sortedArray.join(",")}</span>
+            </p>
+            <p className="description">
+                Insertion Sort is a simple sorting algorithm that builds 
+                the final sorted array one item at a time. It repeatedly takes an element 
+                and inserts it into the correct position within the sorted portion of the array. 
+                It works well for small lists but has a time complexity of O(n^2) in the worst case, 
+                making it less efficient for large datasets.
+            </p>
         </div>
-    )
+  
+        <pre className="code-box">
+          <code>{`function insertionSort(arr) {\n  for (let i = 1; i < arr.length; i++) {\n    const nextElement = arr[i];\n    let prevElementIndex = i - 1;\n    while (prevElementIndex >= 0 && arr[prevElementIndex] > nextElement) {\n      arr[prevElementIndex + 1] = arr[prevElementIndex];\n      prevElementIndex--;\n    }\n    arr[prevElementIndex + 1] = nextElement;\n  }\n  return arr;\n}`}</code>
+        </pre>
+      </div>
+    );
 }
   
 /**QuickSort 
