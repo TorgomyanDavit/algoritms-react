@@ -1,4 +1,4 @@
-import { BubbleSort, InsertionSort, SelectionSort } from "../algoritms/sorting";
+import { BubbleSort, GenerateQuickSort, InsertionSort, SelectionSort } from "../algoritms/sorting";
 
 export default function SortingAlgoritm() {
 
@@ -12,6 +12,7 @@ export default function SortingAlgoritm() {
         <BubbleSort />
         <SelectionSort />
         <InsertionSort />
+        <GenerateQuickSort />
       </div>
     )
 }

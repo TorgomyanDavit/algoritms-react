@@ -20,6 +20,10 @@ function App() {
   
   return (  
     <div className="App">
+      {/* <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/Telephone%20Receiver.webp" alt="Telephone Receiver" width="25" height="25" />
+      <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/Bomb.webp" alt="Bomb" width="25" height="25" />
+      <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/People/Biting%20Lip.webp" alt="Biting Lip" width="25" height="25" />
+      <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Activities/Admission%20Tickets.png" alt="Admission Tickets" width="55" height="55" /> */}
       <Router>
         <nav>
           <ul>
@@ -76,7 +80,6 @@ function App() {
 
       {/* sort algoritm */}
       {/* <SelectionSort arr={[-6, 20, 8, -2, 4]}/> */}
-      {/* <GenerateQuickSort arr={[-6, 20, 8, -2, 4]}/> */}
       {/* <GenerateMergeSort arr={[-6, 20, 8, -2, 4]} callBack={setMergeSortedList}/> */}
 
       {/* searching algoritm */}

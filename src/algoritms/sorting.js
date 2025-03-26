@@ -7,6 +7,7 @@
 
 import { useEffect, useState } from "react";
 import { convertFunctionTemplateLiteral } from "./mixedAlgoritm";
+import { TipAnimatedImage } from "./animatedImg";
 // import "../App.css"
 
 /**Bubble Sort 
@@ -58,6 +59,7 @@ export function BubbleSort() {
             </div>
             <p><strong>Result:</strong> <span className="output success">Found: {calculate().join(",")}</span></p>
             <p className="description">
+                <TipAnimatedImage />
                 Bubble Sort 
                 is a simple sorting algorithm that repeatedly steps through the list, 
                 compares adjacent elements, and swaps them if they are in the wrong order. 
@@ -133,6 +135,7 @@ export function SelectionSort() {
             <strong>Result:</strong>{" "}
             <span className="output success">Sorted: {selectionSort(arr).join(",")}</span>
             <p className="description">
+              <TipAnimatedImage />
                 Selection Sort 
                 is a straightforward sorting algorithm that repeatedly
                 finds the minimum element from the unsorted part of the array and places it at the beginning.
@@ -144,7 +147,7 @@ export function SelectionSort() {
         </div>
   
         <pre className="code-box">
-          <code>{selectionSort.toString()}</code>
+          <code>{convertFunctionTemplateLiteral(selectionSort)}</code>
         </pre>
       </div>
     );
@@ -201,6 +204,7 @@ export function InsertionSort() {
                 <span className="output success">Sorted: {sortedArray.join(",")}</span>
             </p>
             <p className="description">
+                <TipAnimatedImage />
                 Insertion Sort is a simple sorting algorithm that builds 
                 the final sorted array one item at a time. It repeatedly takes an element 
                 and inserts it into the correct position within the sorted portion of the array. 
@@ -210,7 +214,7 @@ export function InsertionSort() {
         </div>
   
         <pre className="code-box">
-          <code>{`function insertionSort(arr) {\n  for (let i = 1; i < arr.length; i++) {\n    const nextElement = arr[i];\n    let prevElementIndex = i - 1;\n    while (prevElementIndex >= 0 && arr[prevElementIndex] > nextElement) {\n      arr[prevElementIndex + 1] = arr[prevElementIndex];\n      prevElementIndex--;\n    }\n    arr[prevElementIndex + 1] = nextElement;\n  }\n  return arr;\n}`}</code>
+          <code>{convertFunctionTemplateLiteral(insertionSort)}</code>
         </pre>
       </div>
     );
@@ -223,41 +227,73 @@ export function InsertionSort() {
     Combine: No additional work is needed to combine as the sub-arrays are sorted in place.
     QuickSort has an average time complexity of O(n log n) and is widely used for its speed and simplicity.
 */
-export function GenerateQuickSort({arr}) {
+export function GenerateQuickSort() {
 
-    function quickSort(arr) { //[12]
-        if (arr.length <= 1) {
-            return arr;
-        }
+    const [arr, setArr] = useState([5, 3, 1, 4, 2]);
+      
+    function handleChange(e) {
+      setArr(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
+    }
 
-        const pivot = arr[0];
-        const less = [];
-        const equal = [];
-        const greater = [];
-        
-        for (const element of arr) {
-            if (element < pivot) {
-                less.push(element);
-            } else if (element === pivot) {
-                equal.push(element);
-            } else {
-                greater.push(element);
-            }
+    function quickSort(arr) { 
+      if (arr.length <= 1) {
+        return arr;
+      }
+
+      const pivot = arr[0];
+      const less = [];
+      const equal = [];
+      const greater = [];
+      
+      for (const element of arr) {
+        if (element < pivot) {
+          less.push(element);
+        } else if (element === pivot) {
+          equal.push(element);
+        } else {
+          greater.push(element);
         }
-        
-        const sortedLess = quickSort(less);
-        const sortedGreater = quickSort(greater);
-        
-        const sortedData = sortedLess.concat(equal,sortedGreater);
-        return sortedData
+      }
+      
+      const sortedLess = quickSort(less);
+      const sortedGreater = quickSort(greater);
+      
+      const sortedData = sortedLess.concat(equal,sortedGreater);
+      return sortedData
     }
 
     return (
-        <div>
-            <h3>GenerateQuickSort</h3> 
-            <div>input = {arr}</div>
-            <div>output = {quickSort(arr).join(",")}</div>
+      <div className="container">
+        <div className="result-side">
+          <h3>⚡ QuickSort Algorithm</h3>
+          <div className="input-side">
+              <label className="input">
+                  Enter Numbers:
+                  <input
+                      className="input"
+                      type="text"
+                      value={arr.join(",")}
+                      onChange={handleChange}
+                      placeholder="Enter numbers, e.g. 5, 3, 1, 4, 2"
+                  />
+              </label>
+          </div>
+          <p>
+            <strong>Result:</strong>{" "}
+            <span className="output success">Sorted: {quickSort(arr).join(",")}</span>
+          </p>
+          <p className="description">
+            <TipAnimatedImage />
+            QuickSort is a **divide-and-conquer** algorithm that selects a pivot,
+            partitions the array into elements less than and greater than the pivot,
+            and recursively sorts each part. It has an average time complexity of **O(n log n)**,
+            making it efficient for large datasets.
+          </p>
         </div>
+        <pre className="code-box">
+          <code>{convertFunctionTemplateLiteral(quickSort)}</code>
+        </pre>
+      </div>
     )
 }
   
@@ -283,7 +319,6 @@ export function GenerateMergeSort({arr,callBack}) {
                 sortedArray.push(rightArr.shift())
             }
         }
-        debugger
 
         return sortedArray.concat(leftArr,rightArr)
     }
@@ -297,7 +332,6 @@ export function GenerateMergeSort({arr,callBack}) {
         const left = arr.slice(0,middle)
         const right = arr.slice(middle)
 
-        debugger
         return merge(mergeSort(left),mergeSort(right))
     }
 

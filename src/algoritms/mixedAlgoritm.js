@@ -1,6 +1,9 @@
 import x from "../data/getSomeIdData.json"
 import React, { useEffect, useState, useCallback } from 'react';
 import _ from "lodash";
+import { TipAnimatedImage } from "./animatedImg";
+
+
 
 
 export function convertFunctionTemplateLiteral(func) {
@@ -549,9 +552,71 @@ export function IsPalindrome({inputText}) {
   </div>
 }
 
+export function GeneratePrimeChecker() {
+  const [numbers, setNumbers] = useState([2, 3, 4, 5, 10, 17]);
 
+  function handleChange(e) {
+    setNumbers(
+      e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0)
+    );
+  }
 
+  function isPrime(num) {
+    if (num < 2) return false;
+    if (num === 2) return true;
+    if (num % 2 === 0) return false;
 
+    const sqrt = Math.sqrt(num);
+    for (let i = 3; i <= sqrt; i += 2) {
+      if (num % i === 0) return false;
+    }
+    return true;
+  }
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>🔢 Prime Number Checker</h3>
+
+        <label className="input">
+          Enter Numbers:
+          <input
+            className="input"
+            type="text"
+            value={numbers.join(",")}
+            onChange={handleChange}
+            placeholder="Enter numbers, e.g. 2,3,4,5,10,17"
+          />
+        </label>
+
+        <p>
+          <strong>Results:</strong>{" "}
+          {numbers.map((num) => (
+            <>
+              <br/>
+              <span
+                key={num}
+                className={`output ${isPrime(num) ? "success" : "error"}`}
+              >
+                {isPrime(num) ? `${num} is Prime` : `${num} does  Not Prime`}
+              </span>
+            </>
+          ))}
+        </p>
+
+        <p className="description">
+          A prime number is a natural number greater than 1 that has only two
+          factors: **1 and itself**. The most common prime numbers are 2, 3, 5, 7,
+          11, and 13. The algorithm used here runs in **O(√n) time complexity**.
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(isPrime)}</code>
+      </pre>
+    </div>
+  );
+}
 
 // new 
 export function SumDifferentArrayValuePairExist() {
@@ -631,6 +696,7 @@ export function SumDifferentArrayValuePairExist() {
         </div>
         <p><strong>Result:</strong> <span className="output success">Found: {calculate()}</span></p>
         <p className="description">
+        <TipAnimatedImage/>
           The Sum Pair Finder problem involves finding two numbers from two different arrays (or the same array) that sum up to a given target value.
         </p>
       </div>
@@ -686,6 +752,7 @@ export function FirstNoneRepeatingCharacters() {
         </label>
         <p><strong>Result:</strong> <span className="output success">Found: {calculate()}</span></p>
         <p className="description">
+            <TipAnimatedImage />
             This problem requires finding the first character in a string that does not repeat anywhere else.
             <b>✅ Input: "swiss"</b>
             <b>✅ Output: "w" (because 's' appears multiple times, but 'w' is unique and appears first)</b>
