@@ -29,13 +29,13 @@ export function BubbleSort() {
       do {
         swapped = false;
         for (let i = 0; i < input.length - 1; i++) {  
-            let currentElement = arr[i];
-            let nextElement = arr[i + 1];
-            if (currentElement > nextElement) {
-              arr[i] = nextElement;
-              arr[i + 1] = currentElement;
-              swapped = true;
-            }
+          let currentElement = arr[i];
+          let nextElement = arr[i + 1];
+          if (currentElement > nextElement) {
+            arr[i] = nextElement;
+            arr[i + 1] = currentElement;
+            swapped = true;
+          }
         }
       } while (swapped);
       return input;
@@ -44,7 +44,7 @@ export function BubbleSort() {
     return (
       <div className="container">
         <div className="result-side">
-            <h3>🔢 Bubble Sort</h3>
+            <h3>⚡ Bubble Sort</h3>
             <div className="input-side">
                 <label className="label">
                     Enter Numbers:
@@ -118,7 +118,7 @@ export function SelectionSort() {
     return (
       <div className="container">
         <div className="result-side">
-          <h3>🔢 Selection Sort</h3>
+          <h3>⚡ Selection Sort</h3>
           <div className="input-side">
             <label className="label">
               Enter Numbers:
@@ -186,7 +186,7 @@ export function InsertionSort() {
     return (
       <div className="container">
         <div className="result-side">
-            <h3>🔢 Insertion Sort</h3>
+            <h3>⚡ Insertion Sort</h3>
             <div className="input-side">
                 <label className="input">
                 Enter Numbers:
@@ -240,7 +240,7 @@ export function GenerateQuickSort() {
         return arr;
       }
 
-      const pivot = arr[0];
+      const pivot = arr[0]; // first element
       const less = [];
       const equal = [];
       const greater = [];
@@ -254,10 +254,10 @@ export function GenerateQuickSort() {
           greater.push(element);
         }
       }
-      
+
       const sortedLess = quickSort(less);
       const sortedGreater = quickSort(greater);
-      
+
       const sortedData = sortedLess.concat(equal,sortedGreater);
       return sortedData
     }
@@ -284,10 +284,10 @@ export function GenerateQuickSort() {
           </p>
           <p className="description">
             <TipAnimatedImage />
-            QuickSort is a **divide-and-conquer** algorithm that selects a pivot,
-            partitions the array into elements less than and greater than the pivot,
-            and recursively sorts each part. It has an average time complexity of **O(n log n)**,
-            making it efficient for large datasets.
+            QuickSort is a divide-and-conquer algorithm that selects a pivot, partitions the array into elements less than and greater than the pivot, and recursively sorts each part.
+            Best Case (O(n log n)) – When the pivot divides the array into nearly equal halves, leading to balanced recursion.
+            Average Case (O(n log n)) – On random input, partitions are fairly balanced, making QuickSort efficient.
+            Worst Case (O(n²)) – Happens when the pivot is the smallest or largest element, creating highly unbalanced partitions (e.g., sorted or reverse-sorted array).
           </p>
         </div>
         <pre className="code-box">
@@ -306,42 +306,76 @@ export function GenerateQuickSort() {
     Merge Sort is efficient, stable, and guarantees a time complexity of O(n log n) for sorting an array of n elements.
 */
   
-export function GenerateMergeSort({arr,callBack}) {
-    const originArray = arr; // [-6, 20, 8, -2, 4]
+export function GenerateMergeSort() {
+  const [arr, setArr] = useState([-6, 20, 8, -2, 4]);
 
-    function merge(leftArr, rightArr) {
-        const sortedArray = []
+  function handleChange(e) {
+    setArr(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
+  }
 
-        while(leftArr.length && rightArr.length) {
-            if(leftArr[0] < rightArr[0]) {
-                sortedArray.push(leftArr.shift())
-            } else {
-                sortedArray.push(rightArr.shift())
-            }
-        }
+  function merge(leftArr, rightArr) {
+    const sortedArray = [];
 
-        return sortedArray.concat(leftArr,rightArr)
+    while (leftArr.length && rightArr.length) {
+      if (leftArr[0] < rightArr[0]) {
+        sortedArray.push(leftArr.shift());
+      } else {
+        sortedArray.push(rightArr.shift());
+      }
     }
 
-    function mergeSort(arr) {
-        if( arr.length <= 1 ) {
-            return arr
-        }
+    return sortedArray.concat(leftArr, rightArr);
+  }
 
-        const middle = Math.floor(arr.length / 2)
-        const left = arr.slice(0,middle)
-        const right = arr.slice(middle)
-
-        return merge(mergeSort(left),mergeSort(right))
+  function mergeSort(arr) {
+    if (arr.length <= 1) {
+      return arr;
     }
 
-    useEffect(() => { callBack(mergeSort(arr)) },[])
-    
-    return (
-        <div>
-            <h3>Merge Sort Algoritm</h3> 
-            <div>input = {originArray}</div>
-            <div>output = {mergeSort(arr).join(",")}</div>
+    const middle = Math.floor(arr.length / 2);
+    const left = arr.slice(0, middle);
+    const right = arr.slice(middle);
+
+    const sortedLeft = mergeSort(left)
+    const sortedRight = mergeSort(right)
+
+    return merge(sortedLeft, sortedRight);
+  }
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>⚡ MergeSort Algorithm</h3>
+        <div className="input-side">
+          <label className="input">
+            Enter Numbers:
+            <input
+              className="input"
+              type="text"
+              value={arr.join(",")}
+              onChange={handleChange}
+              placeholder="Enter numbers, e.g. -6, 20, 8, -2, 4"
+            />
+          </label>
         </div>
-    )
+        <p>
+          <strong>Result:</strong>{" "}
+          <span className="output success">Sorted: {mergeSort(arr).join(",")}</span>
+        </p>
+        <p className="description">
+          <TipAnimatedImage />
+          Merge Sort is a divide-and-conquer algorithm that recursively splits an array into halves, sorts them, and merges them back in order.
+          Best Case (O(n log n)) – Always divides the array into two equal halves and merges efficiently.
+          Average Case (O(n log n)) – Performs the same regardless of input distribution.
+          Worst Case (O(n log n)) – Even for sorted or reverse-sorted arrays, the process remains the same.
+        </p>
+      </div>
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(merge)}</code>
+        <br/>
+        <br/>
+        <code>{convertFunctionTemplateLiteral(mergeSort)}</code>
+      </pre>
+    </div>
+  );
 }
