@@ -29,14 +29,15 @@ function App() {
           <ul>
           <li>
             <NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>
-              Mixed Algorithm
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/sorting" className={({ isActive }) => isActive ? "active" : ""}>
               Sorting Algorithm
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/mixed" className={({ isActive }) => isActive ? "active" : ""}>
+              Mixed Algorithm
+            </NavLink>
+          </li>
+
           <li>
             <NavLink to="/contact" className={({ isActive }) => isActive ? "active" : ""}>
               Contact
@@ -46,8 +47,8 @@ function App() {
         </nav>
 
         <Routes>
-          <Route path="/" element={<MixedAlgoritm />} />
-          <Route path="/sorting" element={<SortingAlgoritm />} />
+          <Route path="/" element={<SortingAlgoritm />} />
+          <Route path="/mixed" element={<MixedAlgoritm />} />
           {/* <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} /> */}
         </Routes>

@@ -324,6 +324,7 @@ export function GenerateMergeSort() {
       }
     }
 
+
     return sortedArray.concat(leftArr, rightArr);
   }
 
@@ -339,7 +340,10 @@ export function GenerateMergeSort() {
     const sortedLeft = mergeSort(left)
     const sortedRight = mergeSort(right)
 
-    return merge(sortedLeft, sortedRight);
+
+    const mergeReponse = merge(sortedLeft, sortedRight);
+    console.log(mergeReponse,"mergeReponsemergeReponsemergeReponse")
+    return mergeReponse
   }
 
   return (
