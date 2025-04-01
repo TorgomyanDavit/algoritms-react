@@ -342,7 +342,6 @@ export function GenerateMergeSort() {
 
 
     const mergeReponse = merge(sortedLeft, sortedRight);
-    console.log(mergeReponse,"mergeReponsemergeReponsemergeReponse")
     return mergeReponse
   }
 

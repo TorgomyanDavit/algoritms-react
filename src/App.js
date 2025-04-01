@@ -77,7 +77,6 @@ function App() {
       {/* <RemoveDuplicates/> */}
       {/* <GetSomeID/> */}
       {/* <CopyObjectMethods/> */}
-      {/* <IsPalindrome inputText={"abba"}/> */}
 
       {/* sort algoritm */}
       {/* <SelectionSort arr={[-6, 20, 8, -2, 4]}/> */}

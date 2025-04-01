@@ -455,16 +455,17 @@ export function ThrottleWindowScroll() {
 }
 
 export function MemoizeObject() {
-  
-  function memoize(func) {
+  const [inputNumber, setInputNumber] = useState("");
+  const [result, setResult] = useState(null);
+  const [timeTaken, setTimeTaken] = useState(null);
 
+  function memoize(func) {
     const cache = new Map();
-    return function(...args) {
+    return function (...args) {
       const key = JSON.stringify(args);
       if (cache.has(key)) {
         return cache.get(key);
       }
-
       const result = func.apply(this, args);
       cache.set(key, result);
       return result;
@@ -472,27 +473,69 @@ export function MemoizeObject() {
   }
 
   const factorial = memoize((n) => {
-    console.log('Computing factorial…');
     if (n === 0 || n === 1) {
       return 1;
     }
-
     return n * factorial(n - 1);
   });
 
-  function callCash() {
+  function handleCalculate() {
+    const num = parseInt(inputNumber, 10);
+    if (isNaN(num) || num < 0) {
+      setResult("❌ Invalid input");
+      setTimeTaken(null);
+      return;
+    }
+
     const start = performance.now();
-    const result = factorial(5); 
+    const computedResult = factorial(num);
     const end = performance.now();
-    const timeTaken = end - start;
-    console.log('Result:', result);
-    console.log('Time taken:', timeTaken.toFixed(2), 'ms');
+
+    setResult(computedResult);
+    setTimeTaken((end - start).toFixed(2));
   }
 
   return (
-    <div>
-      <h3>Memoize Simple Example</h3>
-      <button onClick={callCash}>Click to Cash</button>
+    <div className="container">
+      <div className="result-side">
+        <h3>⚡ Memoization with Factorial</h3>
+
+        <label className="label">
+          Input Number:
+          <input
+            className="input"
+            type="number"
+            value={inputNumber}
+            onChange={(e) => setInputNumber(e.target.value)}
+            placeholder="Enter a number"
+          />
+        </label>
+
+        <button className="button" onClick={handleCalculate}>
+          🧠 Compute Factorial
+        </button>
+
+        <p>
+          <strong>Result:</strong>{" "}
+          <span className={`output ${result !== null ? "success" : "error"}`}>
+            {result !== null ? `✅ ${result}` : "No result yet"}
+          </span>
+        </p>
+
+        {timeTaken !== null && (
+          <p>
+            <strong>Time Taken:</strong> ⏱ {timeTaken} ms
+          </p>
+        )}
+
+        <p className="description">
+          This component uses **memoization** to cache factorial calculations, avoiding redundant computations.
+          Try entering the same number multiple times and see how caching speeds it up! 🚀
+        </p>
+      </div>
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(memoize)}</code>
+      </pre>
     </div>
   );
 }
@@ -501,10 +544,12 @@ export function MemoizeObject() {
 export function createPubSub() {
   const subscribers = {};
 
+  console.log(subscribers,"subscribers")
   function subscribe(event, callback) {
     if (!subscribers[event]) {
       subscribers[event] = [];
     }
+
     subscribers[event].push(callback);
     return () => unsubscribe(event, callback);
   }
@@ -526,31 +571,113 @@ export function createPubSub() {
   };
 }
 
-export function IsPalindrome({inputText}) {
-  let str = inputText
-  let isPalindrom = false
-  const cleanedStr = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-  let left = 0;
-  let right = cleanedStr.length - 1;
-  
-  while (left < right) {
-      if (cleanedStr[left] !== cleanedStr[right]) {
-        isPalindrom = false;
-        break
-      } else {
-        isPalindrom = true;
-      }
+export function Publish_Subscribe() {
+  const { subscribe, publish } = createPubSub();
+  const [message, setMessage] = useState("");
+  const [receivedMessage, setReceivedMessage] = useState("");
+
+  useEffect(() => {
+    const unsubscribe = subscribe("message", (data) => {
+      setReceivedMessage(data);
+    });
+
+    return () => unsubscribe(); 
+  }, [subscribe]);
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>📢 Publish & Subscribe Demo</h3>
+
+        <label className="label">
+          Input Message:
+          <input
+            className="input"
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="Enter message"
+          />
+        </label>
+        <button className="button" onClick={() => publish("message", message)}>
+          🔄 Publish Event
+        </button>
+
+        <p>
+          <strong>Received Message:</strong>{" "}
+          <span className={`output ${receivedMessage ? "success" : "error"}`}>
+            {receivedMessage ? `📩 ${receivedMessage}` : "No message received yet"}
+          </span>
+        </p>
+
+        <p className="description">
+          The <strong>Publish_Subscribe</strong> component demonstrates a simple Pub/Sub system where a message is published 
+          and received by subscribers. 🚀 
+        </p>
+      </div>
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(createPubSub)}</code>
+      </pre>
+    </div>
+  );
+}
+
+
+export function IsPalindrome() {
+  const [inputText, setInputText] = useState("");
+
+  function checkPalindrome(text) {
+    const cleanedStr = text
+    .split("")
+    .filter(char => (char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z') || (char >= '0' && char <= '9'))
+    .join("")
+    .toLowerCase();
+    // const cleanedStr = text.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+    let left = 0,
+    right = cleanedStr.length - 1;
+
+    while (left < right) {
+      if (cleanedStr[left] !== cleanedStr[right]) return false;
       left++;
       right--;
+    }
+    return true;
   }
 
+  return (
+    <div className="container">
+      <div className="result-side">
+      <h3>🔄 Check if a String is a Palindrome</h3>
 
-  return <div>
-    <h3>IsPalindrom</h3>
-    <div>input {str}</div>
-    <div>output {isPalindrom ? "true" : "false"}</div>
-  </div>
+        <label className="label">
+          Input Text:
+          <input
+            className="input"
+            type="text"
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            placeholder="Enter text"
+          />
+        </label>
+        <p>
+          <strong>Result:</strong>{" "}
+          <span className={`output ${checkPalindrome(inputText) ? "success" : "error"}`}>
+            {checkPalindrome(inputText) ? "✅ Palindrome" : "❌ Not a Palindrome"}
+          </span>
+        </p>
+        <p className="description">
+          The IsPalindrome component checks whether a given string is a palindrome by removing non-alphanumeric characters, 
+          converting it to lowercase, and using a two-pointer approach to compare characters from both ends. 
+          It updates the result dynamically based on user input. 🚀
+        </p>
+      </div>
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(checkPalindrome)}</code>
+      </pre>
+    </div>
+  );
 }
+
 
 export function GeneratePrimeChecker() {
   const [numbers, setNumbers] = useState([2, 3, 4, 5, 10, 17]);
@@ -711,7 +838,6 @@ export function SumDifferentArrayValuePairExist() {
 export function FirstNoneRepeatingCharacters() {
   const [text, setText] = useState("abcabbiefc");
 
-
   function calculate() {
     const array = text.split("")
     const valueSet = array.reduce((aggr,val) => {
@@ -734,7 +860,6 @@ export function FirstNoneRepeatingCharacters() {
 
     return "No matching odd value."
   }
-  
 
   return (
     <div className="container">
