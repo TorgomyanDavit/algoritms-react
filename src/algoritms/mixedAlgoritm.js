@@ -1,5 +1,5 @@
 import x from "../data/getSomeIdData.json"
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import _ from "lodash";
 import { TipAnimatedImage } from "./animatedImg";
 
@@ -366,57 +366,67 @@ export function CopyObjectMethods() {
       <div>original array {`{ a: 1, b: { c: 2, d: () => '' } }`}</div>
       <div>original array not changed but upset function{JSON.stringify(obj5)}</div>
       <div>stringifyCopy {JSON.stringify(stringifyCopy)}</div>
-
-
-
-
     </div>
   )  
 }
 
 export function DebounceWindowResize() {
+  const [resizing, setResizing] = useState(false);
+
   function debounce(func, wait) {
     let timeout;
-    return function(...args) {
+    return function (...args) {
       clearTimeout(timeout);
       timeout = setTimeout(() => func.apply(this, args), wait);
     };
   }
 
   const handleResize = useCallback(() => {
-    console.log('Window resized');
+    setResizing(true);
+    setTimeout(() => setResizing(false), 200);
   }, []);
 
-  const debouncedHandleResize = debounce(handleResize, 200);
-  
+  const debouncedResize = useMemo(() => debounce(handleResize, 200), [handleResize]);
+
   useEffect(() => {
-    window.addEventListener('resize', debouncedHandleResize);
+    window.addEventListener('resize', debouncedResize);
 
     return () => {
-      window.removeEventListener('resize', debouncedHandleResize);
+      window.removeEventListener('resize', debouncedResize);
     };
-  }, [debouncedHandleResize]);
+  }, [debouncedResize]);
 
   return (
-    <div>
-      <h3>Debounce Window Resize</h3>
-      <div>Resize the window and check the console log.</div>
+    <div className="container">
+      <div className="result-side">
+        <h3>🔄 Debounce Window Resize</h3>
+        <div>Resize the window and check the console log.</div>
+        <p>{resizing ? 'Resizing in progress...' : 'Resize to see the effect.'}</p>
+        <p className="description">
+          A debounce function delays the execution of a function until a certain time has passed since the last time it was invoked. 
+          This helps optimize performance by preventing frequent executions, especially in events like window resizing. 🖥️🔄
+        </p>
+      </div>
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(debounce)}</code>
+      </pre>
     </div>
   );
 }
 
 export function ThrottleWindowScroll() {
+  const scrollContainerRef = useRef(null);
+  const [scrolling, setScrolling] = useState(false);
 
   function throttle(func, limit) {
     let lastFunc;
     let lastRan;
-    return function(...args) {
+    return function (...args) {
       if (!lastRan) {
         func.apply(this, args);
         lastRan = Date.now();
       } else {
         clearTimeout(lastFunc);
-
         lastFunc = setTimeout(() => {
           if (Date.now() - lastRan >= limit) {
             func.apply(this, args);
@@ -427,29 +437,50 @@ export function ThrottleWindowScroll() {
     };
   }
 
-  useEffect(() => {
-    const handleScroll = throttle(() => {
-      console.log('Window scrolled');
-    }, 200);
+  const throttledScroll = useCallback(
+    throttle(() => {
+      console.log('Container scrolled');
+      setScrolling(true);
+      setTimeout(() => setScrolling(false), 300);
+    }, 200),
+    []
+  );
 
-    window.addEventListener('scroll', handleScroll);
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    scrollContainer.addEventListener('scroll', throttledScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      scrollContainer.removeEventListener('scroll', throttledScroll);
     };
-  }, []);
+  }, [throttledScroll]);
 
   return (
-    <div>
-      <h3>Throttle Window Scroll</h3>
-      <div>Scroll the window and check the console log.</div>
-      <div className="scrollItem">
-        {
-          Array.from({ length: 1000 }, (_, index) => (
-            <div>item {index}</div>
-          ))
-        }
+    <div className="container">
+      <div className="result-side">
+        <h3>🔢 Throttle Scroll on Specific Element</h3>
+        <div>Scroll the container and check the console log.</div>
+        <div
+          className="scrollItem"
+          ref={scrollContainerRef}
+          style={{ height: '150px', overflowY: 'scroll', border: '1px solid #ccc', padding: '10px' }}
+        >
+          {Array.from({ length: 1000 }, (_, index) => (
+            <div key={index} style={{ padding: '5px 0' }}>Item {index}</div>
+          ))}
+        </div>
+        <p>{scrolling ? 'Scrolling in progress...' : 'You can scroll now.'}</p>
+        <p className="description">
+          The main goal of a throttling function is to limit the execution rate of a function to a fixed time interval, 
+          ensuring it runs at most once per specified period. This helps optimize performance by preventing excessive function calls, 
+          especially in scroll, resize, or keypress events. 🚀
+        </p>
       </div>
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(throttle)}</code>
+      </pre>
     </div>
   );
 }
@@ -461,22 +492,32 @@ export function MemoizeObject() {
 
   function memoize(func) {
     const cache = new Map();
+    
     return function (...args) {
       const key = JSON.stringify(args);
       if (cache.has(key)) {
         return cache.get(key);
       }
+
       const result = func.apply(this, args);
       cache.set(key, result);
       return result;
     };
   }
 
+  // const factorial = memoize((n) => {
+  //   if (n === 0 || n === 1) {
+  //     return 1;
+  //   }
+  //   return n * factorial(n - 1);
+  // });
+
   const factorial = memoize((n) => {
-    if (n === 0 || n === 1) {
-      return 1;
+    let result = 1;
+    for (let i = 2; i <= n; i++) {
+      result *= i;
     }
-    return n * factorial(n - 1);
+    return result;
   });
 
   function handleCalculate() {
@@ -492,7 +533,7 @@ export function MemoizeObject() {
     const end = performance.now();
 
     setResult(computedResult);
-    setTimeTaken((end - start).toFixed(2));
+    setTimeTaken((end - start));
   }
 
   return (
@@ -544,7 +585,6 @@ export function MemoizeObject() {
 export function createPubSub() {
   const subscribers = {};
 
-  console.log(subscribers,"subscribers")
   function subscribe(event, callback) {
     if (!subscribers[event]) {
       subscribers[event] = [];

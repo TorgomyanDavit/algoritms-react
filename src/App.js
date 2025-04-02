@@ -55,8 +55,7 @@ function App() {
       </Router>
       {/* <MemoizeObject/> */}
 
-      {/* <ThrottleWindowScroll/> */}
-      {/* <DebounceWindowResize/> */}
+      
       {/* <List/> */}
 
       {/* mixed algoritm */}
