@@ -312,63 +312,120 @@ export function DeepCopyObject() {
 
 export function CopyObjectMethods() {
 
-  // assign methisd is shallow copy
-  const obj = { a: 1, b: { c: 2 } };
-  const shallowCopyAssign = Object.assign({}, obj);
-  shallowCopyAssign.b.c = 42; 
+  const createShallowCopyAssign = () => {
+    const originalObj = { a: 1, b: { c: 2 } };
 
-  //spread library is shallow copy
-  const obj4 = { a: 1, b: { c: 2 } };
-  const spreadCopy = {...obj4};
-  spreadCopy.b.c = 42; 
+    const copy = Object.assign({}, originalObj);
+    copy.b.c = 42;
 
-  // structuredClone is deep copy
-  const obj2 = { a: 1, b: { c: 2 } };
-  const structuredClonCopy = structuredClone(obj2);
-  structuredClonCopy.b.c = 42;
+    console.log(originalObj,"originalObj")
+    return {originalObj,copy};
+  };
 
-  //lodish library _.cloneDeep(obj) is deep copy
-  const obj3 = { a: 1, b: { c: 2 } };
-  const lodishCopy = _.cloneDeep(obj3);
-  lodishCopy.b.c = 42; 
 
-  const obj5 = { a: 1, b: { c: 2, d: () => '' } };
-  const stringifyCopy = JSON.parse(JSON.stringify(obj));
-  stringifyCopy.b.c = 42;
+  const createSpreadCopy = () => {
+    const originalObj = { a: 1, b: { c: 2 } };
 
+    const copy = { ...originalObj };
+    copy.b.c = 42;
+    return {originalObj,copy};
+
+  };
+
+  const createStructuredCloneCopy = () => {
+    const originalObj = { a: 1, b: { c: 2 } };
+
+    const copy = structuredClone(originalObj);
+    copy.b.c = 45;
+    return {originalObj,copy};
+
+  };
+
+  const createLodashCopy = () => {
+    const originalObj = { a: 1, b: { c: 2 } };
+    const copy = _.cloneDeep(originalObj);
+    copy.b.c = 42;
+
+    return {originalObj,copy};
+  };
+
+  const createJsonStringifyCopy = () => {
+    const objWithFunction = { a: 1, b: { c: 2, d: () => '' } };
+    return JSON.parse(JSON.stringify(objWithFunction));
+  };
 
 
   return (
-    <div>
-      <h3>Shallow and Deep Copy methods</h3> 
+    <>
+      <div className="container">
+        <div className="result-side">
+          <h2>📢 Shallow and Deep Copy Methods</h2>
+          <h3>✅ Object.assign (Shallow Copy)</h3>
+          <label className="label target">
+            Original Obj: {JSON.stringify(createShallowCopyAssign().originalObj)}
+          </label>
+          <p><strong>Copy Obj: </strong> <span className="output success">Found: {JSON.stringify(createShallowCopyAssign().copy)}</span></p>
+        </div>
+        <pre className="code-box">
+          <code>{convertFunctionTemplateLiteral(createShallowCopyAssign)}</code>
+        </pre>
+      </div>
 
-      <h3>Object.assign is shallow copy  shallowCopyAssign.b.c = 42;</h3> 
-      <div>original array changed {JSON.stringify(obj)}</div>
-      <div>shallowCopyAssign {JSON.stringify(shallowCopyAssign)}</div>
-      <br/>
+      <div className="container">
+        <div className="result-side">
+          <h3>✅ Spread Operator (Shallow Copy)</h3>
+          <label className="label target">
+            Original Obj: {JSON.stringify(createSpreadCopy().originalObj)}
+          </label>
+          <p><strong>Copy Obj: </strong> <span className="output success">Found: {JSON.stringify(createSpreadCopy().copy)}</span></p>
+        </div>
+        <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(createSpreadCopy)}</code>
+      </pre>
+      </div>
 
-      <h3>spread is shallow copy  spreadCopy.b.c = 42;</h3> 
-      <div>original array changed {JSON.stringify(obj4)}</div>
-      <div>spreadCopy {JSON.stringify(spreadCopy)}</div>
-      <br/>
+      <div className="container">
+        <div className="result-side">
+          <h3>✅ structuredClone (Deep Copy)</h3>
+          <label className="label target">
+            Original Obj: {JSON.stringify(createStructuredCloneCopy().originalObj)}
+          </label>
+          <p><strong>Copy Obj: </strong> <span className="output success">Found: {JSON.stringify(createStructuredCloneCopy().copy)}</span></p>
+        </div>
+        <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(createStructuredCloneCopy)}</code>
+      </pre>
+      </div>
 
-      <h3>structuredClone(obj) is deep copy  structuredClonCopy.b.c = 42;</h3> 
-      <div>original array not changed {JSON.stringify(obj2)}</div>
-      <div>structuredClonCopy {JSON.stringify(structuredClonCopy)}</div>
-      <br/>
+      <div className="container">
+        <div className="result-side">
+          <h3>✅ Lodash _.cloneDeep (Deep Copy)</h3>
+          <label className="label target">
+            Original Obj: {JSON.stringify(createLodashCopy().originalObj)}
+          </label>
+          <p><strong>Copy Obj: </strong> <span className="output success">Found: {JSON.stringify(createLodashCopy().copy)}</span></p>
+        </div>
+        <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(createLodashCopy)}</code>
+      </pre>
+      </div>
 
-      <h3>lodish is deep copy  lodishCopy.b.c = 42;</h3> 
-      <div>original array not changed {JSON.stringify(obj3)}</div>
-      <div>lodishCopy {JSON.stringify(lodishCopy)}</div>
-      <br/>
-
-      <h3>JSON.stringify is deep copy stringifyCopy.b.c = 42; but when using undefined,null, referenced value, or function it not work properly</h3> 
-      <div>original array {`{ a: 1, b: { c: 2, d: () => '' } }`}</div>
-      <div>original array not changed but upset function{JSON.stringify(obj5)}</div>
-      <div>stringifyCopy {JSON.stringify(stringifyCopy)}</div>
-    </div>
-  )  
+      <div className="container">
+        <div className="result-side">
+          <h3>✅ JSON.stringify (Deep Copy but limited)</h3>
+          <label className="label target">
+            Original Obj: {JSON.stringify({ a: 1, b: { c: 2, d: () => '' } })}
+          </label>
+          <p><strong>Copy Obj: </strong> <span className="output success">Found: {JSON.stringify(createJsonStringifyCopy())}</span></p>
+        </div>
+        <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(createJsonStringifyCopy)}</code>
+      </pre>
+      </div>
+    </>
+  );
 }
+
 
 export function DebounceWindowResize() {
   const [resizing, setResizing] = useState(false);
@@ -485,7 +542,7 @@ export function ThrottleWindowScroll() {
   );
 }
 
-export function MemoizeObject() {
+export function MemoizeObjectFactorial() {
   const [inputNumber, setInputNumber] = useState("");
   const [result, setResult] = useState(null);
   const [timeTaken, setTimeTaken] = useState(null);
