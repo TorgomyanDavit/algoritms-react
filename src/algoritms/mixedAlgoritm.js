@@ -274,47 +274,84 @@ export function RemoveDuplicates() {
 }
 
 export function DeepCopyObject() {
-  function deepCopy(obj) {
+  const [text, setText] = useState(
+    `{
+      "age": 1,
+        "nestedObj": {
+          "name": "joe",
+          "net": {
+            "name": "vlan"
+          }
+        },
+      "arr": [15]
+    }`
+  );
+
+
+  function deepCopy(obj)  {
     if (obj === null || typeof obj !== 'object') {
-      return obj; 
+      return obj;
     }
-  
-    const copy = Array.isArray(obj) ? [] : {}; // Determine if obj is an array or object
-  
+
+    const copy = Array.isArray(obj) ? [] : {};
     for (let key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (Object.hasOwnProperty.call(obj, key)) {
         copy[key] = deepCopy(obj[key]);
       }
     }
-  
-    return copy;
-  }
 
-  const obj1 = { 
-    age: 1,
-    nestedObj:{
-       name:"joe",
-       net:{
-        name:"vlan"
-       }
-    },
-    arr:[15]
+    return copy;
+  };
+
+  const createDeepCopy = () => {
+    try {
+      const originalObj = JSON.parse(text);
+      const copiedObj = deepCopy(originalObj);
+  
+      // Mutate copy to prove deep clone works
+      if (copiedObj?.nestedObj?.net) {
+        copiedObj.nestedObj.net.name = "changed";
+      }
+  
+      return { originalObj, copy: copiedObj };
+    } catch (err) {
+      return { error: 'Invalid JSON' };
+    }
   };
 
 
+
+  const result = createDeepCopy();
+
   return (
-      <div>
-          <h3>Deep Copy Object</h3> 
-          <div>output {deepCopy(obj1).join(", ")}</div>
+    <div className="container">
+      <div className="result-side">
+        <h3>✅ Custom Deep Copy Function with User Input</h3>
+
+        <label className="label target">
+          Original Obj: {JSON.stringify(result.originalObj)}
+        </label>
+
+        <label className="label">
+          change: copiedObj.nestedObj.net.name = "changed";
+        </label>
+        <p>
+          <strong>Copy Obj (mutated): </strong>
+          <span className="output success">Found: {JSON.stringify(result.copy)}</span>
+        </p>
       </div>
-  )  
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(deepCopy)}</code>
+      </pre>
+    </div>
+  );
 }
 
 export function CopyObjectMethods() {
 
-  const createShallowCopyAssign = () => {
+  function createShallowCopyAssign() {
     const originalObj = { a: 1, b: { c: 2 } };
-
     const copy = Object.assign({}, originalObj);
     copy.b.c = 42;
 
@@ -322,8 +359,7 @@ export function CopyObjectMethods() {
     return {originalObj,copy};
   };
 
-
-  const createSpreadCopy = () => {
+  function createSpreadCopy() {
     const originalObj = { a: 1, b: { c: 2 } };
 
     const copy = { ...originalObj };
@@ -332,7 +368,7 @@ export function CopyObjectMethods() {
 
   };
 
-  const createStructuredCloneCopy = () => {
+  function createStructuredCloneCopy() {
     const originalObj = { a: 1, b: { c: 2 } };
 
     const copy = structuredClone(originalObj);
@@ -341,7 +377,7 @@ export function CopyObjectMethods() {
 
   };
 
-  const createLodashCopy = () => {
+  function createJsonStringifyCopy() {
     const originalObj = { a: 1, b: { c: 2 } };
     const copy = _.cloneDeep(originalObj);
     copy.b.c = 42;
@@ -349,7 +385,7 @@ export function CopyObjectMethods() {
     return {originalObj,copy};
   };
 
-  const createJsonStringifyCopy = () => {
+  function createLodashCopy() {
     const objWithFunction = { a: 1, b: { c: 2, d: () => '' } };
     return JSON.parse(JSON.stringify(objWithFunction));
   };

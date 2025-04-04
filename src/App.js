@@ -55,7 +55,6 @@ function App() {
       {/* mixed algoritm */}
 
       {/* createPubSub()  */}
-      {/* <DeepCopyObject/> */}
       {/* <MyComponent name="Jone"/> */}
       {/* <CuriousJsonStringify/> */}
 
