@@ -1,4 +1,3 @@
-import x from "../data/getSomeIdData.json"
 import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react';
 import _ from "lodash";
 import { TipAnimatedImage } from "./animatedImg";
@@ -200,77 +199,162 @@ return (
 )  
 } 
 
-export function MaxSumAdjacent({arr}) {
+export function MaxTwoNumberMultiple() {
+  const [text, setText] = useState("5, 1, 3, 7, 9, -10");
+
+  function calculate() {
+    const arr = text
+      .split(",")
+      .map((num) => parseInt(num.trim()))
+      .filter((n) => !isNaN(n));
+
     if (arr.length < 2) {
-        return null; // We need at least two elements to calculate a product.
+      return "Array must have at least 2 numbers.";
     }
 
-    let maxProduct = arr[0] * arr[1]; // Initialize maxProduct with the product of the first two elements.
+    // Sort ascending
+    arr.sort((a, b) => a - b);
 
-    for (let i = 1; i < arr.length - 1; i++) {
-      const currentProduct = arr[i] * arr[i + 1];
-      maxProduct = Math.max(maxProduct, currentProduct);
-    }
-
-
-    return (
-        <div>
-          <h3>Get All Digits and Number Sum</h3> 
-          <div>input {arr}</div>
-          <div>output {maxProduct}</div>
-        </div>
-    )  
-} 
-
-export function GetSomeID() {
-  const newArray = x.reduce((aggr, val, index) => {
-    if (val.isDeleted) {
-      aggr.push({ itemPosition: index, item: val });
-    }
-    return aggr;
-  }, []);
-  
-  let ischange = 0;
-  newArray.forEach((filteredItem) => {
-    x.forEach((val, ind) => {
-      if (!val.isDeleted && val.id === filteredItem.item.replacedId) {
-        const objectToUpdate = x.find((v, i) => i === ind);
-        const myArr = x.filter((item, i) => i !== ind);
-        myArr.splice(filteredItem.itemPosition - ischange, 0, objectToUpdate);
-        x = myArr;
-        if(ischange === 0) {
-          ischange = 1
-        }
-        return;
-      }
-    });
-  });
+    const product1 = arr[arr.length - 1] * arr[arr.length - 2];
+    const product2 = arr[0] * arr[1];
 
 
-  return (
-    <div>
-        <h3>GetSomeID Array</h3> 
-        <div>output {JSON.stringify(x)}</div>
-    </div>
-  )  
-}
-
-export function RemoveDuplicates() {
-  const arr = [1,1,1,2,2,3,3]
-  let repeatArray = {1:1}
-  for(let i = 0; i < arr.length - 1; i++) {
-    if(repeatArray[arr[i]] === undefined) {
-      repeatArray[arr[i]] = arr[i]
-    }
+    debugger
+    return Math.max(product1, product2);
   }
 
   return (
-      <div>
-          <h3>RemoveDuplicates from Array</h3> 
-          <div>input {arr}</div>
-          <div>output {Object.keys(repeatArray).join(", ")}</div>
+    <div className="container">
+      <div className="result-side">
+        <h3>⚡ Optimized Max Product of Any Two Numbers</h3>
+        <label className="label">
+          Input Array:
+          <input
+            className="input"
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Enter numbers, e.g. 5, 1, 3, 7, 9, -10"
+          />
+        </label>
+        <p>
+          <strong>Result:</strong>{" "}
+          <span className="output success">{calculate()}</span>
+        </p>
+        <p className="description">
+          <TipAnimatedImage />
+          This function sorts the array and compares:
+          <ul>
+            <li>🔹 The product of the two largest numbers</li>
+            <li>🔹 The product of the two smallest (possibly negative) numbers</li>
+          </ul>
+          <b>✅ Input: "5, 1, 3, 7, 9, -10"</b><br />
+          <b>✅ Output: 63</b> (7 × 9)
+        </p>
       </div>
-  )  
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+      </pre>
+    </div>
+  );
+}
+
+export function MaxTwoAdjacentNumberMultiple() {
+  const [text, setText] = useState("3, 6, -2, -5, 7, 3");
+
+  function calculate() {
+    const arr = text.split(",").map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+
+    if (arr.length < 2) {
+      return "Array must have at least two numbers.";
+    }
+
+    let maxProduct = arr[0] * arr[1];
+    for (let i = 1; i < arr.length - 1; i++) {
+      const product = arr[i] * arr[i + 1];
+      maxProduct = Math.max(maxProduct, product);
+    }
+
+    return maxProduct;
+  }
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>💥 Max Product of Adjacent Elements</h3>
+        <label className="label">
+          Input Array:
+          <input
+            className="input"
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Enter numbers, e.g. 3, 6, -2, -5, 7, 3"
+          />
+        </label>
+        <p><strong>Result:</strong> <span className="output success">{calculate()}</span></p>
+        <p className="description">
+          <TipAnimatedImage />
+          This function finds the maximum product of two **adjacent** elements in an array.
+          <b>✅ Input: "3, 6, -2, -5, 7, 3"</b><br />
+          <b>✅ Output: 21</b> (7 × 3)
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+      </pre>
+    </div>
+  );
+}
+
+export function RemoveDuplicates() {
+  const [text, setText] = useState("1,1,1,2,2,3,3");
+
+  function calculate() {
+    const arr = text.split(",").map(item => item.trim()).filter(Boolean);
+    const seen = new Set();
+    const result = [];
+
+    for (let item of arr) {
+      if (!seen.has(item)) {
+        seen.add(item);
+        result.push(item);
+      }
+    }
+
+    return result.join(", ");
+  }
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>🧹 Remove Duplicates from Array</h3>
+        <label className="label">
+          Input Text:
+          <input
+            className="input"
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Enter numbers, e.g. 1,2,3,3,4"
+          />
+        </label>
+        <p><strong>Result:</strong> <span className="output success">[{calculate()}]</span></p>
+        <p className="description">
+          <TipAnimatedImage />
+          This example removes duplicates from a comma-separated list of numbers.
+          <b>✅ Input: "1,1,2,2,3"</b><br />
+          <b>✅ Output: "1, 2, 3"</b>
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+      </pre>
+    </div>
+  );
 }
 
 export function DeepCopyObject() {
