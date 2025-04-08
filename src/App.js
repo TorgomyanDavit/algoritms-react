@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Routes, Link, NavLink } from "react-rou
 import ThreeExample from './three';
 import { BubbleSort, GenerateMergeSort, GenerateQuickSort, InsertionSort, SelectionSort } from './algoritms/sorting';
 import { HashingSearch, BinarySearch, LineirSearch, TernarySearch, HashingTextSearch, DFSArrayExample, RecursiveBinarySearch } from './algoritms/search';
-import { CopyObjectMethods, CuriousJsonStringify, DebounceWindowResize, DeepCopyObject, Fibonacci, Find_max, FirstNoneRepeatingCharacters, GenerateFibonacci, GenerateFibonacci2, GetAllDigitsSum, IsPalindrome, MaxSumAdjacent, MemoizeObject, MemoizedFibonacci, RemoveDuplicates, SumDifferentArrayValuePairExist, ThrottleWindowScroll } from './algoritms/mixedAlgoritm';
+import { CopyObjectMethods, DebounceWindowResize, DeepCopyObject, Fibonacci, FirstNoneRepeatingCharacters, GenerateFibonacci, GenerateFibonacci2, GetAllDigitsSum, IsPalindrome, MaxSumAdjacent, MemoizeObject, MemoizedFibonacci, RemoveDuplicates, SumDifferentArrayValuePairExist, ThrottleWindowScroll } from './algoritms/mixedAlgoritm';
 import ZoomedImage from './component';
 import MasonryGrid from './component/reactWindow/reactWindow';
 import List from './component/reactWindow/reactWindow';
@@ -56,15 +56,12 @@ function App() {
 
       {/* createPubSub()  */}
       {/* <MyComponent name="Jone"/> */}
-      {/* <CuriousJsonStringify/> */}
 
       {/* <GenerateFibonacci count={100}/> */}
       {/* <MemoizedFibonacci count={100}/> */}
       {/* <Fibonacci count={50}/> */}
       {/* <GenerateFibonacci2 count={50}/> */}
 
-      {/* <Find_max nums={[5, 3, 1, 4, 2]}/> */}
-      {/* <GetAllDigitsSum arr={[53,14,2]}/> */}
       
       {/* <CopyObjectMethods/> */}
 

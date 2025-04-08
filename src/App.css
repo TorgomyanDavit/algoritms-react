@@ -169,6 +169,8 @@ nav {
   font-weight: bold;
   color: #2e7d32;
   display: inline-block;
+  max-height: 500px;
+  overflow: auto;
 }
 
 .output.success::before {
@@ -183,6 +185,7 @@ nav {
   font-weight: bold;
   color: #c62828;
   display: inline-block;
+  max-width: 350px;
 }
 
 .output.error::before {

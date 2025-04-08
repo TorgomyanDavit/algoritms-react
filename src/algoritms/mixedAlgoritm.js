@@ -30,174 +30,355 @@ export function convertArrayToTemplateLiteral(arr) {
   return `[${customString}]`;
 }
 
-export function CuriousJsonStringify() {
-    const inputArray = [1,null,undefined,() => "",NaN]
-    const inputObject = {age:25,name:NaN,func:() => "",country:null,city:undefined}
-  
-    const innerTemplateLiteralArr = convertArrayToTemplateLiteral(inputArray);
-  
-    function convertObjectToTemplateLiteral(obj) {
-      const innerTemplate = Object.entries(obj).map(([key, value]) => {
-        if (value === null) {
-          return `${key}: null`;
-        } else if (value === undefined) {
-          return `${key}: undefined`;
-        } else if (typeof value === 'function') {
-          return `${key}: ${value.toString()}`;
-        } else if (Number.isNaN(value)) {
-          return `${key}: NaN`;
-        } else {
-          return `${key}: ${value}`;
-        }
-      }).join(', ');
-      return `{${innerTemplate}}`;
-    }
-    const innerTemplateLiteral = convertObjectToTemplateLiteral(inputObject);
-  
-    return (
-      <div>
-        <h3>ArrayAs JSON.stringify</h3> 
-        <div>input inputArray = {innerTemplateLiteralArr}</div>
-        <div>output = {JSON.stringify(inputArray)}</div>
-        <br/>
-        <h3>ObjectAs JSON.stringify</h3> 
-        <div>input ArrayInputExample = {innerTemplateLiteral}</div>
-        <div>output = {JSON.stringify(inputObject)}</div>
-      </div>
-    )
-}
 
-function fibonacciTailRecursive(n, a = 0, b = 1, sequence = []) {
-  if (n <= 0) {
-    return sequence;
+export function ArrayTemplateLiteral() {
+  const [inputArray, setInputArray] = useState([1, null, undefined, () => "", NaN]);
+
+  // Convert array to template literals representation
+  function convertArrayToTemplateLiteral(arr) {
+    return arr.map((value) => {
+      if (value === null) {
+        return `null`;
+      } else if (value === undefined) {
+        return `undefined`;
+      } else if (typeof value === 'function') {
+        return value.toString();
+      } else if (Number.isNaN(value)) {
+        return `NaN`;
+      } else {
+        return value;
+      }
+    }).join(', ');
   }
 
-  sequence.push(a);
-  // Tail recursive call with updated values
-  return fibonacciTailRecursive(n - 1, b, a + b, sequence);
-}
+  const arrayTemplateLiteral = convertArrayToTemplateLiteral(inputArray);
 
-export function GenerateFibonacci2({ count }) {
-  // Generate Fibonacci sequence using tail recursion
-
-  const fibonacciSequence = fibonacciTailRecursive(count);
-  
   return (
-    <div>
-      <h3>Fibonacci Sequence</h3>
-      <div>Input = {count}</div>
-      <div>Output = {fibonacciSequence.join(", ")}</div>
+    <div className="container">
+      <div className="result-side">
+        <h3>🔍 Array as JSON.stringify</h3>
+        <label className="label">
+          Enter Array (comma-separated values):
+          <input
+            className="input"
+            type="text"
+            value={inputArray.join(', ')}
+            onChange={(e) => setInputArray(e.target.value.split(',').map(val => {
+              if (val.trim() === 'null') return null;
+              if (val.trim() === 'undefined') return undefined;
+              if (val.trim() === 'NaN') return NaN;
+              if (val.trim() === '() => ""') return () => "";
+              return val.trim();
+            }))}
+            placeholder="Enter values like: 1, null, NaN"
+          />
+        </label>
+        <p>
+          <strong>Template Literal Output:</strong>
+          <span className="output success">{arrayTemplateLiteral}</span>
+        </p>
+
+        <p>
+          <strong>Output (JSON):</strong>
+          <span className="output success">{JSON.stringify(inputArray)}</span>
+        </p>
+
+        <p className="description">
+          <b>📌 How it works:</b>
+          <ul>
+            <li>✅ Converts an array to a readable template literal format.</li>
+            <li>✅ Handles special values like null, undefined, NaN, and functions.</li>
+          </ul>
+          <b>⚠️ Important:</b> This approach allows for easy conversion of complex arrays, including those with special JavaScript types.
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(convertArrayToTemplateLiteral)}</code>
+      </pre>
     </div>
   );
 }
 
-export function GenerateFibonacci({count}) {
-  const fibonacciSequence = [0, 1];
 
-  for (let i = 2; i < count; i++) {
-    const nextFibonacci = fibonacciSequence[i - 1] + fibonacciSequence[i - 2];
-    fibonacciSequence.push(nextFibonacci);
+export function FibonacciWithoutStackError() {
+  const [count, setCount] = useState(5); 
+
+  function generateFibonacci(n) {
+    const sequence = [0, 1];
+    for (let i = 2; i < n; i++) {
+      const nextFibonacci = sequence[i - 1] + sequence[i - 2];
+      sequence.push(nextFibonacci);
+    }
+    return sequence;
   }
 
+  const result = generateFibonacci(count);
+
   return (
-    <div>
-    <h3>fibonacciSequence</h3> 
-    <div>input = {count}</div>
-    <div>output = {fibonacciSequence.join(",")}</div>
+    <div className="container">
+      <div className="result-side">
+        <h3>🔢 Fibonacci Sequence Without Stack Error</h3>
+        <label className="label">
+          Enter the Fibonacci count:
+          <input
+            className="input"
+            type="number"
+            value={count}
+            onChange={(e) => setCount(Number(e.target.value))}
+            placeholder="Enter a number, e.g. 5"
+          />
+        </label>
+        <p>
+          <strong>Fibonacci Sequence:</strong>{" "}
+          <span className="output success">{result.join(", ")}</span>
+        </p>
+
+        <p className="description">
+          <b>📌 How it works:</b>
+          <ul>
+            <li>✅ Iterative approach to calculate Fibonacci sequence.</li>
+            <li>✅ Returns the Fibonacci sequence up to the given position.</li>
+          </ul>
+          <b>⚠️ Important:</b> This approach does not cause a stack overflow, unlike the recursive version. It avoids deep recursion and is more efficient for larger numbers.
+          <b>Example:</b> "Input: 5" → Output: [0, 1, 1, 2, 3]
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(generateFibonacci)}</code>
+      </pre>
     </div>
-  )
+  );
 }
 
-export function Fibonacci({count}) {
+export function FibonacciSimpleRecursion() {
+  const [count, setCount] = useState(5); // Default value for Fibonacci sequence
+  const [result, setResult] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
   function fibonacci(n) {
-    if(n < 2)return n;
-
-    return fibonacci(n - 1) + fibonacci(n - 2)
+    if (n < 2) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
   }
 
-  const x = fibonacci(count)
-  alert(x)
+  useEffect(() => {
+    const threshold = 30; 
+    if (count > threshold) {
+      setErrorMessage(`Input too large! Fibonacci for numbers greater than ${threshold} can cause a stack overflow.`);
+      setResult(null); 
+    } else {
+      setErrorMessage(""); 
+      setResult(fibonacci(count));
+    }
+  }, [count]);
+
   return (
-    <div>
-    <h3>fibonacciSequence</h3> 
-    <div>input = {count}</div>
-    {/* <div>output = {fibonacci(count)}</div> */}
+    <div className="container">
+      <div className="result-side">
+        <h3>🔢 Fibonacci Sequence</h3>
+        <label className="label">
+          Enter the Fibonacci count:
+          <input
+            className="input"
+            type="number"
+            value={count}
+            onChange={(e) => setCount(Number(e.target.value))}
+            placeholder="Enter a number, e.g. 5"
+          />
+        </label>
+        <p>
+          <strong>Fibonacci Result:</strong>{" "}
+          <span className="output success">{result !== null ? result : "Error: Input too large"}</span>
+        </p>
+        
+        {/* Display error message if the input is too large */}
+        {errorMessage && <p className="output error">{errorMessage}</p>}
+
+        <p className="description">
+          <b>📌 How it works:</b>
+          <ul>
+            <li>✅ Simple recursive function to calculate the Fibonacci number</li>
+            <li>✅ Returns the Fibonacci number at the given position</li>
+          </ul>
+          <b>⚠️ Important:</b> The recursive approach used here can cause a stack overflow for numbers larger than {30} due to deep recursion. Numbers greater than this will trigger an error message.
+          <b>Example:</b> "Input: 5" → Output: 5 (Fibonacci sequence: 0, 1, 1, 2, 3, 5)
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(fibonacci)}</code>
+      </pre>
     </div>
-  )
+  );
 }
 
-export function MemoizedFibonacci({count}) {
-
-
-  const memoFibonacci = memoize((n) => {
-    if(n < 2)return n;
-
-    return memoFibonacci(n - 1) + memoFibonacci(n - 2)
-  })
-
+export function MemoizedFibonacci() {
+  const [count, setCount] = useState(5); // Default value for Fibonacci sequence
 
   function memoize(func) {
-    const cache = new Map()
+    const cache = new Map();
 
     return function(n) {
-      if(cache[n] === undefined) {
-        cache[n] = func(n)
+      if (cache.has(n)) {
+        return cache.get(n);
       }
-      return cache[n]
-    }
+      const result = func(n);
+      cache.set(n, result);
+      return result;
+    };
   }
 
+  
+  const memoFibonacci = memoize((n) => {
+    if (n < 2) return n;
+    return memoFibonacci(n - 1) + memoFibonacci(n - 2);
+  });
+
+  const fibonacciResult = memoFibonacci(count);
 
   return (
-    <div>
-    <h3>fibonacciSequence</h3> 
-    <div>input = {count}</div>
-    <div>output = {memoFibonacci(count)}</div>
+    <div className="container">
+      <div className="result-side">
+        <h3>🔢 Fibonacci Sequence (Memoized)</h3>
+        <label className="label">
+          Enter the Fibonacci count:
+          <input
+            className="input"
+            type="number"
+            value={count}
+            onChange={(e) => setCount(Number(e.target.value))}
+            placeholder="Enter a number, e.g. 5"
+          />
+        </label>
+        <p>
+          <strong>Fibonacci Result:</strong>{" "}
+          <span className="output success">{fibonacciResult}</span>
+        </p>
+        <p className="description">
+          <b>📌 How it works:</b>
+          <ul>
+            <li>✅ Uses memoization to optimize the Fibonacci calculation</li>
+            <li>✅ Returns the Fibonacci number at the given position</li>
+          </ul>
+          <b>⚠️ Important:</b> For large numbers (e.g., greater than 50000), this approach can lead to a stack overflow error due to deep recursion. It is advised to use an iterative approach for calculating Fibonacci numbers for larger inputs to avoid this error.
+          <b>Example:</b> "Input: 5" → Output: 5 (Fibonacci sequence: 0, 1, 1, 2, 3, 5)
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(memoize)}</code>
+      </pre>
     </div>
-  )
+  );
 }
 
-export function Find_max({nums}) {
-let max_num = Number.NEGATIVE_INFINITY; // smaller than all other numbers
-for (let num of nums) {
-    if (num > max_num) {
-    max_num = num
+export function FindMax() {
+  const [text, setText] = useState("5, 1, 3, 7, 9, -10");
+
+  function calculate() {
+    const nums = text
+      .split(",")
+      .map((n) => parseFloat(n.trim()))
+      .filter((n) => !isNaN(n));
+
+    if (nums.length === 0) return "Please enter at least one valid number.";
+
+    let maxNum = Number.NEGATIVE_INFINITY;
+    for (let num of nums) {
+      if (num > maxNum) {
+        maxNum = num;
+      }
     }
+
+    return maxNum;
+  }
+
+  const result = calculate();
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>🔍 Find Maximum Number</h3>
+        <label className="label">
+          Input Array:
+          <input
+            className="input"
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Enter numbers, e.g. 5, 1, 3, 7, 9, -10"
+          />
+        </label>
+        <p>
+          <strong>Max Number:</strong>{" "}
+          <span className="output success">{result}</span>
+        </p>
+        <p className="description">
+          <b>📌 How it works:</b>
+          <ul>
+            <li>✅ Parses input into numbers</li>
+            <li>✅ Loops through array to find the maximum value</li>
+          </ul>
+          <b>Example:</b> "5, 1, 3, 7, 9, -10" → max: 9
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+      </pre>
+    </div>
+  );
 }
 
+export function GetAllDigitsSum() {
+  const [text, setText] = useState("5, 1, 3, 7, 9, -10");
 
+  function calculate() {
+    const digits = text.replace(/\D/g, ""); 
+    const sumDigits = digits
+      .split("")
+      .reduce((acc, digit) => acc + Number(digit), 0);
 
-return (
-    <div>
-    <h3>Find Max</h3> 
-    <div>input = {nums}</div>
-    <div>output = {max_num}</div>
+    return sumDigits;
+  }
+
+  const result = calculate();
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>🔢 Get Only Digits Sum</h3>
+        <label className="label">
+          Input Text:
+          <input
+            className="input"
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Enter numbers, e.g. 5, 1, 3, 7, 9, -10"
+          />
+        </label>
+        <p>
+          <strong>Digits Sum:</strong>{" "}
+          <span className="output success">{result}</span>
+        </p>
+        <p className="description">
+          <b>📌 How it works:</b>
+          <ul>
+            <li>✅ Removes all characters except digits (0-9)</li>
+            <li>✅ Sums the remaining digits</li>
+          </ul>
+          <b>Example:</b> "5, 1, 3, 7, 9, -10" → digits: 5137910 → sum: 26
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+      </pre>
     </div>
-)
+  );
 }
-
-export function GetAllDigitsSum({arr}) {
-const SumNumber = arr.reduce((aggr,val) => {
-    return aggr + val
-},0)
-
-const SumDigitsNumber = arr.join("").trim().split("").reduce((aggr,val) => {
-    return aggr + +val
-},0)
-
-const result = SumNumber + SumDigitsNumber
-
-return (
-    <div>
-    <h3>Get All Digits and Number Sum</h3> 
-    <div>input {arr}</div>
-    <div>output Number and digits sum {result}</div>
-    <div>Number sum  {SumNumber}</div>
-    <div>digits {SumDigitsNumber}</div>
-    </div>
-)  
-} 
 
 export function MaxTwoNumberMultiple() {
   const [text, setText] = useState("5, 1, 3, 7, 9, -10");
@@ -212,21 +393,17 @@ export function MaxTwoNumberMultiple() {
       return "Array must have at least 2 numbers.";
     }
 
-    // Sort ascending
     arr.sort((a, b) => a - b);
-
     const product1 = arr[arr.length - 1] * arr[arr.length - 2];
     const product2 = arr[0] * arr[1];
 
-
-    debugger
     return Math.max(product1, product2);
   }
 
   return (
     <div className="container">
       <div className="result-side">
-        <h3>⚡ Optimized Max Product of Any Two Numbers</h3>
+        <h3>⚡ Max multiple count of Two Numbers</h3>
         <label className="label">
           Input Array:
           <input
@@ -546,7 +723,6 @@ export function CopyObjectMethods() {
   );
 }
 
-
 export function DebounceWindowResize() {
   const [resizing, setResizing] = useState(false);
 
@@ -839,7 +1015,6 @@ export function Publish_Subscribe() {
   );
 }
 
-
 export function IsPalindrome() {
   const [inputText, setInputText] = useState("");
 
@@ -894,7 +1069,6 @@ export function IsPalindrome() {
     </div>
   );
 }
-
 
 export function GeneratePrimeChecker() {
   const [numbers, setNumbers] = useState([2, 3, 4, 5, 10, 17]);
