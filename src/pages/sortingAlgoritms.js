@@ -5,15 +5,15 @@ export default function SortingAlgoritm() {
  
   
 
-    return (
-      <div className="page">
-        <h1 className="title">Sorting Algoritm</h1>
+  return (
+    <div className="page">
+      <h1 className="title">Sorting Algoritm</h1>
 
-        <GenerateMergeSort />
-        <GenerateQuickSort />
-        <BubbleSort />
-        <SelectionSort />
-        <InsertionSort />
-      </div>
-    )
+      <GenerateMergeSort />
+      <GenerateQuickSort />
+      <BubbleSort />
+      <SelectionSort />
+      <InsertionSort />
+    </div>
+  )
 }

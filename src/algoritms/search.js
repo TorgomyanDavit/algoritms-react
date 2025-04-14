@@ -3,50 +3,161 @@
 */
 
 import { useEffect, useState } from "react";
+import { TipAnimatedImage } from "./animatedImg";
+import { convertFunctionTemplateLiteral } from "./mixedAlgoritm";
   
-export function LineirSearch({arr,target}) {
-  let response = -1
-  for (let index = 0; index < arr.length; index++) {
-    if (arr[index] === target) {
-      response = index; // Return the index of the target if found
+
+export function LineirSearch() {
+  const [arr, setArr] = useState([5, 3, 8, 2, 9]);
+  const [target, setTarget] = useState(8);
+
+  function handleArrayChange(e) {
+    setArr(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
+  }
+
+  function handleTargetChange(e) {
+    setTarget(parseInt(e.target.value.trim(), 10) || 0);
+  }
+
+  function calculate() {
+    for (let index = 0; index < arr.length; index++) {
+      if (arr[index] === target) {
+        return index; // Return the index of the target if found
+      }
     }
+    return -1; // Not found
   }
 
   return (
-    <div>
-      <h3>Lineir Search Algoritm</h3> 
-      <div>input = {arr}</div>
-      <div>finding output index is {response}</div>
-    </div>
-  )
-}
+    <div className="container">
+      <div className="result-side">
+        <h3>🔍 Linear Search Algorithm</h3>
+        <div className="input-side">
+          <label className="label">
+            Enter Numbers:
+            <input
+              className="input"
+              type="text"
+              value={arr.join(",")}
+              onChange={handleArrayChange}
+              placeholder="e.g. 5, 3, 8, 2, 9"
+            />
+          </label>
+          <label className="label">
+            Enter Target:
+            <input
+              className="input"
+              type="number"
+              value={target}
+              onChange={handleTargetChange}
+              placeholder="e.g. 8"
+            />
+          </label>
+        </div>
 
-export function BinarySearch({ arr, target }) {
-  let response = -1;
+        <p>
+          <strong>Result:</strong>{" "}
+          <span className="output success">
+            Found at index: {calculate()}
+          </span>
+        </p>
 
-  let start = 0;
-  let end = arr.length - 1;
-  
-  while (start <= end) {
-    const mid = Math.floor((start + end) / 2);
-    if (arr[mid] === target) {
-      response = mid; 
-      break;
-    } else if (target < arr[mid]) {
-      end = mid - 1;
-    } else {
-      start = mid + 1;
-    }
-  }
+        <p className="description">
+          <TipAnimatedImage />
+          Linear Search is the simplest searching algorithm that checks each element 
+          in the array one by one until the target value is found or the end is reached.
+          Its time complexity is O(n), which makes it inefficient for large datasets.
+        </p>
+      </div>
 
-  return (
-    <div>
-      <h3>Binary Search Algorithm</h3>
-      <div>Input: {arr.join(', ')}, Target is {target}</div>
-      <div>Finding output index: {response}</div>
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+      </pre>
     </div>
   );
 }
+
+export function BinarySearch() {
+  const [arr, setArr] = useState([1, 3, 5, 7, 9, 11]);
+  const [target, setTarget] = useState(7);
+
+  function handleArrayChange(e) {
+    const sortedArr = e.target.value
+      .split(",")
+      .map((num) => parseInt(num.trim(), 10) || 0)
+      .sort((a, b) => a - b);
+    setArr(sortedArr);
+  }
+
+  function handleTargetChange(e) {
+    setTarget(parseInt(e.target.value.trim(), 10) || 0);
+  }
+
+  function calculate() {
+    let start = 0;
+    let end = arr.length - 1;
+    
+    while (start <= end) {
+      const mid = Math.floor((start + end) / 2);
+      if (arr[mid] === target) {
+        return mid;
+      } else if (target < arr[mid]) {
+        end = mid - 1;
+      } else {
+        start = mid + 1;
+      }
+    }
+
+    return -1; 
+  }
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>🔎 Binary Search Algorithm</h3>
+        <div className="input-side">
+          <label className="label">
+            Enter Sorted Numbers:
+            <input
+              className="input"
+              type="text"
+              value={arr.join(",")}
+              onChange={handleArrayChange}
+              placeholder="e.g. 1, 3, 5, 7, 9"
+            />
+          </label>
+          <label className="label">
+            Enter Target:
+            <input
+              className="input"
+              type="number"
+              value={target}
+              onChange={handleTargetChange}
+              placeholder="e.g. 7"
+            />
+          </label>
+        </div>
+
+        <p>
+          <strong>Result:</strong>{" "}
+          <span className="output success">
+            Found at index: {calculate()}
+          </span>
+        </p>
+
+        <p className="description">
+          <TipAnimatedImage />
+          Binary Search is a fast search algorithm with a time complexity of O(log n). It only works on sorted arrays by repeatedly dividing the search interval in half. If the value of the target is less than the element in the middle, it continues in the left half; otherwise, it continues in the right half.
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+      </pre>
+    </div>
+  );
+}
+
 
 export function TernarySearch({ arr: sortedArray, target }) {
   const [index, setIndex] = useState(null);
@@ -158,8 +269,6 @@ export function RecursiveBinarySearch({ arr }) {
     </div>
   );
 }
-
-
 
 // Example usage of DFS in a functional component with an array
 export function DFSArrayExample({nestedArray}) {

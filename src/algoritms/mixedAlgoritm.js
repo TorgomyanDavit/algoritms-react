@@ -2,9 +2,6 @@ import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import _ from "lodash";
 import { TipAnimatedImage } from "./animatedImg";
 
-
-
-
 export function convertFunctionTemplateLiteral(func) {
   const functionSource = func.toString(); // Get the raw function code
   // const bodyStart = functionSource.indexOf("{") + 1; // Find the start of the function body
@@ -12,6 +9,76 @@ export function convertFunctionTemplateLiteral(func) {
   // const bodyCode = functionSource.slice(bodyStart, bodyEnd).trim(); // Extract the body
 
   return functionSource;
+}
+
+
+// export function CuriousJsonStringify() {
+//   const inputArray = [1,null,undefined,() => "",NaN]
+//   const inputObject = {age:25,name:NaN,func:() => "",country:null,city:undefined}
+
+//   function convertArrayToTemplateLiteral(arr) {
+//     const customString = arr.map((element) => {
+//       if (element === null) {
+//         return "null";
+//       } else if (element === undefined) {
+//         return "undefined";
+//       } else if (typeof element === "function") {
+//         return "() => \"\"";
+//       } else {
+//         return element.toString();
+//       }
+//     }).join(", ");
+
+//     return `[${customString}]`;
+//   }
+//   const innerTemplateLiteralArr = convertArrayToTemplateLiteral(inputArray);
+
+//   function convertObjectToTemplateLiteral(obj) {
+//     const innerTemplate = Object.entries(obj).map(([key, value]) => {
+//       if (value === null) {
+//         return `${key}: null`;
+//       } else if (value === undefined) {
+//         return `${key}: undefined`;
+//       } else if (typeof value === 'function') {
+//         return `${key}: ${value.toString()}`;
+//       } else if (Number.isNaN(value)) {
+//         return `${key}: NaN`;
+//       } else {
+//         return `${key}: ${value}`;
+//       }
+//     }).join(', ');
+//     return `{${innerTemplate}}`;
+//   }
+//   const innerTemplateLiteral = convertObjectToTemplateLiteral(inputObject);
+
+//   return (
+//     <div>
+//       <h3>ArrayAs JSON.stringify</h3> 
+//       <div>input inputArray = {innerTemplateLiteralArr}</div>
+//       <div>output = {JSON.stringify(inputArray)}</div>
+//       <br/>
+//       <h3>ObjectAs JSON.stringify</h3> 
+//       <div>input ArrayInputExample = {innerTemplateLiteral}</div>
+//       <div>output = {JSON.stringify(inputObject)}</div>
+//     </div>
+//   )
+// }
+
+export function convertObjectToTemplateLiteral(obj) {
+  const innerTemplate = Object.entries(obj).map(([key, value]) => {
+    if (value === null) {
+      return `${key}: null`;
+    } else if (value === undefined) {
+      return `${key}: undefined`;
+    } else if (typeof value === 'function') {
+      return `${key}: ${value.toString()}`;
+    } else if (Number.isNaN(value)) {
+      return `${key}: NaN`;
+    } else {
+      return `${key}: ${value}`;
+    }
+  }).join(', ');
+  return `{${innerTemplate}}`;
 }
 
 export function convertArrayToTemplateLiteral(arr) {
@@ -30,26 +97,61 @@ export function convertArrayToTemplateLiteral(arr) {
   return `[${customString}]`;
 }
 
+export function ObjectToTemplateLiteral() {
+  const [inputObject, setInputObject] = useState({
+    age: 25,
+    name: NaN,
+    func: () => "",
+    country: null,
+    city: undefined,
+  });
+
+  const objectTemplateLiteral = convertObjectToTemplateLiteral(inputObject);
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>🔍 Object to Template Literal</h3>
+        <label className="label">
+          Input:
+          <br/>
+          {`{
+            age: 25,
+            name: NaN,
+            func: () => "",
+            country: null,
+            city: undefined,
+          }`}
+        </label>
+        <p>
+          <strong>Template Literal Output:</strong>
+          <span className="output success">{objectTemplateLiteral}</span>
+        </p>
+
+        <p>
+          <strong>Output (JSON.Stringify):</strong>
+          <span className="output success">{JSON.stringify(inputObject,undefined,2)}</span>
+        </p>
+
+        <p className="description">
+          <b>📌 How it works:</b>
+          <ul>
+            <li>✅ Converts an object to a readable template literal format.</li>
+            <li>✅ Handles special values like null, undefined, NaN, and functions.</li>
+          </ul>
+          <b>⚠️ Important:</b> This approach allows for easy conversion of complex objects, including those with special JavaScript types.
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(convertObjectToTemplateLiteral)}</code>
+      </pre>
+    </div>
+  );
+}
 
 export function ArrayTemplateLiteral() {
   const [inputArray, setInputArray] = useState([1, null, undefined, () => "", NaN]);
-
-  // Convert array to template literals representation
-  function convertArrayToTemplateLiteral(arr) {
-    return arr.map((value) => {
-      if (value === null) {
-        return `null`;
-      } else if (value === undefined) {
-        return `undefined`;
-      } else if (typeof value === 'function') {
-        return value.toString();
-      } else if (Number.isNaN(value)) {
-        return `NaN`;
-      } else {
-        return value;
-      }
-    }).join(', ');
-  }
 
   const arrayTemplateLiteral = convertArrayToTemplateLiteral(inputArray);
 
@@ -58,20 +160,9 @@ export function ArrayTemplateLiteral() {
       <div className="result-side">
         <h3>🔍 Array as JSON.stringify</h3>
         <label className="label">
-          Enter Array (comma-separated values):
-          <input
-            className="input"
-            type="text"
-            value={inputArray.join(', ')}
-            onChange={(e) => setInputArray(e.target.value.split(',').map(val => {
-              if (val.trim() === 'null') return null;
-              if (val.trim() === 'undefined') return undefined;
-              if (val.trim() === 'NaN') return NaN;
-              if (val.trim() === '() => ""') return () => "";
-              return val.trim();
-            }))}
-            placeholder="Enter values like: 1, null, NaN"
-          />
+          Input:
+          <br/>
+          {`[1, null, undefined, () => "", NaN]`}
         </label>
         <p>
           <strong>Template Literal Output:</strong>
@@ -79,7 +170,7 @@ export function ArrayTemplateLiteral() {
         </p>
 
         <p>
-          <strong>Output (JSON):</strong>
+          <strong>Output (JSON Stringify):</strong>
           <span className="output success">{JSON.stringify(inputArray)}</span>
         </p>
 
@@ -99,7 +190,6 @@ export function ArrayTemplateLiteral() {
     </div>
   );
 }
-
 
 export function FibonacciWithoutStackError() {
   const [count, setCount] = useState(5); 
@@ -580,8 +670,6 @@ export function DeepCopyObject() {
     }
   };
 
-
-
   const result = createDeepCopy();
 
   return (
@@ -599,6 +687,14 @@ export function DeepCopyObject() {
         <p>
           <strong>Copy Obj (mutated): </strong>
           <span className="output success">Found: {JSON.stringify(result.copy)}</span>
+        </p>
+
+        <p className="description">
+          <TipAnimatedImage/>
+          The `DeepCopyObject` component demonstrates how to deep clone a JavaScript object using a custom recursive function.
+          It accepts a JSON string as user input, parses it into an object, and uses the `deepCopy` function to recursively create a clone.
+          The component then mutates the copied object to prove that the original remains unchanged, displaying both the original and the mutated copy. 
+          This approach ensures that changes to nested properties in the copied object do not affect the original, which is crucial for avoiding side effects in JavaScript applications.
         </p>
       </div>
 
@@ -662,6 +758,11 @@ export function CopyObjectMethods() {
             Original Obj: {JSON.stringify(createShallowCopyAssign().originalObj)}
           </label>
           <p><strong>Copy Obj: </strong> <span className="output success">Found: {JSON.stringify(createShallowCopyAssign().copy)}</span></p>
+          <p className="description">
+            <TipAnimatedImage/>
+            Object.assign (Shallow Copy)
+            Creates a shallow copy—only the first level is copied. Nested objects remain linked to the original.
+          </p>
         </div>
         <pre className="code-box">
           <code>{convertFunctionTemplateLiteral(createShallowCopyAssign)}</code>
@@ -675,6 +776,11 @@ export function CopyObjectMethods() {
             Original Obj: {JSON.stringify(createSpreadCopy().originalObj)}
           </label>
           <p><strong>Copy Obj: </strong> <span className="output success">Found: {JSON.stringify(createSpreadCopy().copy)}</span></p>
+          <p className="description">
+            <TipAnimatedImage/>
+            Spread Operator ...obj  (Shallow Copy)
+            Also creates a shallow copy. Changing nested objects in the copy affects the original.
+          </p>
         </div>
         <pre className="code-box">
         <code>{convertFunctionTemplateLiteral(createSpreadCopy)}</code>
@@ -688,6 +794,11 @@ export function CopyObjectMethods() {
             Original Obj: {JSON.stringify(createStructuredCloneCopy().originalObj)}
           </label>
           <p><strong>Copy Obj: </strong> <span className="output success">Found: {JSON.stringify(createStructuredCloneCopy().copy)}</span></p>
+          <p className="description">
+            <TipAnimatedImage/>
+            structuredClone (Deep Copy)
+            Creates a deep copy that fully clones nested structures. Changes in the copy do not affect the original.
+          </p>
         </div>
         <pre className="code-box">
         <code>{convertFunctionTemplateLiteral(createStructuredCloneCopy)}</code>
@@ -701,6 +812,11 @@ export function CopyObjectMethods() {
             Original Obj: {JSON.stringify(createLodashCopy().originalObj)}
           </label>
           <p><strong>Copy Obj: </strong> <span className="output success">Found: {JSON.stringify(createLodashCopy().copy)}</span></p>
+          <p className="description">
+            <TipAnimatedImage/>
+            _.cloneDeep from Lodash (Deep Copy)
+            Performs a true deep clone, including nested objects and arrays. Safely handles most JavaScript types.
+          </p>
         </div>
         <pre className="code-box">
         <code>{convertFunctionTemplateLiteral(createLodashCopy)}</code>
@@ -714,6 +830,11 @@ export function CopyObjectMethods() {
             Original Obj: {JSON.stringify({ a: 1, b: { c: 2, d: () => '' } })}
           </label>
           <p><strong>Copy Obj: </strong> <span className="output success">Found: {JSON.stringify(createJsonStringifyCopy())}</span></p>
+          <p className="description">
+            <TipAnimatedImage/>
+            JSON.stringify + JSON.parse (Deep Copy but Limited)
+            Creates a deep copy, but functions, undefined, and Symbols are lost, making it suitable only for pure data.
+          </p>
         </div>
         <pre className="code-box">
         <code>{convertFunctionTemplateLiteral(createJsonStringifyCopy)}</code>
@@ -1214,7 +1335,7 @@ export function SumDifferentArrayValuePairExist() {
         </div>
         <p><strong>Result:</strong> <span className="output success">Found: {calculate()}</span></p>
         <p className="description">
-        <TipAnimatedImage/>
+          <TipAnimatedImage/>
           The Sum Pair Finder problem involves finding two numbers from two different arrays (or the same array) that sum up to a given target value.
         </p>
       </div>
