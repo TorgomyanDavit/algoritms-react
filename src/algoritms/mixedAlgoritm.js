@@ -1257,7 +1257,6 @@ export function GeneratePrimeChecker() {
   );
 }
 
-// new 
 export function SumDifferentArrayValuePairExist() {
   const [input1, setInput1] = useState([1, 2, 3, 4]);
   const [input2, setInput2] = useState([5, 6, 7, 8]);
@@ -1402,3 +1401,9 @@ export function FirstNoneRepeatingCharacters() {
     </div>
   )
 }
+
+
+/** Should be learn */
+// Tower of Hanoi 
+// cartesian project
+// claimbing stairs

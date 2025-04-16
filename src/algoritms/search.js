@@ -78,7 +78,7 @@ export function LineirSearch() {
 }
 
 export function BinarySearch() {
-  const [arr, setArr] = useState([1, 3, 5, 7, 9, 11]);
+  const [arr, setArr] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
   const [target, setTarget] = useState(7);
 
   function handleArrayChange(e) {
@@ -96,7 +96,7 @@ export function BinarySearch() {
   function calculate() {
     let start = 0;
     let end = arr.length - 1;
-    
+
     while (start <= end) {
       const mid = Math.floor((start + end) / 2);
       if (arr[mid] === target) {
@@ -158,82 +158,250 @@ export function BinarySearch() {
   );
 }
 
+export function TernarySearch() {
+  const [arr, setArr] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const [target, setTarget] = useState(4);
 
-export function TernarySearch({ arr: sortedArray, target }) {
-  const [index, setIndex] = useState(null);
+  function handleArrayChange(e) {
+    const sortedArr = e.target.value
+      .split(",")
+      .map((num) => parseInt(num.trim(), 10) || 0)
+      .sort((a, b) => a - b);
+    setArr(sortedArr);
+  }
 
-  useEffect(() => {
-    const ternarySearch = () => {
-      let start = 0;
-      let end = sortedArray.length - 1;
+  function handleTargetChange(e) {
+    setTarget(parseInt(e.target.value.trim(), 10) || 0);
+  }
 
-      while (start <= end) {
-        const mid1 = start + Math.floor((end - start) / 3);
-        const mid2 = end - Math.floor((end - start) / 3);
-        if (sortedArray[mid1] === target) {
-          setIndex(mid1);
-          return;
-        }
+  function calculate() {
+    let start = 0;
+    let end = arr.length - 1;
 
-        if (sortedArray[mid2] === target) {
-          setIndex(mid2);
-          return;
-        }
+    debugger
+    while (start <= end) {
+      const mid1 = start + Math.floor((end - start) / 3);
+      const mid2 = end - Math.floor((end - start) / 3);
 
-        if (target < sortedArray[mid1]) {
-          end = mid1 - 1;
-        } else if (target > sortedArray[mid2]) {
-          start = mid2 + 1;
-        } else {
-          start = mid1 + 1;
-          end = mid2 - 1;
-        }
+      if (arr[mid1] === target) return mid1;
+      if (arr[mid2] === target) return mid2;
+
+      if (target < arr[mid1]) {
+        end = mid1 - 1;
+      } else if (target > arr[mid2]) {
+        start = mid2 + 1;
+      } else {
+        start = mid1 + 1;
+        end = mid2 - 1;
       }
-
-      setIndex(-1);
-    };
-
-    ternarySearch();
-  }, [sortedArray, target]);
-
-  return (
-    <div>
-      <h3>Ternary Search Algorithm</h3>
-      <div>
-        Input: {sortedArray.join(', ')}, Target is {target}
-      </div>
-      <div>Finding output index: {index}</div>
-    </div>
-  );
-}
-
-export function HashingSearch({ arr: myArray, target }) {
-  const [index, setIndex] = useState(null);
-
-  useEffect(() => {
-    function createHashTable(arr) {
-      const hashTable = {};
-      arr.forEach((value, index) => {
-        hashTable[value] = index;
-      });
-      return hashTable;
     }
 
-    const hashTable = createHashTable(myArray);
-    const targetIndex = hashTable[target];
-    setIndex(targetIndex);
-  }, [myArray, target]);
+    return -1;
+  }
 
   return (
-    <div>
-      <h3>Hashing Search Algorithm</h3>
-      <div>
-        Input: {myArray.join(', ')}, Target is {target}
+    <div className="container">
+      <div className="result-side">
+        <h3>🔍 Ternary Search Algorithm</h3>
+        <div className="input-side">
+          <label className="label">
+            Enter Sorted Numbers:
+            <input
+              className="input"
+              type="text"
+              value={arr.join(",")}
+              onChange={handleArrayChange}
+              placeholder="e.g. 1, 3, 5, 7, 9"
+            />
+          </label>
+          <label className="label">
+            Enter Target:
+            <input
+              className="input"
+              type="number"
+              value={target}
+              onChange={handleTargetChange}
+              placeholder="e.g. 7"
+            />
+          </label>
+        </div>
+
+        <p>
+          <strong>Result:</strong>{" "}
+          <span className="output success">
+            Found at index: {calculate()}
+          </span>
+        </p>
+
+        <p className="description">
+          <TipAnimatedImage />
+          Ternary Search is a divide-and-conquer algorithm that splits the array
+          into three parts. It works on **sorted arrays** and has a time complexity
+          of **O(log₃ n)**. It compares the target to two midpoints to narrow the
+          search interval more quickly than binary search.
+        </p>
       </div>
-      <div>Finding output index: {index}</div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+      </pre>
     </div>
   );
 }
+
+export function HashingSearch() {
+  const [arr, setArr] = useState([1, 2, 3, 4, 5, 6]);
+  const [target, setTarget] = useState(4);
+
+  function handleArrayChange(e) {
+    const parsedArr = e.target.value
+      .split(",")
+      .map((num) => parseInt(num.trim(), 10) || 0);
+    setArr(parsedArr);
+  }
+
+  function handleTargetChange(e) {
+    setTarget(parseInt(e.target.value.trim(), 10) || 0);
+  }
+
+  function calculate() {
+    const hashTable = {};
+    arr.forEach((value, index) => {
+      hashTable[value] = index;
+    });
+    return hashTable[target] !== undefined ? hashTable[target] : -1;
+  }
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>🔎 Hashing Search Algorithm</h3>
+        <div className="input-side">
+          <label className="label">
+            Enter Numbers:
+            <input
+              className="input"
+              type="text"
+              value={arr.join(",")}
+              onChange={handleArrayChange}
+              placeholder="e.g. 1, 2, 3, 4"
+            />
+          </label>
+          <label className="label">
+            Enter Target:
+            <input
+              className="input"
+              type="number"
+              value={target}
+              onChange={handleTargetChange}
+              placeholder="e.g. 4"
+            />
+          </label>
+        </div>
+
+        <p>
+          <strong>Result:</strong>{" "}
+          <span className="output success">
+            Found at index: {calculate()}
+          </span>
+        </p>
+
+        <p className="description">
+          <TipAnimatedImage />
+          Hashing Search uses a hash table to store elements and their indices
+          for **constant-time (O(1))** lookup. It's extremely efficient for
+          unsorted data when quick access is needed.
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+      </pre>
+    </div>
+  );
+}
+
+export function DFSArrayExample() {
+  const [input, setInput] = useState("[1, [2, 3], [4, [5, 6]]]");
+  const [nestedArray, setNestedArray] = useState([1, [2, 3], [4, [5, 6]]]);
+  const [result, setResult] = useState([]);
+
+  function handleInputChange(e) {
+    const userInput = e.target.value;
+    setInput(userInput);
+    try {
+      const parsed = JSON.parse(userInput);
+      if (Array.isArray(parsed)) {
+        setNestedArray(parsed);
+      } else {
+        throw new Error();
+      }
+    } catch {
+      setNestedArray([]);
+    }
+  }
+
+  function depthFirstSearchArray(array, callback) {
+    array.forEach((item) => {
+      if (Array.isArray(item)) {
+        depthFirstSearchArray(item, callback);
+      } else {
+        callback(item);
+      }
+    });
+  }
+
+  function extractArrayCallBack() {
+    const visited = [];
+    depthFirstSearchArray(nestedArray, (item) => visited.push(item));
+    setResult(visited);
+  }
+
+  useEffect(extractArrayCallBack, [nestedArray]);
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>🧭 DFS on Nested Array</h3>
+
+        <div className="input-side">
+          <label className="label">
+            Enter Nested Array (as JSON):
+            <input
+              className="input"
+              type="text"
+              value={input}
+              onChange={handleInputChange}
+              placeholder='e.g. [1, [2, 3], [4, [5, 6]]]'
+            />
+          </label>
+        </div>
+
+        <p>
+          <strong>Result:</strong>{" "}
+          <span className="output success">
+            {result.length > 0 ? result.join(" ⇒ ") : "No valid input"}
+          </span>
+        </p>
+
+        <p className="description">
+          <TipAnimatedImage />
+          This demonstrates a **Depth-First Search (DFS)** traversal over a **nested array**.
+          It explores each branch completely before moving to the next. DFS is commonly
+          used in tree/graph traversal and recursive data structures.
+        </p>
+      </div>
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(depthFirstSearchArray)}</code>
+        <br/>
+        <br/>
+        <code>{convertFunctionTemplateLiteral(extractArrayCallBack)}</code>
+      </pre>
+    </div>
+  );
+}
+
 
 export function RecursiveBinarySearch({ arr }) {
   const [output,setOutput] = useState([])
@@ -270,35 +438,7 @@ export function RecursiveBinarySearch({ arr }) {
   );
 }
 
-// Example usage of DFS in a functional component with an array
-export function DFSArrayExample({nestedArray}) {
-  const [result, setResult] = useState([]);
 
-  const depthFirstSearchArray = (array, callback) => {
-    array.forEach(item => {
-      if (Array.isArray(item)) {
-        depthFirstSearchArray(item, callback); 
-      } else {
-        callback(item);
-      }
-    });
-  };
-
-
-  useEffect(() => {
-    const visitedItems = [];
-    depthFirstSearchArray(nestedArray, item => visitedItems.push(item));
-
-    setResult(visitedItems);
-  }, []);
-
-  return (
-    <div>
-      <h2>Depth-First Search on Array Example</h2>
-      <div>Result: {result.join(' == ')}</div>
-    </div>
-  );
-};
 
 export function HashingTextSearch() {
   function hash(key, arrayLength) {
