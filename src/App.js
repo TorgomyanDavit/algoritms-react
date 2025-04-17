@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import "./App.css"
 import { BrowserRouter as Router, Route, Routes, NavLink } from "react-router-dom";
 
-import ThreeExample from './three';
-import { BubbleSort, GenerateMergeSort, GenerateQuickSort, InsertionSort, SelectionSort } from './algoritms/sorting';
-import { HashingSearch, BinarySearch, LineirSearch, TernarySearch, HashingTextSearch, DFSArrayExample, RecursiveBinarySearch } from './algoritms/search';
-import { CopyObjectMethods, DebounceWindowResize, DeepCopyObject, Fibonacci, FirstNoneRepeatingCharacters, GenerateFibonacci, GenerateFibonacci2, GetAllDigitsSum, IsPalindrome, MaxSumAdjacent, MemoizeObject, MemoizedFibonacci, RemoveDuplicates, SumDifferentArrayValuePairExist, ThrottleWindowScroll } from './algoritms/mixedAlgoritm';
-import ZoomedImage from './component';
-import MasonryGrid from './component/reactWindow/reactWindow';
-import List from './component/reactWindow/reactWindow';
-import ImageUpload from './AI/imageRecognization';
 import MixedAlgoritm from './pages/mixedAlgoritm';
 import SortingAlgoritm from './pages/sortingAlgoritms';
 import SearchingAlgoritm from './pages/searchAlgoritms';
