@@ -12,7 +12,6 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/three": "^0.168.0",
     "dotenv": "^16.3.1",
-    "getlogic": "^1.7.0",
     "greetdavo": "^1.0.0",
     "lamina": "^1.1.23",
     "react": "^18.2.0",
