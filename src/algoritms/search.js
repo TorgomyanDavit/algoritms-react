@@ -178,7 +178,6 @@ export function TernarySearch() {
     let start = 0;
     let end = arr.length - 1;
 
-    debugger
     while (start <= end) {
       const mid1 = start + Math.floor((end - start) / 3);
       const mid2 = end - Math.floor((end - start) / 3);
@@ -438,14 +437,14 @@ export function RecursiveBinarySearch({ arr }) {
   );
 }
 
-
-
 export function HashingTextSearch() {
+  const [entries, setEntries] = useState("Hello:world, apple:orange");
+  const [searchKey, setSearchKey] = useState("apple");
+
   function hash(key, arrayLength) {
     let total = 0;
     for (let char of key) {
-      // Map 'a' to 1, 'b' to 2, etc.
-      let value = char.charCodeAt(0)
+      let value = char.charCodeAt(0);
       total = (total + value) % arrayLength;
     }
     return total;
@@ -453,8 +452,7 @@ export function HashingTextSearch() {
 
   function createHashTable(size = 53) {
     const keyMap = new Map();
-  
-    // Function to set a key-value pair in the hash table
+
     function set(key, value) {
       const index = hash(key, size);
       if (!keyMap.has(index)) {
@@ -462,8 +460,7 @@ export function HashingTextSearch() {
       }
       keyMap.get(index).push([key, value]);
     }
-  
-    // Function to get a value based on a key
+
     function get(key) {
       const index = hash(key, size);
       const bucket = keyMap.get(index);
@@ -474,10 +471,9 @@ export function HashingTextSearch() {
           }
         }
       }
-      return undefined;
+      return "Not found";
     }
-  
-    // Function to get all keys in the hash table
+
     function keys() {
       let keysArray = [];
       for (let [index, bucket] of keyMap.entries()) {
@@ -489,24 +485,61 @@ export function HashingTextSearch() {
       }
       return keysArray;
     }
-  
+
     return { set, get, keys };
   }
-  
-  // Example usage
-  const hashTable = createHashTable();
 
-  hashTable.set("Hello", "world");
-  hashTable.set("apple", "orange");
-  
+  function calculate() {
+    const hashTable = createHashTable();
+    const pairs = entries.split(",").map((pair) => pair.trim().split(":"));
+    for (const [key, value] of pairs) {
+      hashTable.set(key, value);
+    }
+    return hashTable.get(searchKey);
+  }
 
   return (
-    <div>
-      <h3>Hashing Search Algorithm</h3>
-      <div>
-        Input: Hask Text
+    <div className="container">
+      <div className="result-side">
+        <h3>🔎 Hashing Text Search</h3>
+        <div className="input-side">
+          <label className="label">
+            Enter Key-Value Pairs:
+            <input
+              className="input"
+              type="text"
+              value={entries}
+              onChange={(e) => setEntries(e.target.value)}
+              placeholder="e.g. Hello:world, apple:orange"
+            />
+          </label>
+          <label className="label">
+            Enter Search Key:
+            <input
+              className="input"
+              type="text"
+              value={searchKey}
+              onChange={(e) => setSearchKey(e.target.value)}
+              placeholder="e.g. apple"
+            />
+          </label>
+        </div>
+
+        <p>
+          <strong>Result:</strong>{" "}
+          <span className="output success">{calculate()}</span>
+        </p>
+
+        <p className="description">
+          <TipAnimatedImage />
+          This uses a basic hash table implementation with string keys and shows
+          how collisions are resolved using chaining.
+        </p>
       </div>
-      {/* <div>Finding output index: {index}</div> */}
+
+      <pre className="code-box">
+        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+      </pre>
     </div>
   );
 }

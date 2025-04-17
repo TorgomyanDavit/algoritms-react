@@ -48,24 +48,14 @@ function App() {
         </Routes>
       </Router>
 
-
-
-      {/* searching algoritm */}
-      {/* <BinarySearch arr={[1, 2, 4, 5]} target={4}/> */}
-      {/* <RecursiveBinarySearch arr={[1, 2, 3, 4, 5]}/> */}
-      {/* <HashingSearch arr={[1, 2, 3, 4, 5]} target={3}/> */}
-      {/* <TernarySearch arr={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} target={8}/> */}
-      {/* <DFSArrayExample nestedArray={[1, [2, [3, 4], 5], 6, [7, 8]]}/> */}
-      {/* <HashingTextSearch />  */}
-
-
       {/* <List/> */}
 
-      {/* Three js */}
       {/* <ThreeExample/> */}
 
-      {/* Another Challenges */}
+      {/* zoom image like amazon */}
       {/* <ZoomedImage/> */}
+
+      {/* recognize image content */}
       {/* <ImageUpload/> */}
     </div>
   )

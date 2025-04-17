@@ -7,7 +7,7 @@ const ZoomedImage = () => {
       width={500}
       height={400}
       zoomWidth={600}
-      img="https://natalimediaapi.innodream.com/api/Image/Resize/ProductImage/02058-637011347564623046.png"
+      img="https://crm-media-backend.innodream.com/api/Image/Resize/1/1660_548_ducray_arm(4)-638804152613288993.png"
       className="zoom-img"
     />
   );
