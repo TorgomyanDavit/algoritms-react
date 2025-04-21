@@ -2,13 +2,14 @@ import React, { useEffect, useState, useCallback, useRef, useMemo } from 'react'
 import _ from "lodash";
 import { TipAnimatedImage } from "./animatedImg";
 
-export function convertFunctionTemplateLiteral(func) {
-  const functionSource = func.toString(); // Get the raw function code
-  // const bodyStart = functionSource.indexOf("{") + 1; // Find the start of the function body
-  // const bodyEnd = functionSource.lastIndexOf("}"); // Find the end of the function body
-  // const bodyCode = functionSource.slice(bodyStart, bodyEnd).trim(); // Extract the body
+// export function convertFunctionTemplateLiteral(func) {
+//   const functionSource = func.toString();
 
-  return functionSource;
+//   return functionSource;
+// }
+
+export function convertFunctionTemplateLiteral(fnString) {
+  return new Function(`return (${fnString})`)(); 
 }
 
 
@@ -194,14 +195,19 @@ export function ArrayTemplateLiteral() {
 export function FibonacciWithoutStackError() {
   const [count, setCount] = useState(5); 
 
-  function generateFibonacci(n) {
-    const sequence = [0, 1];
-    for (let i = 2; i < n; i++) {
-      const nextFibonacci = sequence[i - 1] + sequence[i - 2];
-      sequence.push(nextFibonacci);
+
+  const generateFibonacciView = `
+    function generateFibonacci(n) {
+      const sequence = [0, 1];
+      for (let i = 2; i < n; i++) {
+        const nextFibonacci = sequence[i - 1] + sequence[i - 2];
+        sequence.push(nextFibonacci);
+      }
+      return sequence;
     }
-    return sequence;
-  }
+  `;
+
+  const generateFibonacci = convertFunctionTemplateLiteral(generateFibonacciView);
 
   const result = generateFibonacci(count);
 
@@ -236,7 +242,7 @@ export function FibonacciWithoutStackError() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(generateFibonacci)}</code>
+        <code>{generateFibonacciView}</code>
       </pre>
     </div>
   );
@@ -247,10 +253,15 @@ export function FibonacciSimpleRecursion() {
   const [result, setResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
 
+
+  const fibonacciView = `
   function fibonacci(n) {
     if (n < 2) return n;
     return fibonacci(n - 1) + fibonacci(n - 2);
   }
+`;
+  const fibonacci = convertFunctionTemplateLiteral(fibonacciView);
+
 
   useEffect(() => {
     const threshold = 30; 
@@ -297,7 +308,7 @@ export function FibonacciSimpleRecursion() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(fibonacci)}</code>
+        <code>{fibonacciView}</code>
       </pre>
     </div>
   );
@@ -306,6 +317,8 @@ export function FibonacciSimpleRecursion() {
 export function MemoizedFibonacci() {
   const [count, setCount] = useState(5); // Default value for Fibonacci sequence
 
+
+  const memoizeView = `
   function memoize(func) {
     const cache = new Map();
 
@@ -318,7 +331,9 @@ export function MemoizedFibonacci() {
       return result;
     };
   }
+`;
 
+  const memoize = convertFunctionTemplateLiteral(memoizeView);
   
   const memoFibonacci = memoize((n) => {
     if (n < 2) return n;
@@ -357,7 +372,7 @@ export function MemoizedFibonacci() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(memoize)}</code>
+        <code>{memoizeView}</code>
       </pre>
     </div>
   );
@@ -638,21 +653,22 @@ export function DeepCopyObject() {
     }`
   );
 
-
-  function deepCopy(obj)  {
-    if (obj === null || typeof obj !== 'object') {
-      return obj;
-    }
-
-    const copy = Array.isArray(obj) ? [] : {};
-    for (let key in obj) {
-      if (Object.hasOwnProperty.call(obj, key)) {
-        copy[key] = deepCopy(obj[key]);
+  const deepCopyCode = `
+    function deepCopy(obj) {
+      if (obj === null || typeof obj !== 'object') {
+        return obj;
       }
+      const copy = Array.isArray(obj) ? [] : {};
+      for (let key in obj) {
+        if (Object.hasOwnProperty.call(obj, key)) {
+          copy[key] = deepCopy(obj[key]);
+        }
+      }
+      return copy;
     }
+  `;
 
-    return copy;
-  };
+  const deepCopy = convertFunctionTemplateLiteral(deepCopyCode);
 
   const createDeepCopy = () => {
     try {
@@ -699,7 +715,7 @@ export function DeepCopyObject() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(deepCopy)}</code>
+        <code>{deepCopyCode}</code>
       </pre>
     </div>
   );
@@ -707,46 +723,69 @@ export function DeepCopyObject() {
 
 export function CopyObjectMethods() {
 
-  function createShallowCopyAssign() {
-    const originalObj = { a: 1, b: { c: 2 } };
-    const copy = Object.assign({}, originalObj);
-    copy.b.c = 42;
+  const createShallowCopyAssignView = `
+    function createShallowCopyAssign() {
+      const originalObj = { a: 1, b: { c: 2 } };
+      const copy = Object.assign({}, originalObj);
+      copy.b.c = 42;
 
-    console.log(originalObj,"originalObj")
-    return {originalObj,copy};
-  };
+      console.log(originalObj,"originalObj")
+      return {originalObj,copy};
+    }
+  `;
 
-  function createSpreadCopy() {
-    const originalObj = { a: 1, b: { c: 2 } };
+  const createSpreadCopyView = `
+    function createSpreadCopy() {
+      const originalObj = { a: 1, b: { c: 2 } };
 
-    const copy = { ...originalObj };
-    copy.b.c = 42;
-    return {originalObj,copy};
+      const copy = { ...originalObj };
+      copy.b.c = 42;
+      return {originalObj,copy};
+    }
+  `;
 
-  };
 
-  function createStructuredCloneCopy() {
-    const originalObj = { a: 1, b: { c: 2 } };
+  const createStructuredCloneCopyView = `
+    function createStructuredCloneCopy() {
+      const originalObj = { a: 1, b: { c: 2 } };
 
-    const copy = structuredClone(originalObj);
-    copy.b.c = 45;
-    return {originalObj,copy};
+      const copy = structuredClone(originalObj);
+      copy.b.c = 45;
+      return {originalObj,copy};
+    }
+  `;
 
-  };
+  const createJsonStringifyCopyView = `
+    function createJsonStringifyCopy() {
+      const originalObj = { a: 1, b: { c: 2 } };
+      const copy = _.cloneDeep(originalObj);
+      copy.b.c = 42;
 
-  function createJsonStringifyCopy() {
-    const originalObj = { a: 1, b: { c: 2 } };
-    const copy = _.cloneDeep(originalObj);
-    copy.b.c = 42;
+      return {originalObj,copy};
+    }
+  `;
 
-    return {originalObj,copy};
-  };
+  const createLodashCopyView = `
+    function createJsonStringifyCopy() {
+      const originalObj = { a: 1, b: { c: 2 } };
+      const copy = _.cloneDeep(originalObj);
+      copy.b.c = 42;
 
-  function createLodashCopy() {
-    const objWithFunction = { a: 1, b: { c: 2, d: () => '' } };
-    return JSON.parse(JSON.stringify(objWithFunction));
-  };
+      return {originalObj,copy};
+    }
+  `;
 
+
+  const createShallowCopyAssign = convertFunctionTemplateLiteral(createShallowCopyAssignView);
+  const createSpreadCopy = convertFunctionTemplateLiteral(createSpreadCopyView);
+  const createStructuredCloneCopy = convertFunctionTemplateLiteral(createStructuredCloneCopyView);
+  const createJsonStringifyCopy = convertFunctionTemplateLiteral(createJsonStringifyCopyView);
+  const createLodashCopy = convertFunctionTemplateLiteral(createLodashCopyView);
+
+
+
+
+  
 
   return (
     <>
@@ -765,7 +804,7 @@ export function CopyObjectMethods() {
           </p>
         </div>
         <pre className="code-box">
-          <code>{convertFunctionTemplateLiteral(createShallowCopyAssign)}</code>
+          <code>{createShallowCopyAssignView}</code>
         </pre>
       </div>
 
@@ -783,7 +822,7 @@ export function CopyObjectMethods() {
           </p>
         </div>
         <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(createSpreadCopy)}</code>
+        <code>{createSpreadCopyView}</code>
       </pre>
       </div>
 
@@ -801,7 +840,7 @@ export function CopyObjectMethods() {
           </p>
         </div>
         <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(createStructuredCloneCopy)}</code>
+        <code>{createStructuredCloneCopyView}</code>
       </pre>
       </div>
 
@@ -819,7 +858,7 @@ export function CopyObjectMethods() {
           </p>
         </div>
         <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(createLodashCopy)}</code>
+        <code>{createLodashCopyView}</code>
       </pre>
       </div>
 
@@ -837,7 +876,7 @@ export function CopyObjectMethods() {
           </p>
         </div>
         <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(createJsonStringifyCopy)}</code>
+        <code>{createJsonStringifyCopyView}</code>
       </pre>
       </div>
     </>
@@ -994,6 +1033,31 @@ export function MemoizeObjectFactorial() {
     return result;
   });
 
+  const deepCopyCode = `
+  function deepCopy(obj) {
+    if (obj === null || typeof obj !== 'object') {
+      return obj;
+    }
+    const copy = Array.isArray(obj) ? [] : {};
+    for (let key in obj) {
+      if (Object.hasOwnProperty.call(obj, key)) {
+        copy[key] = deepCopy(obj[key]);
+      }
+    }
+    return copy;
+  }
+`;
+
+  const factorialView = `
+    function factorial(n) => {
+        let result = 1;
+        for (let i = 2; i <= n; i++) {
+          result *= i;
+        }
+        return result;
+      }
+  `;
+
   function handleCalculate() {
     const num = parseInt(inputNumber, 10);
     if (isNaN(num) || num < 0) {
@@ -1049,7 +1113,7 @@ export function MemoizeObjectFactorial() {
         </p>
       </div>
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(memoize)}</code>
+        <code>{factorialView}</code>
       </pre>
     </div>
   );
@@ -1267,6 +1331,20 @@ export function SumDifferentArrayValuePairExist() {
       setter(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
     };
   }
+
+  const calculateView = `
+    function calculate() {
+      const valueSet = new Set(input2);
+      for (let num of input1) {
+        const requiredPair = target - num;
+        if (valueSet.has(requiredPair)) {
+          return '\${num} + \${requiredPair} = \${target}';
+        }
+      }
+      return "No matching pair found.";
+    }
+  `;
+  
   function calculate() {
     const valueSet = new Set(input2);
     for (let num of input1) {
@@ -1340,7 +1418,7 @@ export function SumDifferentArrayValuePairExist() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+        <code>{calculateView}</code>
       </pre>
     </div>
   );

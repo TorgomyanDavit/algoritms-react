@@ -26,23 +26,23 @@ export default function MixedAlgoritm() {
         <SumDifferentArrayValuePairExist/>
         <FirstNoneRepeatingCharacters/>
 
-        <FindMax />
-        <IsPalindrome />
-        <GeneratePrimeChecker/> 
-        <MaxTwoNumberMultiple />
-        <MaxTwoAdjacentNumberMultiple />
-        <GetAllDigitsSum />
+        {/* <FindMax /> */}
+        {/* <IsPalindrome /> */}
+        {/* <GeneratePrimeChecker/>  */}
+        {/* <MaxTwoNumberMultiple /> */}
+        {/* <MaxTwoAdjacentNumberMultiple /> */}
+        {/* <GetAllDigitsSum /> */}
 
-        <RemoveDuplicates/>
+        {/* <RemoveDuplicates/> */}
 
-        <Publish_Subscribe />
+        {/* <Publish_Subscribe /> */}
 
-        <ThrottleWindowScroll/>
-        <DebounceWindowResize/>
+        {/* <ThrottleWindowScroll/> */}
+        {/* <DebounceWindowResize/> */}
 
         
-        <ObjectToTemplateLiteral />
-        <ArrayTemplateLiteral />
+        {/* <ObjectToTemplateLiteral /> */}
+        {/* <ArrayTemplateLiteral /> */}
       </div>
     )
 }
