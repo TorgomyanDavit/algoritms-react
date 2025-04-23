@@ -313,37 +313,45 @@ export function GenerateMergeSort() {
     setArr(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
   }
 
-  function merge(leftArr, rightArr) {
-    const sortedArray = [];
+  const mergeView = `
+    function merge(leftArr, rightArr) {
+      const sortedArray = [];
 
-    while (leftArr.length && rightArr.length) {
-      if (leftArr[0] < rightArr[0]) {
-        sortedArray.push(leftArr.shift());
-      } else {
-        sortedArray.push(rightArr.shift());
+      while (leftArr.length && rightArr.length) {
+        if (leftArr[0] < rightArr[0]) {
+          sortedArray.push(leftArr.shift());
+        } else {
+          sortedArray.push(rightArr.shift());
+        }
       }
+
+
+      return sortedArray.concat(leftArr, rightArr);
     }
+  `;
+
+  const merge = convertFunctionTemplateLiteral(mergeView);
+
+  const mergeSortView = `
+    function mergeSort(arr,merge) {
+      if (arr.length <= 1) {
+        return arr;
+      }
+
+      const middle = Math.floor(arr.length / 2);
+      const left = arr.slice(0, middle);
+      const right = arr.slice(middle);
+
+      const sortedLeft = mergeSort(left,merge)
+      const sortedRight = mergeSort(right,merge)
 
 
-    return sortedArray.concat(leftArr, rightArr);
-  }
-
-  function mergeSort(arr) {
-    if (arr.length <= 1) {
-      return arr;
+      const mergeReponse = merge(sortedLeft, sortedRight);
+      return mergeReponse
     }
+  `;
 
-    const middle = Math.floor(arr.length / 2);
-    const left = arr.slice(0, middle);
-    const right = arr.slice(middle);
-
-    const sortedLeft = mergeSort(left)
-    const sortedRight = mergeSort(right)
-
-
-    const mergeReponse = merge(sortedLeft, sortedRight);
-    return mergeReponse
-  }
+  const mergeSort = convertFunctionTemplateLiteral(mergeSortView);
 
   return (
     <div className="container">
@@ -363,7 +371,7 @@ export function GenerateMergeSort() {
         </div>
         <p>
           <strong>Result:</strong>{" "}
-          <span className="output success">Sorted: {mergeSort(arr).join(",")}</span>
+          <span className="output success">Sorted: {mergeSort(arr,merge).join(",")}</span>
         </p>
         <p className="description">
           <TipAnimatedImage />
@@ -374,10 +382,10 @@ export function GenerateMergeSort() {
         </p>
       </div>
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(merge)}</code>
+        <code>{mergeView}</code>
         <br/>
         <br/>
-        <code>{convertFunctionTemplateLiteral(mergeSort)}</code>
+        <code>{mergeSortView}</code>
       </pre>
     </div>
   );

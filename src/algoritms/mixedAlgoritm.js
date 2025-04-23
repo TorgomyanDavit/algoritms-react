@@ -12,59 +12,6 @@ export function convertFunctionTemplateLiteral(fnString) {
   return new Function(`return (${fnString})`)(); 
 }
 
-
-// export function CuriousJsonStringify() {
-//   const inputArray = [1,null,undefined,() => "",NaN]
-//   const inputObject = {age:25,name:NaN,func:() => "",country:null,city:undefined}
-
-//   function convertArrayToTemplateLiteral(arr) {
-//     const customString = arr.map((element) => {
-//       if (element === null) {
-//         return "null";
-//       } else if (element === undefined) {
-//         return "undefined";
-//       } else if (typeof element === "function") {
-//         return "() => \"\"";
-//       } else {
-//         return element.toString();
-//       }
-//     }).join(", ");
-
-//     return `[${customString}]`;
-//   }
-//   const innerTemplateLiteralArr = convertArrayToTemplateLiteral(inputArray);
-
-//   function convertObjectToTemplateLiteral(obj) {
-//     const innerTemplate = Object.entries(obj).map(([key, value]) => {
-//       if (value === null) {
-//         return `${key}: null`;
-//       } else if (value === undefined) {
-//         return `${key}: undefined`;
-//       } else if (typeof value === 'function') {
-//         return `${key}: ${value.toString()}`;
-//       } else if (Number.isNaN(value)) {
-//         return `${key}: NaN`;
-//       } else {
-//         return `${key}: ${value}`;
-//       }
-//     }).join(', ');
-//     return `{${innerTemplate}}`;
-//   }
-//   const innerTemplateLiteral = convertObjectToTemplateLiteral(inputObject);
-
-//   return (
-//     <div>
-//       <h3>ArrayAs JSON.stringify</h3> 
-//       <div>input inputArray = {innerTemplateLiteralArr}</div>
-//       <div>output = {JSON.stringify(inputArray)}</div>
-//       <br/>
-//       <h3>ObjectAs JSON.stringify</h3> 
-//       <div>input ArrayInputExample = {innerTemplateLiteral}</div>
-//       <div>output = {JSON.stringify(inputObject)}</div>
-//     </div>
-//   )
-// }
-
 export function convertObjectToTemplateLiteral(obj) {
   const innerTemplate = Object.entries(obj).map(([key, value]) => {
     if (value === null) {
@@ -109,6 +56,25 @@ export function ObjectToTemplateLiteral() {
 
   const objectTemplateLiteral = convertObjectToTemplateLiteral(inputObject);
 
+  const cconvertObjectToTemplateLiteralView = `
+    function convertObjectToTemplateLiteral(obj) {
+      const innerTemplate = Object.entries(obj).map(([key, value]) => {
+        if (value === null) {
+          return key: null;
+        } else if (value === undefined) {
+          return key: undefined;
+        } else if (typeof value === 'function') {
+          return key: value.toString();
+        } else if (Number.isNaN(value)) {
+          return key: NaN;
+        } else {
+          return key: value;
+        }
+      }).join(', ');
+      return innerTemplate;
+    }
+  `;
+
   return (
     <div className="container">
       <div className="result-side">
@@ -145,7 +111,7 @@ export function ObjectToTemplateLiteral() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(convertObjectToTemplateLiteral)}</code>
+        <code>{cconvertObjectToTemplateLiteralView}</code>
       </pre>
     </div>
   );
@@ -155,7 +121,23 @@ export function ArrayTemplateLiteral() {
   const [inputArray, setInputArray] = useState([1, null, undefined, () => "", NaN]);
 
   const arrayTemplateLiteral = convertArrayToTemplateLiteral(inputArray);
+  const convertArrayToTemplateLiteralView = `
+    function convertArrayToTemplateLiteral(arr) {
+      const customString = arr.map((element) => {
+        if (element === null) {
+          return "null";
+        } else if (element === undefined) {
+          return "undefined";
+        } else if (typeof element === "function") {
+          return "() => \"\"";
+        } else {
+          return element.toString();
+        }
+      }).join(", ");
 
+      return customString;
+    }
+  `;
   return (
     <div className="container">
       <div className="result-side">
@@ -186,7 +168,7 @@ export function ArrayTemplateLiteral() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(convertArrayToTemplateLiteral)}</code>
+        <code>{convertArrayToTemplateLiteralView}</code>
       </pre>
     </div>
   );
@@ -381,25 +363,28 @@ export function MemoizedFibonacci() {
 export function FindMax() {
   const [text, setText] = useState("5, 1, 3, 7, 9, -10");
 
-  function calculate() {
-    const nums = text
-      .split(",")
-      .map((n) => parseFloat(n.trim()))
-      .filter((n) => !isNaN(n));
+  const calculateView = `
+    function calculate(text) {
+      const nums = text
+        .split(",")
+        .map((n) => parseFloat(n.trim()))
+        .filter((n) => !isNaN(n));
 
-    if (nums.length === 0) return "Please enter at least one valid number.";
+      if (nums.length === 0) return "Please enter at least one valid number.";
 
-    let maxNum = Number.NEGATIVE_INFINITY;
-    for (let num of nums) {
-      if (num > maxNum) {
-        maxNum = num;
+      let maxNum = Number.NEGATIVE_INFINITY;
+      for (let num of nums) {
+        if (num > maxNum) {
+          maxNum = num;
+        }
       }
+
+      return maxNum;
     }
+  `;
 
-    return maxNum;
-  }
-
-  const result = calculate();
+  const calculate = convertFunctionTemplateLiteral(calculateView);
+  const result = calculate(text);
 
   return (
     <div className="container">
@@ -430,7 +415,7 @@ export function FindMax() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+        <code>{calculateView}</code>
       </pre>
     </div>
   );
@@ -439,16 +424,19 @@ export function FindMax() {
 export function GetAllDigitsSum() {
   const [text, setText] = useState("5, 1, 3, 7, 9, -10");
 
-  function calculate() {
-    const digits = text.replace(/\D/g, ""); 
-    const sumDigits = digits
-      .split("")
-      .reduce((acc, digit) => acc + Number(digit), 0);
+  const calculateView = `
+    function calculate(text) {
+      const digits = text.replace(/\D/g, ""); 
+      const sumDigits = digits
+        .split("")
+        .reduce((acc, digit) => acc + Number(digit), 0);
 
-    return sumDigits;
-  }
+      return sumDigits;
+    }
+  `;
 
-  const result = calculate();
+  const calculate = convertFunctionTemplateLiteral(calculateView);
+  const result = calculate(text);
 
   return (
     <div className="container">
@@ -479,7 +467,7 @@ export function GetAllDigitsSum() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+        <code>{calculateView}</code>
       </pre>
     </div>
   );
@@ -488,22 +476,28 @@ export function GetAllDigitsSum() {
 export function MaxTwoNumberMultiple() {
   const [text, setText] = useState("5, 1, 3, 7, 9, -10");
 
-  function calculate() {
-    const arr = text
-      .split(",")
-      .map((num) => parseInt(num.trim()))
-      .filter((n) => !isNaN(n));
 
-    if (arr.length < 2) {
-      return "Array must have at least 2 numbers.";
+
+  
+  const calculateView = `
+    function calculate(text) {
+      const arr = text
+        .split(",")
+        .map((num) => parseInt(num.trim()))
+        .filter((n) => !isNaN(n));
+
+      if (arr.length < 2) {
+        return "Array must have at least 2 numbers.";
+      }
+
+      arr.sort((a, b) => a - b);
+      const product1 = arr[arr.length - 1] * arr[arr.length - 2];
+      const product2 = arr[0] * arr[1];
+
+      return Math.max(product1, product2);
     }
-
-    arr.sort((a, b) => a - b);
-    const product1 = arr[arr.length - 1] * arr[arr.length - 2];
-    const product2 = arr[0] * arr[1];
-
-    return Math.max(product1, product2);
-  }
+  `;
+  const calculate = convertFunctionTemplateLiteral(calculateView);
 
   return (
     <div className="container">
@@ -521,7 +515,7 @@ export function MaxTwoNumberMultiple() {
         </label>
         <p>
           <strong>Result:</strong>{" "}
-          <span className="output success">{calculate()}</span>
+          <span className="output success">{calculate(text)}</span>
         </p>
         <p className="description">
           <TipAnimatedImage />
@@ -536,7 +530,7 @@ export function MaxTwoNumberMultiple() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+        <code>{calculateView}</code>
       </pre>
     </div>
   );
@@ -545,21 +539,26 @@ export function MaxTwoNumberMultiple() {
 export function MaxTwoAdjacentNumberMultiple() {
   const [text, setText] = useState("3, 6, -2, -5, 7, 3");
 
-  function calculate() {
-    const arr = text.split(",").map(n => parseInt(n.trim())).filter(n => !isNaN(n));
 
-    if (arr.length < 2) {
-      return "Array must have at least two numbers.";
+  const calculateView = `
+    function calculate(text) {
+      const arr = text.split(",").map(n => parseInt(n.trim())).filter(n => !isNaN(n));
+
+      if (arr.length < 2) {
+        return "Array must have at least two numbers.";
+      }
+
+      let maxProduct = arr[0] * arr[1];
+      for (let i = 1; i < arr.length - 1; i++) {
+        const product = arr[i] * arr[i + 1];
+        maxProduct = Math.max(maxProduct, product);
+      }
+
+      return maxProduct;
     }
+  `;
+  const calculate = convertFunctionTemplateLiteral(calculateView);
 
-    let maxProduct = arr[0] * arr[1];
-    for (let i = 1; i < arr.length - 1; i++) {
-      const product = arr[i] * arr[i + 1];
-      maxProduct = Math.max(maxProduct, product);
-    }
-
-    return maxProduct;
-  }
 
   return (
     <div className="container">
@@ -575,7 +574,7 @@ export function MaxTwoAdjacentNumberMultiple() {
             placeholder="Enter numbers, e.g. 3, 6, -2, -5, 7, 3"
           />
         </label>
-        <p><strong>Result:</strong> <span className="output success">{calculate()}</span></p>
+        <p><strong>Result:</strong> <span className="output success">{calculate(text)}</span></p>
         <p className="description">
           <TipAnimatedImage />
           This function finds the maximum product of two **adjacent** elements in an array.
@@ -585,7 +584,7 @@ export function MaxTwoAdjacentNumberMultiple() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+        <code>{calculateView}</code>
       </pre>
     </div>
   );
@@ -594,20 +593,25 @@ export function MaxTwoAdjacentNumberMultiple() {
 export function RemoveDuplicates() {
   const [text, setText] = useState("1,1,1,2,2,3,3");
 
-  function calculate() {
-    const arr = text.split(",").map(item => item.trim()).filter(Boolean);
-    const seen = new Set();
-    const result = [];
 
-    for (let item of arr) {
-      if (!seen.has(item)) {
-        seen.add(item);
-        result.push(item);
+  const calculateView = `
+    function calculate(text) {
+      const arr = text?.split(",").map(item => item.trim()).filter(Boolean);
+      const seen = new Set();
+      const result = [];
+
+      for (let item of arr) {
+        if (!seen.has(item)) {
+          seen.add(item);
+          result.push(item);
+        }
       }
-    }
 
-    return result.join(", ");
-  }
+      return result.join(", ");
+    }
+  `;
+
+  const calculate = convertFunctionTemplateLiteral(calculateView);
 
   return (
     <div className="container">
@@ -623,7 +627,7 @@ export function RemoveDuplicates() {
             placeholder="Enter numbers, e.g. 1,2,3,3,4"
           />
         </label>
-        <p><strong>Result:</strong> <span className="output success">[{calculate()}]</span></p>
+        <p><strong>Result:</strong> <span className="output success">[{calculate(text)}]</span></p>
         <p className="description">
           <TipAnimatedImage />
           This example removes duplicates from a comma-separated list of numbers.
@@ -633,7 +637,7 @@ export function RemoveDuplicates() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+        <code>{calculateView}</code>
       </pre>
     </div>
   );
@@ -886,13 +890,18 @@ export function CopyObjectMethods() {
 export function DebounceWindowResize() {
   const [resizing, setResizing] = useState(false);
 
-  function debounce(func, wait) {
-    let timeout;
-    return function (...args) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(this, args), wait);
-    };
-  }
+
+  const debounceView = `
+    function debounce(func, wait) {
+      let timeout;
+      return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+    }
+  `;
+  const debounce = convertFunctionTemplateLiteral(debounceView);
+
 
   const handleResize = useCallback(() => {
     setResizing(true);
@@ -921,7 +930,7 @@ export function DebounceWindowResize() {
         </p>
       </div>
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(debounce)}</code>
+        <code>{debounceView}</code>
       </pre>
     </div>
   );
@@ -931,24 +940,27 @@ export function ThrottleWindowScroll() {
   const scrollContainerRef = useRef(null);
   const [scrolling, setScrolling] = useState(false);
 
-  function throttle(func, limit) {
-    let lastFunc;
-    let lastRan;
-    return function (...args) {
-      if (!lastRan) {
-        func.apply(this, args);
-        lastRan = Date.now();
-      } else {
-        clearTimeout(lastFunc);
-        lastFunc = setTimeout(() => {
-          if (Date.now() - lastRan >= limit) {
-            func.apply(this, args);
-            lastRan = Date.now();
-          }
-        }, limit - (Date.now() - lastRan));
-      }
-    };
-  }
+  const calculateView = `
+    function throttle(func, limit) {
+      let lastFunc;
+      let lastRan;
+      return function (...args) {
+        if (!lastRan) {
+          func.apply(this, args);
+          lastRan = Date.now();
+        } else {
+          clearTimeout(lastFunc);
+          lastFunc = setTimeout(() => {
+            if (Date.now() - lastRan >= limit) {
+              func.apply(this, args);
+              lastRan = Date.now();
+            }
+          }, limit - (Date.now() - lastRan));
+        }
+      };
+    }
+  `;
+  const throttle = convertFunctionTemplateLiteral(calculateView);
 
   const throttledScroll = useCallback(
     throttle(() => {
@@ -992,7 +1004,7 @@ export function ThrottleWindowScroll() {
         </p>
       </div>
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(throttle)}</code>
+        <code>{calculateView}</code>
       </pre>
     </div>
   );
@@ -1032,21 +1044,6 @@ export function MemoizeObjectFactorial() {
     }
     return result;
   });
-
-  const deepCopyCode = `
-  function deepCopy(obj) {
-    if (obj === null || typeof obj !== 'object') {
-      return obj;
-    }
-    const copy = Array.isArray(obj) ? [] : {};
-    for (let key in obj) {
-      if (Object.hasOwnProperty.call(obj, key)) {
-        copy[key] = deepCopy(obj[key]);
-      }
-    }
-    return copy;
-  }
-`;
 
   const factorialView = `
     function factorial(n) => {
@@ -1120,34 +1117,36 @@ export function MemoizeObjectFactorial() {
 }
 
 //  this is not component
-export function createPubSub() {
-  const subscribers = {};
+const createPubSubView = `
+ function createPubSub() {
+    const subscribers = {};
+    function subscribe(event, callback) {
+      if (!subscribers[event]) {
+        subscribers[event] = [];
+      }
 
-  function subscribe(event, callback) {
-    if (!subscribers[event]) {
-      subscribers[event] = [];
+      subscribers[event].push(callback);
+      return () => unsubscribe(event, callback);
     }
 
-    subscribers[event].push(callback);
-    return () => unsubscribe(event, callback);
-  }
+    function unsubscribe(event, callback) {
+      if (!subscribers[event]) return;
+      subscribers[event] = subscribers[event].filter(cb => cb !== callback);
+    }
 
-  function unsubscribe(event, callback) {
-    if (!subscribers[event]) return;
-    subscribers[event] = subscribers[event].filter(cb => cb !== callback);
-  }
+    function publish(event, data) {
+      if (!subscribers[event]) return;
+      subscribers[event].forEach(callback => callback(data));
+    }
 
-  function publish(event, data) {
-    if (!subscribers[event]) return;
-    subscribers[event].forEach(callback => callback(data));
+    return {
+      subscribe,
+      unsubscribe,
+      publish
+    };
   }
-
-  return {
-    subscribe,
-    unsubscribe,
-    publish
-  };
-}
+`;
+const createPubSub = convertFunctionTemplateLiteral(createPubSubView);
 
 export function Publish_Subscribe() {
   const { subscribe, publish } = createPubSub();
@@ -1194,7 +1193,7 @@ export function Publish_Subscribe() {
         </p>
       </div>
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(createPubSub)}</code>
+        <code>{createPubSubView}</code>
       </pre>
     </div>
   );
@@ -1203,23 +1202,27 @@ export function Publish_Subscribe() {
 export function IsPalindrome() {
   const [inputText, setInputText] = useState("");
 
-  function checkPalindrome(text) {
-    const cleanedStr = text
-    .split("")
-    .filter(char => (char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z') || (char >= '0' && char <= '9'))
-    .join("")
-    .toLowerCase();
-    // const cleanedStr = text.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
-    let left = 0,
-    right = cleanedStr.length - 1;
+  const checkPalindromeView = `
+    function checkPalindrome(text) {
+      const cleanedStr = text
+      .split("")
+      .filter(char => (char >= 'a' && char <= 'z') || (char >= 'A' && char <= 'Z') || (char >= '0' && char <= '9'))
+      .join("")
+      .toLowerCase();
+      // const cleanedStr = text.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+      let left = 0,
+      right = cleanedStr.length - 1;
 
-    while (left < right) {
-      if (cleanedStr[left] !== cleanedStr[right]) return false;
-      left++;
-      right--;
+      while (left < right) {
+        if (cleanedStr[left] !== cleanedStr[right]) return false;
+        left++;
+        right--;
+      }
+      return true;
     }
-    return true;
-  }
+  `;
+
+  const checkPalindrome = convertFunctionTemplateLiteral(checkPalindromeView);
 
   return (
     <div className="container">
@@ -1249,7 +1252,7 @@ export function IsPalindrome() {
         </p>
       </div>
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(checkPalindrome)}</code>
+        <code>{checkPalindromeView}</code>
       </pre>
     </div>
   );
@@ -1264,17 +1267,21 @@ export function GeneratePrimeChecker() {
     );
   }
 
-  function isPrime(num) {
-    if (num < 2) return false;
-    if (num === 2) return true;
-    if (num % 2 === 0) return false;
+  const isPrimeView = `
+    function isPrime(num) {
+      if (num < 2) return false;
+      if (num === 2) return true;
+      if (num % 2 === 0) return false;
 
-    const sqrt = Math.sqrt(num);
-    for (let i = 3; i <= sqrt; i += 2) {
-      if (num % i === 0) return false;
+      const sqrt = Math.sqrt(num);
+      for (let i = 3; i <= sqrt; i += 2) {
+        if (num % i === 0) return false;
+      }
+      return true;
     }
-    return true;
-  }
+  `;
+  const isPrime = convertFunctionTemplateLiteral(isPrimeView);
+
 
   return (
     <div className="container">
@@ -1315,7 +1322,7 @@ export function GeneratePrimeChecker() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(isPrime)}</code>
+        <code>{isPrimeView}</code>
       </pre>
     </div>
   );
@@ -1427,28 +1434,32 @@ export function SumDifferentArrayValuePairExist() {
 export function FirstNoneRepeatingCharacters() {
   const [text, setText] = useState("abcabbiefc");
 
-  function calculate() {
-    const array = text.split("")
-    const valueSet = array.reduce((aggr,val) => {
-      if(!aggr[val]) {
-        aggr[val] = 1
-      } else {
-        aggr[val]++
+  const calculateView = `
+    function calculate(text) {
+      const array = text.split("")
+      const valueSet = array.reduce((aggr,val) => {
+        if(!aggr[val]) {
+          aggr[val] = 1
+        } else {
+          aggr[val]++
+        }
+
+        return aggr
+      },{})
+
+      const keys = Object.keys(valueSet)
+      for (let i = 0; i < keys.length;i++) {
+        const val = keys[i]
+        if (valueSet[val] === 1) {
+          return val
+        }
       }
 
-      return aggr
-    },{})
-
-    const keys = Object.keys(valueSet)
-    for (let i = 0; i < keys.length;i++) {
-      const val = keys[i]
-      if (valueSet[val] === 1) {
-        return val
-      }
+      return "No matching odd value."
     }
+  `;
+  const calculate = convertFunctionTemplateLiteral(calculateView);
 
-    return "No matching odd value."
-  }
 
   return (
     <div className="container">
@@ -1464,7 +1475,7 @@ export function FirstNoneRepeatingCharacters() {
             placeholder="Enter numbers, e.g. 4,5,6"
           />
         </label>
-        <p><strong>Result:</strong> <span className="output success">Found: {calculate()}</span></p>
+        <p><strong>Result:</strong> <span className="output success">Found: {calculate(text)}</span></p>
         <p className="description">
             <TipAnimatedImage />
             This problem requires finding the first character in a string that does not repeat anywhere else.
@@ -1474,7 +1485,7 @@ export function FirstNoneRepeatingCharacters() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+        <code>{calculateView}</code>
       </pre>
     </div>
   )
