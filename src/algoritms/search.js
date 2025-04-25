@@ -19,14 +19,17 @@ export function LineirSearch() {
     setTarget(parseInt(e.target.value.trim(), 10) || 0);
   }
 
-  function calculate() {
-    for (let index = 0; index < arr.length; index++) {
-      if (arr[index] === target) {
-        return index; // Return the index of the target if found
+  const calculateView = `
+    function calculate(arr,target) {
+      for (let index = 0; index < arr.length; index++) {
+        if (arr[index] === target) {
+          return index; // Return the index of the target if found
+        }
       }
+      return -1; // Not found
     }
-    return -1; // Not found
-  }
+  `;
+  const calculate = convertFunctionTemplateLiteral(calculateView);
 
   return (
     <div className="container">
@@ -58,7 +61,7 @@ export function LineirSearch() {
         <p>
           <strong>Result:</strong>{" "}
           <span className="output success">
-            Found at index: {calculate()}
+            Found at index: {calculate(arr,target)}
           </span>
         </p>
 
@@ -71,7 +74,7 @@ export function LineirSearch() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+        <code>{calculateView}</code>
       </pre>
     </div>
   );
@@ -93,23 +96,28 @@ export function BinarySearch() {
     setTarget(parseInt(e.target.value.trim(), 10) || 0);
   }
 
-  function calculate() {
-    let start = 0;
-    let end = arr.length - 1;
+  const calculateView = `
+    function calculate(arr,target) {
+      let start = 0;
+      let end = arr.length - 1;
 
-    while (start <= end) {
-      const mid = Math.floor((start + end) / 2);
-      if (arr[mid] === target) {
-        return mid;
-      } else if (target < arr[mid]) {
-        end = mid - 1;
-      } else {
-        start = mid + 1;
+      while (start <= end) {
+        const mid = Math.floor((start + end) / 2);
+        if (arr[mid] === target) {
+          return mid;
+        } else if (target < arr[mid]) {
+          end = mid - 1;
+        } else {
+          start = mid + 1;
+        }
       }
-    }
 
-    return -1; 
-  }
+      return -1; 
+    }
+  `;
+  const calculate = convertFunctionTemplateLiteral(calculateView);
+
+
 
   return (
     <div className="container">
@@ -141,7 +149,7 @@ export function BinarySearch() {
         <p>
           <strong>Result:</strong>{" "}
           <span className="output success">
-            Found at index: {calculate()}
+            Found at index: {calculate(arr,target)}
           </span>
         </p>
 
@@ -152,7 +160,7 @@ export function BinarySearch() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+        <code>{calculateView}</code>
       </pre>
     </div>
   );
@@ -174,29 +182,33 @@ export function TernarySearch() {
     setTarget(parseInt(e.target.value.trim(), 10) || 0);
   }
 
-  function calculate() {
-    let start = 0;
-    let end = arr.length - 1;
+  const calculateView = `
+    function calculate(arr,target) {
+      let start = 0;
+      let end = arr.length - 1;
 
-    while (start <= end) {
-      const mid1 = start + Math.floor((end - start) / 3);
-      const mid2 = end - Math.floor((end - start) / 3);
+      while (start <= end) {
+        const mid1 = start + Math.floor((end - start) / 3);
+        const mid2 = end - Math.floor((end - start) / 3);
 
-      if (arr[mid1] === target) return mid1;
-      if (arr[mid2] === target) return mid2;
+        if (arr[mid1] === target) return mid1;
+        if (arr[mid2] === target) return mid2;
 
-      if (target < arr[mid1]) {
-        end = mid1 - 1;
-      } else if (target > arr[mid2]) {
-        start = mid2 + 1;
-      } else {
-        start = mid1 + 1;
-        end = mid2 - 1;
+        if (target < arr[mid1]) {
+          end = mid1 - 1;
+        } else if (target > arr[mid2]) {
+          start = mid2 + 1;
+        } else {
+          start = mid1 + 1;
+          end = mid2 - 1;
+        }
       }
-    }
 
-    return -1;
-  }
+      return -1;
+    }
+  `;
+  const calculate = convertFunctionTemplateLiteral(calculateView);
+
 
   return (
     <div className="container">
@@ -228,7 +240,7 @@ export function TernarySearch() {
         <p>
           <strong>Result:</strong>{" "}
           <span className="output success">
-            Found at index: {calculate()}
+            Found at index: {calculate(arr,target)}
           </span>
         </p>
 
@@ -242,7 +254,7 @@ export function TernarySearch() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+        <code>{calculateView}</code>
       </pre>
     </div>
   );
@@ -251,6 +263,16 @@ export function TernarySearch() {
 export function HashingSearch() {
   const [arr, setArr] = useState([1, 2, 3, 4, 5, 6]);
   const [target, setTarget] = useState(4);
+
+  const calculateView = `
+    function calculate(arr,target) {
+      const hashTable = {};
+      arr.forEach((value, index) => {
+        hashTable[value] = index;
+      });
+      return hashTable[target] !== undefined ? hashTable[target] : -1;
+    }
+  `;
 
   function handleArrayChange(e) {
     const parsedArr = e.target.value
@@ -263,14 +285,7 @@ export function HashingSearch() {
     setTarget(parseInt(e.target.value.trim(), 10) || 0);
   }
 
-  function calculate() {
-    const hashTable = {};
-    arr.forEach((value, index) => {
-      hashTable[value] = index;
-    });
-    return hashTable[target] !== undefined ? hashTable[target] : -1;
-  }
-
+  const calculate = convertFunctionTemplateLiteral(calculateView);
   return (
     <div className="container">
       <div className="result-side">
@@ -301,7 +316,7 @@ export function HashingSearch() {
         <p>
           <strong>Result:</strong>{" "}
           <span className="output success">
-            Found at index: {calculate()}
+            Found at index: {calculate(arr,target)}
           </span>
         </p>
 
@@ -314,7 +329,7 @@ export function HashingSearch() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(calculate)}</code>
+        <code>{calculateView}</code>
       </pre>
     </div>
   );
@@ -340,21 +355,32 @@ export function DFSArrayExample() {
     }
   }
 
-  function depthFirstSearchArray(array, callback) {
-    array.forEach((item) => {
-      if (Array.isArray(item)) {
-        depthFirstSearchArray(item, callback);
-      } else {
-        callback(item);
-      }
-    });
-  }
+  const calculateView = `
+    function depthFirstSearchArray(array, callback) {
+      array.forEach((item) => {
+        if (Array.isArray(item)) {
+          depthFirstSearchArray(item, callback);
+        } else {
+          callback(item);
+        }
+      });
+    }
+  `;
+
+  const calculateView2 = `
+    function extractArrayCallBack() {
+      const visited = [];
+      depthFirstSearchArray(nestedArray, (item) => visited.push(item));
+      setResult(visited);
+    }
+  `;
 
   function extractArrayCallBack() {
     const visited = [];
     depthFirstSearchArray(nestedArray, (item) => visited.push(item));
     setResult(visited);
   }
+  const depthFirstSearchArray = convertFunctionTemplateLiteral(calculateView);
 
   useEffect(extractArrayCallBack, [nestedArray]);
 
@@ -392,15 +418,14 @@ export function DFSArrayExample() {
       </div>
 
       <pre className="code-box">
-        <code>{convertFunctionTemplateLiteral(depthFirstSearchArray)}</code>
+        <code>{calculateView}</code>
         <br/>
         <br/>
-        <code>{convertFunctionTemplateLiteral(extractArrayCallBack)}</code>
+        <code>{calculateView2}</code>
       </pre>
     </div>
   );
 }
-
 
 export function RecursiveBinarySearch({ arr }) {
   const [output,setOutput] = useState([])

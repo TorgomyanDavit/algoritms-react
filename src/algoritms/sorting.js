@@ -23,23 +23,28 @@ export function BubbleSort() {
       setArr(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
     }
   
-    function calculate() {
-      let input = [...arr]; 
-      let swapped;
-      do {
-        swapped = false;
-        for (let i = 0; i < input.length - 1; i++) {  
-          let currentElement = arr[i];
-          let nextElement = arr[i + 1];
-          if (currentElement > nextElement) {
-            arr[i] = nextElement;
-            arr[i + 1] = currentElement;
-            swapped = true;
+
+    const calculateView = `
+      function calculate(arr) {
+        let input = [...arr]; 
+        let swapped;
+        do {
+          swapped = false;
+          for (let i = 0; i < input.length - 1; i++) {  
+            let currentElement = arr[i];
+            let nextElement = arr[i + 1];
+            if (currentElement > nextElement) {
+              arr[i] = nextElement;
+              arr[i + 1] = currentElement;
+              swapped = true;
+            }
           }
-        }
-      } while (swapped);
-      return input;
-    }
+        } while (swapped);
+        return input;
+      }
+    `;
+    const calculate = convertFunctionTemplateLiteral(calculateView);
+
   
     return (
       <div className="container">
@@ -57,7 +62,7 @@ export function BubbleSort() {
                     />
                 </label>
             </div>
-            <p><strong>Result:</strong> <span className="output success">Found: {calculate().join(",")}</span></p>
+            <p><strong>Result:</strong> <span className="output success">Found: {calculate(arr).join(",")}</span></p>
             <p className="description">
                 <TipAnimatedImage />
                 Bubble Sort 
@@ -69,7 +74,7 @@ export function BubbleSort() {
         </div>
 
         <pre className="code-box">
-            <code>{convertFunctionTemplateLiteral(calculate)}</code>
+            <code>{calculateView}</code>
         </pre>
       </div>
     );
@@ -88,32 +93,37 @@ export function SelectionSort() {
       setArr(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
     }
   
-    function selectionSort(inputArr) {
-      let arr = [...inputArr]; 
-      const length = arr.length;
-  
-        for (let i = 0; i < length - 1; i++) {
-            let minIndex = i;
 
-            for (let j = i + 1; j < length; j++) {
-                const nextElement = arr[j]
-                const currentElement = arr[minIndex]
-
-                if (nextElement < currentElement) {
-                    minIndex = j;
-                }
-            }
-
-            if (minIndex !== i) {
-                const temp = arr[i];
-                arr[i] = arr[minIndex];
-                arr[minIndex] = temp;
-            }
+    const calculateView = `
+      function selectionSort(inputArr) {
+        let arr = [...inputArr]; 
+        const length = arr.length;
     
-        }
-  
-      return arr;
-    }
+          for (let i = 0; i < length - 1; i++) {
+              let minIndex = i;
+
+              for (let j = i + 1; j < length; j++) {
+                  const nextElement = arr[j]
+                  const currentElement = arr[minIndex]
+
+                  if (nextElement < currentElement) {
+                      minIndex = j;
+                  }
+              }
+
+              if (minIndex !== i) {
+                  const temp = arr[i];
+                  arr[i] = arr[minIndex];
+                  arr[minIndex] = temp;
+              }
+      
+          }
+    
+        return arr;
+      }
+    `;
+    const selectionSort = convertFunctionTemplateLiteral(calculateView);
+
   
     return (
       <div className="container">
@@ -147,7 +157,7 @@ export function SelectionSort() {
         </div>
   
         <pre className="code-box">
-          <code>{convertFunctionTemplateLiteral(selectionSort)}</code>
+          <code>{calculateView}</code>
         </pre>
       </div>
     );
@@ -167,6 +177,22 @@ export function InsertionSort() {
       setArr(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
     }
   
+    const calculateView = `
+      function insertionSort(arr) {
+        for (let i = 1; i < length; i++) {
+          const nextElement = arr[i];
+          let prevElementIndex = i - 1;
+          while (prevElementIndex >= 0 && arr[prevElementIndex] > nextElement) {
+            arr[prevElementIndex + 1] = arr[prevElementIndex];
+            prevElementIndex--;
+          }
+    
+          arr[prevElementIndex + 1] = nextElement;
+        }
+        return arr;
+      }
+    `;
+
     function insertionSort(arr) {
       for (let i = 1; i < length; i++) {
         const nextElement = arr[i];
@@ -180,7 +206,7 @@ export function InsertionSort() {
       }
       return arr;
     }
-  
+
     const sortedArray = insertionSort([...arr]);
   
     return (
@@ -214,7 +240,7 @@ export function InsertionSort() {
         </div>
   
         <pre className="code-box">
-          <code>{convertFunctionTemplateLiteral(insertionSort)}</code>
+          <code>{calculateView}</code>
         </pre>
       </div>
     );
@@ -228,13 +254,13 @@ export function InsertionSort() {
     QuickSort has an average time complexity of O(n log n) and is widely used for its speed and simplicity.
 */
 export function GenerateQuickSort() {
+  const [arr, setArr] = useState([5, 3, 1, 4, 2]);
+    
+  function handleChange(e) {
+    setArr(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
+  }
 
-    const [arr, setArr] = useState([5, 3, 1, 4, 2]);
-      
-    function handleChange(e) {
-      setArr(e.target.value.split(",").map((num) => parseInt(num.trim(), 10) || 0));
-    }
-
+  const calculateView = `
     function quickSort(arr) { 
       if (arr.length <= 1) {
         return arr;
@@ -261,40 +287,43 @@ export function GenerateQuickSort() {
       const sortedData = sortedLess.concat(equal,sortedGreater);
       return sortedData
     }
+  `;
 
-    return (
-      <div className="container">
-        <div className="result-side">
-          <h3>⚡ QuickSort Algorithm</h3>
-          <div className="input-side">
-              <label className="input">
-                  Enter Numbers:
-                  <input
-                      className="input"
-                      type="text"
-                      value={arr.join(",")}
-                      onChange={handleChange}
-                      placeholder="Enter numbers, e.g. 5, 3, 1, 4, 2"
-                  />
-              </label>
-          </div>
-          <p>
-            <strong>Result:</strong>{" "}
-            <span className="output success">Sorted: {quickSort(arr).join(",")}</span>
-          </p>
-          <p className="description">
-            <TipAnimatedImage />
-            QuickSort is a divide-and-conquer algorithm that selects a pivot, partitions the array into elements less than and greater than the pivot, and recursively sorts each part.
-            Best Case (O(n log n)) – When the pivot divides the array into nearly equal halves, leading to balanced recursion.
-            Average Case (O(n log n)) – On random input, partitions are fairly balanced, making QuickSort efficient.
-            Worst Case (O(n²)) – Happens when the pivot is the smallest or largest element, creating highly unbalanced partitions (e.g., sorted or reverse-sorted array).
-          </p>
+  const quickSort = convertFunctionTemplateLiteral(calculateView);
+
+  return (
+    <div className="container">
+      <div className="result-side">
+        <h3>⚡ QuickSort Algorithm</h3>
+        <div className="input-side">
+            <label className="input">
+                Enter Numbers:
+                <input
+                    className="input"
+                    type="text"
+                    value={arr.join(",")}
+                    onChange={handleChange}
+                    placeholder="Enter numbers, e.g. 5, 3, 1, 4, 2"
+                />
+            </label>
         </div>
-        <pre className="code-box">
-          <code>{convertFunctionTemplateLiteral(quickSort)}</code>
-        </pre>
+        <p>
+          <strong>Result:</strong>{" "}
+          <span className="output success">Sorted: {quickSort(arr).join(",")}</span>
+        </p>
+        <p className="description">
+          <TipAnimatedImage />
+          QuickSort is a divide-and-conquer algorithm that selects a pivot, partitions the array into elements less than and greater than the pivot, and recursively sorts each part.
+          Best Case (O(n log n)) – When the pivot divides the array into nearly equal halves, leading to balanced recursion.
+          Average Case (O(n log n)) – On random input, partitions are fairly balanced, making QuickSort efficient.
+          Worst Case (O(n²)) – Happens when the pivot is the smallest or largest element, creating highly unbalanced partitions (e.g., sorted or reverse-sorted array).
+        </p>
       </div>
-    )
+      <pre className="code-box">
+        <code>{calculateView}</code>
+      </pre>
+    </div>
+  )
 }
   
 /*Merge Sort: 

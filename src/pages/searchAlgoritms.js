@@ -5,11 +5,11 @@ export default function SearchingAlgoritm() {
   return (
     <div className="page">
       <h1 className="title">Searching Algoritm</h1>
-      <DFSArrayExample/>
       <HashingSearch/>
       <TernarySearch/>
       <BinarySearch/>
       <LineirSearch/>
+      <DFSArrayExample/>
     </div>
   )
 }
